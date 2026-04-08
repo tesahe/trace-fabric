@@ -2,22 +2,17 @@ syntax = "proto3";
 
 package tracefabric;
 
-message Lead {
+message RawLead {
   string id = 1;
-  string business_name = 2;
-  string website_url = 3;
-  double latitude = 4;
-  double longitude = 5;
+  string source_url = 2;
+  string company_name = 3;
+  string raw_html = 4;
+
+  // should be epoch or ISO8601 string
+  string timestamp = 5;
   
-  // No-Drop Flags
-  bool has_website = 6;
-  bool is_viable = 7;
-  float xgboost_confidence = 8;
-  
-  // Metadata for the data system
-  string industry = 9;
-  int32 google_rating_count = 10;
-  float google_rating_score = 11;
-  
-  string timestamp = 12;
+}
+
+message LeadBatch {
+  repeated RawLead leads = 1;
 }
