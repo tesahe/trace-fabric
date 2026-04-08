@@ -3,6 +3,7 @@
 .env
 .env.local
 .vscode/
+infra/.env
 # RustRover
 #.idea
 

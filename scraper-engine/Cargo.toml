@@ -5,9 +5,33 @@ edition = "2024"
 
 [dependencies]
 prost = "0.14.3"
-sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio", "macros"] }
 tokio = { version = "1.51.0", features = ["full"] }
 zmq = "0.10.0"
+dotenvy = "0.15"
+
+# SQLx with encryption
+sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "macros"] }
+
+# Rust data types 
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+serde_json = "1.0"
+
+# Async HTTP client with internal connection pool, pure-Rust tls 
+# no OS dependencies
+reqwest = { version = "0.12.0", features = ["rustls-tls"] }
+
+# governor Token Bucket Rate Limiter, uses .await for rate limiting on  
+# target servers.
+governor = "0.8"
+
+# Structured logging to upgrade from "println!" for current Spikes
+tracing = "0.1"
+# logging backend / subscriber to stdout for runtime control
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+
+
 
 [build-dependencies]
 prost-build = "0.14.3"
