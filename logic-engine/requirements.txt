@@ -1,5 +1,10 @@
 pyzmq==27.1.0
-protobuf==7.34.1
+protobuf==6.33.6 # 6.33.1 change to if there are issues but this is fine
 xgboost==3.2.0
 fastapi
 uvicorn
+grpcio-tools
+sqlalchemy
+asyncpg
+python-dotenv
+greenlet
