@@ -1,6 +1,5 @@
 use std::io::Result;
 
-
 fn main() -> Result<()> {
     // when cargo build :
     // look here, invoke compiler, output
