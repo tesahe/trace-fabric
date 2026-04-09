@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column
-from sqlalchemy import String, Float
+from sqlalchemy import String, Float, JSON, Boolean, Integer
+
+
 
 
 # load variables from .env
@@ -41,4 +43,28 @@ class ScoredLeadModel(Base):
     raw_html: Mapped[str] = mapped_column(String)
     # TEMP because of large size - will be moved to object storage later
     timestamp: Mapped[str] = mapped_column(String)
+
+    # Sprint 2 
+
+    # Pipeline status as no rows are Dropped
+
+    pipeline_status: Mapped[str] = mapped_column(String, default="pending")
+
+
+    # Deterministic Layer (Regex, Substring, etc)
+    heuristic_flags: Mapped[dict] = mapped_column(JSON, default=dict)
+
+
+    # Probabilistic Layer (LLM Outputs)
+    # Built to mirror Pydantic schema exactly, nullable
+
+    has_booking_widget: Mapped[bool] = mapped_column(Boolean, nullable=true)
+    year_founded: Mapped[int] = mapped_column(Integer, nullable=true)
+    contact_email: Mapped[str] = mapped_column(String, nullable=true)
+    identified_service_gaps: Mapped[list] = mapped_column(JSON, default=list)
+
+    # Financial Tracking
+    llm_processing_cost: Mapped[float] = mapped_column(Float, default = 0.0)
+
+
 
