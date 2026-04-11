@@ -58,9 +58,9 @@ class ScoredLeadModel(Base):
     # Probabilistic Layer (LLM Outputs)
     # Built to mirror Pydantic schema exactly, nullable
 
-    has_booking_widget: Mapped[bool] = mapped_column(Boolean, nullable=true)
-    year_founded: Mapped[int] = mapped_column(Integer, nullable=true)
-    contact_email: Mapped[str] = mapped_column(String, nullable=true)
+    has_booking_widget: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    year_founded: Mapped[int] = mapped_column(Integer, nullable=True)
+    contact_email: Mapped[str] = mapped_column(String, nullable=True)
     identified_service_gaps: Mapped[list] = mapped_column(JSON, default=list)
 
     # Financial Tracking

@@ -9,3 +9,8 @@ asyncpg
 python-dotenv
 greenlet
 beautifulsoup4
+lxml
+google-genai
+instructor
+aiolimiter
+jsonref
