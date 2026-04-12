@@ -2,6 +2,11 @@ import asyncio
 import logging
 from aiolimiter import AsyncLimiter
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from google import genai
+from typing import Optional
+
+import instructor
+from schemas import LeadExtraction
 
 
 logger = logging.getLogger(__name__)
@@ -9,6 +14,57 @@ logger = logging.getLogger(__name__)
 # To catch HTTP 429 errors
 class LLMRatelimitException(Exception):
     pass
+
+
+# Initalize Client wrapped with Instructor
+raw_client = genai.Client()
+ai_client = instructor.from_provider(raw_client)
+
+async def evaluate_service_gaps(html_content: str, url:str) -> Optional[LeadExtraction]:
+    """
+    Tier 2 Orchestrator Core Cognitive Engine:
+    Evaluates the scraped real-world HTML to extract deterministic Service Gaps using Gemini.
+    """
+
+    # System Prompt
+    system_prompt = (
+        "You are a Senior Digital Architect and Web Evaluator. "
+        "Your objective is to evaluate small business websites to identify critical 'Service Gaps' "
+        "(e.g., outdated design, lacking an online booking engine, missing contact details). "
+        "If you are confident the website represents a real operational business, but it has a poor digital presence, "
+        "you should flag it as a highly qualified lead.\n\n"
+        "CRITICAL RULES:\n"
+        "1. Strictly adhere to the provided output JSON schema.\n"
+        "2. Base your findings ONLY on the provided HTML content.\n"
+        "3. If the page is broken, parked, or not a real business, set is_qualified_lead to False and explain why."
+    )
+
+    try:
+        # Instructor Extraction using asyncio.to_thread for safety net.
+        extraction: LeadExtraction = await asyncio.to_thread(
+            ai_client.create,
+            response_model=LeadExtraction,
+            model="gemini-2.5-flash",
+            messages=[
+                {"role": "user", "content": system_prompt},
+                {"role": "user", "content": f"Target URL: {url}\n\nHTML Content:\n{html_content[:30000]}"} # Truncate massive HTML payloads to save tokens
+            ]
+        )
+
+        return extraction
+
+    except Exception as e:
+        logger.error(f"Error evaluating service gaps for {url}: {e}")
+        return None
+
+
+
+    
+
+
+
+    
+
 
 class LLMOrchestrator:
     def __init__(self, rpm_limit: int = 500, max_concurent: int = 15, queue_size: int = 2000):
@@ -56,16 +112,25 @@ class LLMOrchestrator:
 
             # Ask semaphore for permission
             async with self.semaphore:
+
+                url = lead_data.get("url", "Unknown URL")
+                html = lead_data.get("html", "")
                 
 
                 # TODO Fire HTTP Req to LLm API
-                logger.info(f"[Tier 2] Firing LLM extraction for lead ID: {lead_data.get('id')}")
+                logger.info(f"[Tier 2] Firing LLM extraction for lead ID: {url}")
 
-                await asyncio.sleep(1)
+                result = await evaluate_service_gaps(html_content=html, url=url)
+
+                if result is None:
+
+                    # If LLm failed or timed out
+                    pass
 
 
 
-                return {"extracted_data": "success"}
+
+                return result
 
 
     
@@ -108,12 +173,3 @@ class LLMOrchestrator:
         logger.info(f"Started {worker_count} LLM background workers.")
 
             
-        
-                
-        
-
-
-
-
-
-        

@@ -1,9 +1,13 @@
 import os
 from dotenv import load_dotenv
+from typing import Optional, List
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column
-from sqlalchemy import String, Float, JSON, Boolean, Integer
+
+
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import String, Float, JSON, Boolean, Integer, Text
+
 
 
 
@@ -24,59 +28,55 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 # 3) Base class for all models
-Base = declarative_base()
+class Base(AsyncAttrs, DeclarativeBase):
+    pass
 
 # Database schema definition
+
 class ScoredLeadModel(Base):
     """
     The canonical source of truth for a processed lead.
-    Maps directly to the Master Data Warehouse table.
+    Adheres to the 'No-Drop Ontology', preserving all raw and inferred intelligence.
     """
-
     __tablename__ = "scored_leads"
-
-    # SERPER COLUMNS 
-    # Map types to match Protobuf + XG boost score
+    # --- INGESTION PLANE (Serper / Tier 0) ---
     id: Mapped[str] = mapped_column(String, primary_key=True)
     source_url: Mapped[str] = mapped_column(String)
-    score: Mapped[float] = mapped_column(Float)
+    score: Mapped[float] = mapped_column(Float) # XGBoost / Initial Score
     company_name: Mapped[str] = mapped_column(String)
-    raw_html: Mapped[str] = mapped_column(String)
-    # TEMP because of large size - will be moved to object storage later
-    timestamp: Mapped[str] = mapped_column(String)
+    raw_html: Mapped[Optional[str]] = mapped_column(Text, nullable=True) # Heavy payload
+    timestamp: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # New SERPER Columns
-    phone_number: Mapped[str] = mapped_column(String, nullable=True)
-    address: Mapped[str] = mapped_column(String, nullable=True)
-    latitude: Mapped[float] = mapped_column(Float, nullable=True)
-    longitude: Mapped[float] = mapped_column(Float, nullable=True)
-    rating: Mapped[float] = mapped_column(Float, nullable=True)
-    rating_count: Mapped[int] = mapped_column(Integer, nullable=True)
-    category: Mapped[str] = mapped_column(String, nullable=True)
-    customer_id: Mapped[str] = mapped_column(String, nullable=True)
-    place_id: Mapped[str] = mapped_column(String, nullable=True)
+    # Enrichment Fields
+    phone_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    address: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    latitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    rating: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    rating_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    category: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # Sprint 2 
-
-    # Pipeline status as no rows are Dropped
-
+    # --- PIPELINE STATUS PLANE ---
     pipeline_status: Mapped[str] = mapped_column(String, default="pending")
-
-
-    # Deterministic Layer (Regex, Substring, etc)
     heuristic_flags: Mapped[dict] = mapped_column(JSON, default=dict)
 
+    # --- COGNITIVE PLANE (Tier 2 LLM Extraction) ---
+    # Boolean Checkboxes mapping directly to Pydantic
+    is_qualified_lead: Mapped[bool] = mapped_column(Boolean, default=False)
+    has_booking_widget: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    is_mobile_optimized: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_clear_contact_info: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    
+    # Textual Intelligence
+    overall_digital_health: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    rejection_reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    
+    # Structured Findings
+    identified_service_gaps: Mapped[list] = mapped_column(JSON, default=list) # outdated_indicators
+    missing_critical_features: Mapped[list] = mapped_column(JSON, default=list) # new list from schema
 
-    # Probabilistic Layer (LLM Outputs)
-    # Built to mirror Pydantic schema exactly, nullable
-
-    has_booking_widget: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    year_founded: Mapped[int] = mapped_column(Integer, nullable=True)
-    contact_email: Mapped[str] = mapped_column(String, nullable=True)
-    identified_service_gaps: Mapped[list] = mapped_column(JSON, default=list)
-
+    # The 'Safe-Haven' column (No-Drop Strategy)
+    # Store the entire raw LeadExtraction JSON dump here!
+    full_llm_payload: Mapped[dict] = mapped_column(JSON, default=dict)
     # Financial Tracking
-    llm_processing_cost: Mapped[float] = mapped_column(Float, default = 0.0)
-
-
-
+    llm_processing_cost: Mapped[float] = mapped_column(Float, default=0.0)
