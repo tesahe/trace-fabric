@@ -24,15 +24,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rlead_v1.proto\x12\x0btracefabric\"d\n\x07RawLead\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nsource_url\x18\x02 \x01(\t\x12\x14\n\x0c\x63ompany_name\x18\x03 \x01(\t\x12\x10\n\x08raw_html\x18\x04 \x01(\t\x12\x11\n\ttimestamp\x18\x05 \x01(\t\"0\n\tLeadBatch\x12#\n\x05leads\x18\x01 \x03(\x0b\x32\x14.tracefabric.RawLeadb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rlead_v1.proto\x12\x0btracefabric\"\x8f\x02\n\x07RawLead\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nsource_url\x18\x02 \x01(\t\x12\x14\n\x0c\x63ompany_name\x18\x03 \x01(\t\x12\x10\n\x08raw_html\x18\x04 \x01(\t\x12\x11\n\ttimestamp\x18\x05 \x01(\t\x12\x14\n\x0cphone_number\x18\x06 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x07 \x01(\t\x12\x10\n\x08latitude\x18\x08 \x01(\x01\x12\x11\n\tlongitude\x18\t \x01(\x01\x12\x0e\n\x06rating\x18\n \x01(\x02\x12\x14\n\x0crating_count\x18\x0b \x01(\x05\x12\x10\n\x08\x63\x61tegory\x18\x0c \x01(\t\x12\x13\n\x0b\x63ustomer_id\x18\r \x01(\t\x12\x10\n\x08place_id\x18\x0e \x01(\t\"0\n\tLeadBatch\x12#\n\x05leads\x18\x01 \x03(\x0b\x32\x14.tracefabric.RawLeadb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'lead_v1_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_RAWLEAD']._serialized_start=30
-  _globals['_RAWLEAD']._serialized_end=130
-  _globals['_LEADBATCH']._serialized_start=132
-  _globals['_LEADBATCH']._serialized_end=180
+  _globals['_RAWLEAD']._serialized_start=31
+  _globals['_RAWLEAD']._serialized_end=302
+  _globals['_LEADBATCH']._serialized_start=304
+  _globals['_LEADBATCH']._serialized_end=352
 # @@protoc_insertion_point(module_scope)

@@ -35,6 +35,7 @@ class ScoredLeadModel(Base):
 
     __tablename__ = "scored_leads"
 
+    # SERPER COLUMNS 
     # Map types to match Protobuf + XG boost score
     id: Mapped[str] = mapped_column(String, primary_key=True)
     source_url: Mapped[str] = mapped_column(String)
@@ -43,6 +44,17 @@ class ScoredLeadModel(Base):
     raw_html: Mapped[str] = mapped_column(String)
     # TEMP because of large size - will be moved to object storage later
     timestamp: Mapped[str] = mapped_column(String)
+
+    # New SERPER Columns
+    phone_number: Mapped[str] = mapped_column(String, nullable=True)
+    address: Mapped[str] = mapped_column(String, nullable=True)
+    latitude: Mapped[float] = mapped_column(Float, nullable=True)
+    longitude: Mapped[float] = mapped_column(Float, nullable=True)
+    rating: Mapped[float] = mapped_column(Float, nullable=True)
+    rating_count: Mapped[int] = mapped_column(Integer, nullable=True)
+    category: Mapped[str] = mapped_column(String, nullable=True)
+    customer_id: Mapped[str] = mapped_column(String, nullable=True)
+    place_id: Mapped[str] = mapped_column(String, nullable=True)
 
     # Sprint 2 
 

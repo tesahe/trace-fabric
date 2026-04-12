@@ -4,13 +4,26 @@ package tracefabric;
 
 message RawLead {
   string id = 1;
+
   string source_url = 2;
   string company_name = 3;
   string raw_html = 4;
+  string timestamp = 5;
+
 
   // should be epoch or ISO8601 string
-  string timestamp = 5;
-  
+  string phone_number = 6;
+  string address = 7;
+
+  double latitude = 8;
+  double longitude = 9;
+  float rating = 10;
+  int32 rating_count = 11;
+
+  string category = 12;
+  string customer_id = 13;
+  string place_id = 14;
+
 }
 
 message LeadBatch {

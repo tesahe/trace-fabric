@@ -1,3 +1,4 @@
+import queue
 import asyncio
 from contextlib import asynccontextmanager
 import zmq
@@ -13,6 +14,7 @@ import lead_v1_pb2
 from database import engine, Base, AsyncSessionLocal, ScoredLeadModel
 from gatekeeper import HeuristicScanner, WEBSITE_MODERNIZATION_CAMPAIGN
 from tier1_router import Tier1Gatekeeper, protected_tier1_call
+from tier2_orchestrator import LLMOrchestrator
 
 ctx = zmq.asyncio.Context()
 
@@ -22,6 +24,8 @@ ml_executor = ThreadPoolExecutor(max_workers=4)
 
 # LLM Gatekeeper init once, reused across all leads
 tier1 = Tier1Gatekeeper()
+
+tier2 = LLMOrchestrator(rpm_limit=500, max_concurent=15, queue_size=2000)
 
 class LeadClassifier:
     def __init__(self):
@@ -102,7 +106,21 @@ async def zmq_pull_worker():
                                 raw_html=lead.raw_html,
                                 timestamp=lead.timestamp,
                                 pipeline_status="rejected_tier1_not_a_business",
-                                heuristic_flags=heuristic_flags  # still preserve the Tier 0 data
+                                heuristic_flags=heuristic_flags,
+                                
+                                # still preserve the Tier 0 data
+
+                                # SERPER COLUMNS
+                                phone_number=lead.phone_number,
+                                address=lead.address,
+                                latitude=lead.latitude,
+                                longitude=lead.longitude,
+                                rating=lead.rating,
+                                rating_count=lead.rating_count,
+                                category=lead.category,
+                                customer_id=lead.customer_id,
+                                place_id=lead.place_id,
+
                             )
                             session.add(rejected_record)
                     continue
@@ -127,12 +145,39 @@ async def zmq_pull_worker():
                             company_name=lead.company_name,
                             raw_html=lead.raw_html,
                             timestamp=lead.timestamp,
+
                             pipeline_status="pending_tier2",   # ← ready for deep LLM extraction
-                            heuristic_flags=heuristic_flags
+                            heuristic_flags=heuristic_flags,
+
+                            # SERPER COLUMNS
+                            phone_number=lead.phone_number,
+                            address=lead.address,
+                            latitude=lead.latitude,
+                            longitude=lead.longitude,
+                            rating=lead.rating,
+                            rating_count=lead.rating_count,
+                            category=lead.category,
+                            customer_id=lead.customer_id,
+                            place_id=lead.place_id,
                         )
                         session.add(new_record)
 
                 print(f"[Persist] Lead ID: {lead.id} -> DB")
+
+                # TIER 2: Deep Extraction
+                lead_payload = {
+                    "id": lead.id,
+                    "url": lead.source_url,
+                    "company_name": lead.company_name,
+                    "raw_html": lead.raw_html,
+                    "timestamp": lead.timestamp,
+                    "phone_number": lead.phone_number,
+                    "address": lead.address,
+                    "category": lead.category,
+                    "rating": lead.rating
+                }
+
+                await tier2.enqueue_lead(lead_payload)
 
 
                 # XG BOOST SCORING BLOCK 
@@ -179,10 +224,13 @@ async def lifespan(app: FastAPI):
     # DB Initialization
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    print(" Database schema verified.")
+    print("Database schema verified.")
 
     # STARTUP - ZeroMQ listener as a concurrent asyncio Task
     worker_task = asyncio.create_task(zmq_pull_worker())
+
+    await tier2.start(worker_count=15)
+    print("[Tier 2] LLM Workers started.")
 
 
     # fastAPI control here
@@ -191,10 +239,14 @@ async def lifespan(app: FastAPI):
     # Shutdown 
     worker_task.cancel()
 
+    for task in tier2.workers:
+        task.cancel()
+
     try: 
         await worker_task
     except asyncio.CancelledError:
         pass
+
     ctx.term()
 
 

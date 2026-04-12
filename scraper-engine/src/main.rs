@@ -37,12 +37,21 @@ pub struct SerperPlace {
     pub rating: Option<f32>,
     #[serde(rename = "ratingCount")]
     pub rating_count: Option<u32>,
+
+
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
+    pub category: Option<String>,
+    #[serde(rename = "placeId")]
+    pub place_id: Option<String>,
+    #[serde(rename = "cid")]
+    pub customer_id: Option<String>,
 }
 
 // organized into mod modules for Protobuf structs
-// pub mod schema {
-//     include!(concat!(env!("OUT_DIR") ,"/tracefabric.rs"));
-// }
+pub mod schema {
+    include!(concat!(env!("OUT_DIR") ,"/tracefabric.rs"));
+}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -121,7 +130,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Establish Bounding Channel
 
-    let (tx, mut rx) = mpsc::channel::<String>(500);
+    let (tx, mut rx) = mpsc::channel::<SerperPlace>(500);
 
 
     // Discovery needs to run in the background
@@ -172,11 +181,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     for place in serper_data.places {
                         // If they have a website, queue it
 
-                        if let Some(website_url) = place.website {
+                        if let Some(ref website_url) = place.website {
                             debug!(company = %place.title, url = %website_url, "Discovered lead. Queuing for scraping.");
                             
                             // Push URL into pipeline
-                            if let Err(e) = discovery_tx.send(website_url).await {
+                            if let Err(e) = discovery_tx.send(place).await {
                                 error!(error = %e, "Failed to send URL to pipeline");
                                 break;
                             }
@@ -208,49 +217,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         //MOCK Yelp API integration NEXT
 
-        // let target_urls = vec![
-        //     "https://example.com".to_string(),
-        //     "https://httpbin.org/html".to_string(),
-        //     "https://www.rust-lang.org".to_string(),
-        // ];
-
-        // // Push discovered URLS into pipeline
-
-        // for url in target_urls {
-
-        //     debug!(url = %url, "Discovery found a lead. Pushing to pipeline...");
-        //     // Send URL into the channel.
-        //     // If channel is full (500), send().await will auto pause
-        //     // providing backpressure
-
-        //     if let Err(e) = discovery_tx.send(url).await {
-        //         eprintln!("Pipeline channel closed: {}", e);
-        //         break;
-        //     }
-        // }
-
-        // println!("Discovery task finished.");
-
-
-
-
-    //     // 3. Push URLS into pipeline
-
-    //     for place in response.places {
-    //         if let Some(website_url) = place.website {
-    //             //Send over chanel to scraping workers
-
-    //             // If channel is full (500), send().await will auto pause
-    //             // here without crashing providing backpressure
-
-    //             if let Err(e) = discovery_tx.send(website_url).await {
-    //                 eprintln!("Pipeline channel closed: {}", e);
-    //                 break;
-    //             }
-    //         }
-    //     }
-
-    //     println!("Discovery task finished.");
 
     });
 
@@ -267,7 +233,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut scraper_tasks = tokio::task::JoinSet::new();
 
-    while let Some(url) = rx.recv().await {
+    while let Some(place) = rx.recv().await {
         // Wakes up when Discovery pushes a URL
         // Clones (limiter, zmq context)
 
@@ -276,6 +242,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let worker_client = http_client.clone();
 
         // 2. Dedicating spawn scraping task for this specific URL
+        let url = place.website.clone().unwrap();
 
 
         scraper_tasks.spawn(async move {
@@ -290,13 +257,32 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             match worker_client.get(&url).send().await {
                 Ok(response) => {
                     let status = response.status().as_u16();
-                    let body = response.text().await.unwrap_or_default();
+                    let html_body = response.text().await.unwrap_or_default();
                     
-                    info!(url = %url, status = %status, bytes= body.len(), "Fetched successfully");
+                    info!(url = %url, status = %status, bytes = html_body.len(), "Fetched successfully");
 
                     // TODO 
                     // 3. Serialize into Protobuf
-                    // let payload = schema::LeadPayload {}
+                    let payload = schema::RawLead {
+                        id: uuid::Uuid::new_v4().to_string(),
+                        source_url: url.clone(),
+                        company_name: place.title,
+                        raw_html: html_body.clone(),
+                        timestamp: chrono::Utc::now().to_rfc3339(),
+
+                        phone_number: place.phone_number.unwrap_or_default(),
+                        address: place.address,
+                        latitude: place.latitude.unwrap_or(0.0), 
+                        longitude: place.longitude.unwrap_or(0.0),
+
+                        rating: place.rating.unwrap_or(0.0),
+                        rating_count: place.rating_count.unwrap_or(0) as i32,
+
+                        category: place.category.unwrap_or_default(), 
+                        customer_id: place.customer_id.unwrap_or_default(), 
+                        place_id: place.place_id.unwrap_or_default(),    
+                    };
+
 
                     // 
 
