@@ -7,6 +7,8 @@ from typing import Optional
 
 import instructor
 from schemas import LeadExtraction
+from sqlalchemy import select
+from database import AsyncSessionLocal, ScoredLeadModel
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +20,7 @@ class LLMRatelimitException(Exception):
 
 # Initalize Client wrapped with Instructor
 raw_client = genai.Client()
-ai_client = instructor.from_provider(raw_client)
+ai_client = instructor.from_genai(raw_client)
 
 async def evaluate_service_gaps(html_content: str, url:str) -> Optional[LeadExtraction]:
     """
@@ -144,13 +146,48 @@ class LLMOrchestrator:
         while True:
             # 1. Wait for a lead to drop
             lead_data = await self.queue.get()
+            lead_id = lead_data.get("id")
+            # TODO need to see if we want this id, or the cid that comes in with serper
 
             try: 
                 # 2. Push it through pipeline
-                result = await self._save_execute_llm(lead_data)
+                result: Optional[LeadExtraction] = await self._save_execute_llm(lead_data)
 
-                # 3. TODO Update DB
-                logger.info(f"[Tier 2] Saved LLM results for lead ID: {lead_data.get('id')}")
+                async with AsyncSessionLocal() as session:
+                    async with session.begin():
+                        stmt = select(ScoredLeadModel).where(ScoredLeadModel.id == lead_id)
+                        db_result = await session.execute(stmt)
+                        lead_record = db_result.scalar_one_or_none()
+
+                        if not lead_record:
+                            logger.error(f"Worker {worker_id}: Lead {lead_id} not found in DB! Highly anomalous.")
+                            continue
+
+                        if result is not None:
+                            lead_record.is_qualified_lead = result.is_qualified_lead
+                            lead_record.overall_digital_health = result.overall_digital_health
+                            lead_record.rejection_reason = result.rejection_reason
+                            
+                            # Break down the nested gaps
+                            lead_record.has_booking_widget = result.service_gaps.has_online_booking
+                            lead_record.is_mobile_optimized = result.service_gaps.is_mobile_optimized
+                            lead_record.has_clear_contact_info = result.service_gaps.has_clear_contact_info
+                            
+                            # Dump the JSON data for Lists and the "Safe Haven" Payload
+                            lead_record.identified_service_gaps = result.service_gaps.outdated_indicators
+                            lead_record.missing_critical_features = result.service_gaps.missing_critical_features
+                            lead_record.full_llm_payload = result.model_dump() # The absolute source of truth
+                            
+                            # Update workflow status based on the LLM's opinion
+                            if result.is_qualified_lead:
+                                lead_record.pipeline_status = "lead_qualified"
+                            else:
+                                lead_record.pipeline_status = "lead_rejected_by_llm"
+                        
+
+
+
+                logger.info(f"[Tier 2] Saved LLM results for lead ID: {lead_id} | Status: {lead_record.pipeline_status}")
             
             except Exception as e:
                 logger.error(f"Worker {worker_id} completely failed on lead. Error: {e}")
