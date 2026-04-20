@@ -44,7 +44,7 @@ CREATE TABLE leads (
     heuristic_flags JSONB NOT NULL DEFAULT '{}'::jsonb,
     deterministic_evidence JSONB NOT NULL DEFAULT '{}'::jsonb,
     external_enrichments JSONB NOT NULL DEFAULT '{}'::jsonb,
-    offer_type TEXT,
+    campaign_type TEXT,
     target_industry TEXT,
 
     is_qualified_lead BOOLEAN NOT NULL DEFAULT FALSE,

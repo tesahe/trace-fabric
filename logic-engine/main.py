@@ -330,8 +330,9 @@ async def lifespan(app: FastAPI):
     # Shutdown 
     worker_task.cancel()
 
-    for task in tier2.workers:
-        task.cancel()
+    if tier2 is not None:
+        for task in tier2.workers:
+            task.cancel()
 
     try: 
         await worker_task
