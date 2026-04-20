@@ -21,6 +21,36 @@ class RuleSet:
     custom_evaluators: List[Callable[[BeautifulSoup, str], Dict[str, Any]]]
 
 
+WEBSITE_MODERNIZATION_CAMPAIGN = RuleSet(
+    campaign_name="website_modernization",
+    rejection_signatures=[],
+    custom_evaluators=[],
+)
+VOICE_AI_AGENT_CAMPAIGN = RuleSet(
+    campaign_name="voice_ai_agent",
+    rejection_signatures=[],
+    custom_evaluators=[],
+)
+
+SMMA_CAMPAIGN = RuleSet(
+    campaign_name="smma",
+    rejection_signatures=[],
+    custom_evaluators=[],
+)
+
+def get_ruleset_for_campaign(campaign_type: str) -> RuleSet:
+    """Returns the appropriate RuleSet for the given campaign type."""
+
+    if campaign_type == "website_modernization":
+        return WEBSITE_MODERNIZATION_CAMPAIGN
+    if campaign_type == "voice_ai_agent":
+        return VOICE_AI_AGENT_CAMPAIGN
+    if campaign_type == "smma":
+        return SMMA_CAMPAIGN
+    
+    raise ValueError(f"Unknown campaign type: {campaign_type}")
+
+
 
 def evaluate_website_modernization(soup: BeautifulSoup, text_content: str) -> Dict[str, Any]:
     """
@@ -45,22 +75,6 @@ def evaluate_website_modernization(soup: BeautifulSoup, text_content: str) -> Di
     
     return flags
 
-
-# ==========================================
-# CAMPAIGNS CONFIGURATION GOES HERE
-# ==========================================
-
-WEBSITE_MODERNIZATION_CAMPAIGN = RuleSet(
-    campaign_name="website_modernization",
-    # Reject these IMMEDIATELY. They already have a modern portfolio.
-    rejection_signatures=[
-        re.compile(r'Static\.SQUARESPACE', re.IGNORECASE),
-        re.compile(r'cdn\.shopify\.com', re.IGNORECASE),
-        re.compile(r'wix\.com', re.IGNORECASE),
-        re.compile(r'weebly\.com', re.IGNORECASE)
-    ],
-    custom_evaluators=[evaluate_website_modernization]
-)
 
 
 # ==========================================

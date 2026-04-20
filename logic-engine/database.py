@@ -84,7 +84,7 @@ class ScoredLeadModel(Base):
     heuristic_flags: Mapped[dict] = mapped_column(JSON, default=dict)
     deterministic_evidence: Mapped[dict] = mapped_column(JSON, default=dict)
     external_enrichments: Mapped[dict] = mapped_column(JSON, default=dict)
-    offer_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    campaign_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     target_industry: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
     # Tier 2 / LLM evaluation

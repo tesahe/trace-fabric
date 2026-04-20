@@ -12,9 +12,18 @@ import random
 import lead_v1_pb2
 
 from database import engine, Base, AsyncSessionLocal, ScoredLeadModel
-from gatekeeper import HeuristicScanner, WEBSITE_MODERNIZATION_CAMPAIGN
 from tier1_router import Tier1Gatekeeper, protected_tier1_call
 from tier2_orchestrator import LLMOrchestrator
+
+from campaigns import load_runtime_config
+from deterministic_evaluator import evaluate_lead
+from gatekeeper import HeuristicScanner, get_ruleset_for_campaign
+
+
+runtime_config = load_runtime_config()
+tier1 = Tier1Gatekeeper() if runtime_config.llm_enabled else None
+tier2 = LLMOrchestrator(rpm_limit=500, max_concurent=15, queue_size=2000) if runtime_config.llm_enabled else None
+
 
 ctx = zmq.asyncio.Context()
 
@@ -23,9 +32,6 @@ ctx = zmq.asyncio.Context()
 ml_executor = ThreadPoolExecutor(max_workers=4)
 
 # LLM Gatekeeper init once, reused across all leads
-tier1 = Tier1Gatekeeper()
-
-tier2 = LLMOrchestrator(rpm_limit=500, max_concurent=15, queue_size=2000)
 
 class LeadClassifier:
     def __init__(self):
@@ -72,7 +78,11 @@ async def zmq_pull_worker():
                 # TIER 0: Heuristic Scanner
                 print(f"[Tier 0] Starting heuristic scan for Lead ID: {lead.id}")
 
-                scanner = HeuristicScanner(lead.raw_html, WEBSITE_MODERNIZATION_CAMPAIGN)
+                scanner = HeuristicScanner(
+                    lead.raw_html,
+                    get_ruleset_for_campaign(runtime_config.campaign_type),
+                    )
+
                 passed, heuristic_flags, status = scanner.run_all_checks()
                 print(f"[Tier 0] Completed for Lead ID: {lead.id} | passed={passed} | status={status}")
 
@@ -94,74 +104,129 @@ async def zmq_pull_worker():
                             session.add(rejected_record)
                     continue
 
-                # TIER 1: Probabilistic LLM Validator
-                print(f"[Tier 1] Starting LLM validation for Lead ID: {lead.id}")
+                lead_payload = {
+                    "id": lead.id,
+                    "company_name": lead.company_name,
+                    "category": lead.category,
+                    "source_url": lead.source_url,
+                    "initial_url": lead.initial_url,
+                    "final_url": lead.final_url,
+                    "timestamp": lead.timestamp,
+                    "phone_number": lead.phone_number,
+                    "address": lead.address,
+                    "latitude": lead.latitude,
+                    "longitude": lead.longitude,
+                    "rating": lead.rating,
+                    "rating_count": lead.rating_count,
+                    "place_id": lead.place_id,
+                    "customer_id": lead.customer_id,
+                    "http_status": lead.http_status,
+                    "is_https": lead.is_https,
+                    "redirect_count": lead.redirect_count,
+                    "fetch_duration_ms": lead.fetch_duration_ms,
+                    "response_size_bytes": lead.response_size_bytes,
+                    "content_type": lead.content_type,
+                    "page_title": lead.page_title,
+                    "manifest_url": lead.manifest_url,
+                    "raw_html": lead.raw_html,
+                    "text_content": lead.text_content,
+                    "response_headers": [
+                        {"key": h.key, "value": h.value}
+                        for h in lead.response_headers
+                    ],
+                    "anchor_hrefs": [
+                        {"url": x.url, "is_internal": x.is_internal, "label": x.label}
+                        for x in lead.anchor_hrefs
+                    ],
+                    "script_srcs": [
+                        {"url": x.url, "is_internal": x.is_internal, "label": x.label}
+                        for x in lead.script_srcs
+                    ],
+                    "stylesheet_hrefs": [
+                        {"url": x.url, "is_internal": x.is_internal, "label": x.label}
+                        for x in lead.stylesheet_hrefs
+                    ],
+                    "robots_txt": {
+                        "path": lead.robots_txt.path,
+                        "http_status": lead.robots_txt.http_status,
+                        "exists": lead.robots_txt.exists,
+                        "content_type": lead.robots_txt.content_type,
+                        "body": lead.robots_txt.body,
+                    },
+                    "sitemap_xml": {
+                        "path": lead.sitemap_xml.path,
+                        "http_status": lead.sitemap_xml.http_status,
+                        "exists": lead.sitemap_xml.exists,
+                        "content_type": lead.sitemap_xml.content_type,
+                        "body": lead.sitemap_xml.body,
+                    },
+                }
+
+                evaluation = evaluate_lead(
+                    lead_data=lead_payload,
+                    campaign_type=runtime_config.campaign_type,
+                    target_industry=runtime_config.target_industry,
+                    heuristic_flags=heuristic_flags,
+                )
 
 
-                tier1_result = await protected_tier1_call(tier1, scanner.text_content)
-                print(f"[Tier 1] Completed LLM validation for Lead ID: {lead.id} | is_real_local_business={tier1_result.is_real_local_business}")
+                if runtime_config.llm_enabled:
+                    print(f"[Tier 1] Starting LLM validation for Lead ID: {lead.id}")
 
+                    tier1_result = await protected_tier1_call(tier1, scanner.text_content)
+                    print(
+                        f"[Tier 1] Completed LLM validation for Lead ID: {lead.id} "
+                        f"| is_real_local_business={tier1_result.is_real_local_business}"
+                    )
 
-                if not tier1_result.is_real_local_business:
-                    print(f"[Tier1 REJECT] Lead ID: {lead.id} | Reason: {tier1_result.reason}")
-                    print(f"[DB] Starting persist for Lead ID: {lead.id}")
+                    if not tier1_result.is_real_local_business:
+                        print(f"[Tier1 REJECT] Lead ID: {lead.id} | Reason: {tier1_result.reason}")
 
-                    async with AsyncSessionLocal() as session:
-                        async with session.begin():
-                            rejected_record = ScoredLeadModel(
-                                id=lead.id,
-                                source_url=lead.source_url,
-                                score=0.0,
-                                company_name=lead.company_name,
-                                raw_html=lead.raw_html,
-                                timestamp=lead.timestamp,
-                                pipeline_status="rejected_tier1_not_a_business",
-                                heuristic_flags=heuristic_flags,
-                                
-                                # still preserve the Tier 0 data
+                        async with AsyncSessionLocal() as session:
+                            async with session.begin():
+                                rejected_record = ScoredLeadModel(
+                                    id=lead.id,
+                                    source_url=lead.source_url,
+                                    score=0.0,
+                                    company_name=lead.company_name,
+                                    raw_html=lead.raw_html,
+                                    timestamp=lead.timestamp,
+                                    pipeline_status="rejected_tier1_not_a_business",
+                                    heuristic_flags={
+                                        **heuristic_flags,
+                                        "tier1_reason": tier1_result.reason,
+                                        "tier1_confidence": tier1_result.confidence,
+                                    },
+                                    phone_number=lead.phone_number,
+                                    address=lead.address,
+                                    latitude=lead.latitude,
+                                    longitude=lead.longitude,
+                                    rating=lead.rating,
+                                    rating_count=lead.rating_count,
+                                    category=lead.category,
+                                    customer_id=lead.customer_id,
+                                    place_id=lead.place_id,
+                                    campaign_type=runtime_config.campaign_type,
+                                    target_industry=runtime_config.target_industry,
+                                    rejection_reason=tier1_result.reason,
+                                )
+                                session.add(rejected_record)
 
-                                # SERPER COLUMNS
-                                phone_number=lead.phone_number,
-                                address=lead.address,
-                                latitude=lead.latitude,
-                                longitude=lead.longitude,
-                                rating=lead.rating,
-                                rating_count=lead.rating_count,
-                                category=lead.category,
-                                #customer_id=lead.customer_id,
-                                #place_id=lead.place_id,
+                        continue
 
-                            )
-                            session.add(rejected_record)
-                            print(f"[DB] Added ORM record for Lead ID: {lead.id}")
-
-                    continue
-
-                # TIERS 0 + 1 PASSED → Proceed to XGBoost / Tier 2
-
-                # loop = asyncio.get_running_loop()
-                # score = await loop.run_in_executor(
-                #     ml_executor,
-                #     classifier.predict,
-                #     lead.raw_html
-                # )
-
-                # print(f"[Scored] Lead ID: {lead.id} -> {score}")
 
                 async with AsyncSessionLocal() as session:
                     async with session.begin():
                         new_record = ScoredLeadModel(
                             id=lead.id,
                             source_url=lead.source_url,
-                            score=0.0,
+                            score=evaluation["score"],
                             company_name=lead.company_name,
                             raw_html=lead.raw_html,
                             timestamp=lead.timestamp,
-
-                            pipeline_status="pending_tier2",   # ← ready for deep LLM extraction
-                            heuristic_flags=heuristic_flags,
-
-                            # SERPER COLUMNS
+                            pipeline_status=evaluation["pipeline_status"],
+                            heuristic_flags=evaluation["heuristic_flags"],
+                            deterministic_evidence=evaluation["deterministic_evidence"],
                             phone_number=lead.phone_number,
                             address=lead.address,
                             latitude=lead.latitude,
@@ -171,25 +236,36 @@ async def zmq_pull_worker():
                             category=lead.category,
                             customer_id=lead.customer_id,
                             place_id=lead.place_id,
+                            campaign_type=runtime_config.campaign_type,
+                            target_industry=runtime_config.target_industry,
+                            is_qualified_lead=evaluation["is_qualified_lead"],
+                            has_booking_widget=evaluation["has_booking_widget"],
+                            is_mobile_optimized=evaluation["is_mobile_optimized"],
+                            has_clear_contact_info=evaluation["has_clear_contact_info"],
+                            overall_digital_health=evaluation["overall_digital_health"],
+                            rejection_reason=evaluation["rejection_reason"],
+                            identified_service_gaps=evaluation["identified_service_gaps"],
+                            missing_critical_features=evaluation["missing_critical_features"],
                         )
                         session.add(new_record)
 
                 print(f"[Persist] Lead ID: {lead.id} -> DB")
 
-                # TIER 2: Deep Extraction
-                lead_payload = {
-                    "id": lead.id,
-                    "url": lead.source_url,
-                    "company_name": lead.company_name,
-                    "raw_html": lead.raw_html,
-                    "timestamp": lead.timestamp,
-                    "phone_number": lead.phone_number,
-                    "address": lead.address,
-                    "category": lead.category,
-                    "rating": lead.rating
-                }
+                if runtime_config.llm_enabled:
+                    await tier2.enqueue_lead(
+                        {
+                            "id": lead.id,
+                            "url": lead.source_url,
+                            "html": lead.raw_html,
+                            "company_name": lead.company_name,
+                            "timestamp": lead.timestamp,
+                            "phone_number": lead.phone_number,
+                            "address": lead.address,
+                            "category": lead.category,
+                            "rating": lead.rating,
+                        }
+                    )
 
-                await tier2.enqueue_lead(lead_payload)
 
 
                 # XG BOOST SCORING BLOCK 
@@ -241,8 +317,11 @@ async def lifespan(app: FastAPI):
     # STARTUP - ZeroMQ listener as a concurrent asyncio Task
     worker_task = asyncio.create_task(zmq_pull_worker())
 
-    await tier2.start(worker_count=15)
-    print("[Tier 2] LLM Workers started.")
+    if runtime_config.llm_enabled and tier2 is not None:
+        await tier2.start(worker_count=15)
+        print("[Tier 2] LLM Workers started.")
+    else:
+        print("[Tier 2] Disabled for local deterministic testing.")
 
 
     # fastAPI control here

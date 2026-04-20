@@ -7,6 +7,8 @@ use std::time::Duration;
 use std::time::Instant;
 use std::sync::Mutex;
 use std::sync::Arc;
+use std::num::NonZeroU32;
+use std::collections::HashSet;
 
 use prost::Message;
 use zmq::Context;
@@ -18,7 +20,6 @@ use tracing::{debug, error, info};
 use tracing_subscriber::EnvFilter;
 
 use governor::{Quota, RateLimiter};
-use std::num::NonZeroU32;
 
 use tokio::sync::mpsc;
 
@@ -294,6 +295,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let discovery_tx = tx.clone();
 
+    let target_industry = env::var("TARGET_INDUSTRY")
+        .unwrap_or_else(|_| "HVAC".to_string());
+    let target_location = env::var("TARGET_LOCATION")
+        .unwrap_or_else(|_| "Portland, OR".to_string());
+
+    let discovery_query = env::var("DISCOVERY_QUERY")
+        .unwrap_or_else(|_| format!("{} in {}", target_industry, target_location));
+
+    let discovery_limit: usize = env::var("DISCOVERY_LIMIT")
+        .ok()
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(3);
+        
+
     // Server Discovery Task
     tokio::spawn( async move {
         info!("Stage 1 (Serper Discovery) background task started");
@@ -303,10 +318,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let client = Client::new();
 
         let search_query_json = serde_json::json!({
-            "q": "HVAC In Portland, OR",
+            "q": discovery_query,
             "gl": "us",
         });
-        info!("Querying Serper.dev Places API");
+        info!(
+            query = %search_query_json["q"].as_str().unwrap_or(""),
+            limit = discovery_limit,
+            "Querying Serper.dev Places API"
+        );
 
 
 
@@ -324,8 +343,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 //  Deserialize via serde into SerperResponse struct
                 if let Ok(serper_data) = resp.json::<SerperResponse>().await {
                 
-                    info!("Serper API returned {} places", serper_data.places.len());
+                    info!("Serper API returned {} places",    
+                        serper_data.places.len());
 
+                    let mut seen_websites: HashSet<String> =         
+                        HashSet::new();
+                    let mut queued_count = 0usize;
                     // Push URLS into pipeline
 
                     //TODO This is where I have to back and edit
@@ -334,9 +357,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     // WHAT we are able to get from Serper.dev
                     // Currently have website, address, title, HTML?
                     for place in serper_data.places {
+                        if queued_count >= discovery_limit {
+                            info!(queued = queued_count, limit = discovery_limit, "Discovery limited reached.");
+                            break;
+                        }
+
                         // If they have a website, queue it
 
                         if let Some(ref website_url) = place.website {
+                            let normalized_website = website_url
+                                .trim()
+                                .trim_end_matches("/")
+                                .to_lowercase();
+
+                            if seen_websites.contains(&normalized_website) {
+                                debug!(url = website_url, "Skipping duplicate discovered website");
+                                continue;
+                            }
+                            seen_websites.insert(normalized_website);
+
                             debug!(company = %place.title, url = %website_url, "Discovered lead. Queuing for scraping.");
                             
                             // Push URL into pipeline
@@ -344,13 +383,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 error!(error = %e, "Failed to send URL to pipeline");
                                 break;
                             }
+
+                            queued_count += 1;
+
                         } else {
                             // On Google but have no website!
-
+                            // TODO might need a conditional block here
                             info!(company = %place.title, "SERVICE GAP: No Website listed on Google Maps");
 
-                            //TODO: Add to "Service Gap" table in DB
-                            // TODO add functionality for this; This is a very important feature
                         }
                     }
 
