@@ -4,6 +4,8 @@ use std::env;
 
 use reqwest::Client;
 use std::time::Duration;
+use std::time::Instant;
+
 
 // tracing
 use tracing::{debug, error, info};
@@ -16,6 +18,9 @@ use std::sync::Arc;
 use tokio::sync::mpsc;
 
 use serde::Deserialize;
+
+use scraper::{Html, Selector};
+use url::Url;
 
 // ==========================================
 // SERPER API STRUCTS
@@ -52,6 +57,151 @@ pub struct SerperPlace {
 pub mod schema {
     include!(concat!(env!("OUT_DIR") ,"/tracefabric.rs"));
 }
+
+fn parse_selector(selector: &str) -> Selector {
+    Selector::parse(selector).expect("valid CSS selector")
+}
+
+fn extract_page_title(document: &Html) -> String {
+    let selector = parse_selector("title");
+    document
+        .select(&selector)
+        .next()
+        .map(|element| element.text().collect::<Vec<_>>().join(" ").trim().to_string())
+        .unwrap_or_default()
+}
+
+fn extract_text_content(document: &Html) -> String {
+    document
+        .root_element()
+        .text()
+        .collect::<Vec<_>>()
+        .join(" ")
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+fn resolve_url(base_url: &str, raw_url: &str) -> Option<String> {
+    if raw_url.is_empty() {
+        return None;
+    }
+
+    let base = Url::parse(base_url).ok()?;
+    base.join(raw_url).ok().map(|u| u.to_string())
+
+}
+
+fn is_internal_url(base_url: &str, candidate_url: &str) -> bool {
+    let base = Url::parse(base_url).ok();
+    let candidate = Url::parse(candidate_url).ok();
+
+    match (base, candidate) {
+        (Some(base), Some(candidate)) => base.domain() == candidate.domain(),
+        _ => false,
+    }
+}
+
+fn extract_anchor_hrefs(document: &Html, base_url: &str) -> Vec<schema::UrlArtifact> {
+    let selector = parse_selector("a[href]");
+    
+    document
+        .select(&selector)
+        .filter_map(|el| {
+            let raw_href = el.value().attr("href")?;
+            let resolved = resolve_url(base_url, raw_href)?;
+            let label = el.text().collect::<Vec<_>>().join(" ").trim().to_string();
+
+            Some(schema::UrlArtifact {
+                url: resolved.clone(),
+                is_internal: is_internal_url(base_url, &resolved),
+                label,
+            })
+        })
+        .collect()
+}
+
+fn extract_script_srcs(document: &Html, base_url: &str) -> Vec<schema::UrlArtifact> {
+    let selector = parse_selector("script[src]");
+    
+    document
+        .select(&selector)
+        .filter_map(|el| {
+            let raw_src = el.value().attr("src")?;
+            let resolved = resolve_url(base_url, raw_src)?;
+
+            Some(schema::UrlArtifact {
+                url: resolved.clone(),
+                is_internal: is_internal_url(base_url, &resolved),
+                label: String::new(),
+            })
+        })
+        .collect()
+}
+
+fn extract_stylesheet_hrefs(document: &Html, base_url: &str) -> Vec<schema::UrlArtifact> {
+    let selector = parse_selector(r#"link[rel="stylesheet"][href]"#);
+    
+    document
+        .select(&selector)
+        .filter_map(|el| {
+            let raw_href = el.value().attr("href")?;
+            let resolved = resolve_url(base_url, raw_href)?;
+
+            Some(schema::UrlArtifact {
+                url: resolved.clone(),
+                is_internal: is_internal_url(base_url, &resolved),
+                label: String::new(),
+            })
+        })
+        .collect()
+}
+
+fn extract_manifest_url(document: &Html, base_url: &str) -> String {
+    let selector = parse_selector(r#"link[rel="manifest"][href]"#);
+    
+    document
+        .select(&selector)
+        .next()
+        .and_then(|el| el.value().attr("href"))
+        .and_then(|href| resolve_url(base_url, href))
+        .unwrap_or_default()
+}
+
+async fn fetch_root_file(
+    client: &Client,
+    base_url: &str,
+    path: &str,
+) -> Option<schema::RootFile> {
+    let base = Url::parse(base_url).ok()?;
+    let joined = base.join(path).ok()?;
+
+    let response = client.get(joined.clone()).send().await.ok()?;
+
+    let status = response.status().as_u16() as i32;
+    let content_type = response
+        .headers()
+        .get(reqwest::header::CONTENT_TYPE)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("")
+        .to_string();
+
+    let body = response.text().await.unwrap_or_default();
+
+    Some(schema::RootFile {
+        path: path.to_string(),
+        http_status: status,
+        exists: status >= 200 && status < 300,
+        content_type,
+        body,
+    })
+}
+
+
+
+
+
+
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -243,6 +393,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // 2. Dedicating spawn scraping task for this specific URL
         let url = place.website.clone().unwrap();
+        let initial_url = url.clone();
+        let fetch_started = Instant::now();
 
 
         scraper_tasks.spawn(async move {
@@ -256,31 +408,120 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             //reqwest HTTP GET to the website
             match worker_client.get(&url).send().await {
                 Ok(response) => {
-                    let status = response.status().as_u16();
-                    let html_body = response.text().await.unwrap_or_default();
-                    
-                    info!(url = %url, status = %status, bytes = html_body.len(), "Fetched successfully");
 
-                    // TODO 
-                    // 3. Serialize into Protobuf
-                    let payload = schema::RawLead {
+                    // 1. fetch metadata
+
+                    let fetch_duration_ms = fetch_started.elapsed().as_millis() as i32;
+
+                    let status = response.status().as_u16() as i32;
+                    let final_url = response.url().to_string();
+                    let is_https = response.url().scheme() == "https";
+
+                    let content_type = response
+                        .headers()
+                        .get(reqwest::header::CONTENT_TYPE)
+                        .and_then(|v| v.to_str().ok())
+                        .unwrap_or("")
+                        .to_string();
+
+                    let response_headers: Vec<schema::Header> = response
+                        .headers()
+                        .iter()
+                        .map(|(key, value)| schema::Header {
+                            key: key.as_str().to_string(),
+                            value: value.to_str().unwrap_or("").to_string(),
+                        })
+                        .collect();
+
+
+                    // 2. fetch body content
+
+                    let html_body = response.text().await.unwrap_or_default();
+                    let response_size_bytes = html_body.len() as i32;
+
+
+                    let (page_title, text_content, anchor_hrefs, script_srcs, stylesheet_hrefs, manifest_url) = {
+                        // 3. document parsing
+
+                        let document = Html::parse_document(&html_body);
+
+                    // 4. homepage extraction helpers
+
+                        let page_title = extract_page_title(&document);
+                        let text_content = extract_text_content(&document);
+                        let anchor_hrefs = extract_anchor_hrefs(&document, &final_url);
+                        let script_srcs = extract_script_srcs(&document, &final_url);
+                        let stylesheet_hrefs = extract_stylesheet_hrefs(&document, &final_url);
+                        let manifest_url = extract_manifest_url(&document, &final_url);
+
+                        (
+                            page_title,
+                            text_content,
+                            anchor_hrefs,
+                            script_srcs,
+                            stylesheet_hrefs,
+                            manifest_url,
+                        )
+                    };
+
+
+                    // 5. root file fetch helpers
+                    let robots_txt = fetch_root_file(&worker_client, &final_url, "/robots.txt").await;
+                    let sitemap_xml = fetch_root_file(&worker_client, &final_url, "/sitemap.xml").await;
+
+
+
+
+
+                    
+                    info!(url = %initial_url,
+                        final_url = %final_url,
+                        status = %status, 
+                        bytes = response_size_bytes, 
+                        fetch_duration_ms = fetch_duration_ms,
+                        "Fetched successfully"
+                    );
+
+                    // 6. Serialize into Protobuf, build payload
+                    let _payload = schema::RawLead { // remove underscore once zmq setup
                         id: uuid::Uuid::new_v4().to_string(),
-                        source_url: url.clone(),
-                        company_name: place.title,
-                        raw_html: html_body.clone(),
                         timestamp: chrono::Utc::now().to_rfc3339(),
+
+                        company_name: place.title,
+                        category: place.category.unwrap_or_default(),
+                        source_url: initial_url.clone(),
+                        initial_url: initial_url.clone(),
+                        final_url,
 
                         phone_number: place.phone_number.unwrap_or_default(),
                         address: place.address,
-                        latitude: place.latitude.unwrap_or(0.0), 
+                        latitude: place.latitude.unwrap_or(0.0),
                         longitude: place.longitude.unwrap_or(0.0),
-
                         rating: place.rating.unwrap_or(0.0),
                         rating_count: place.rating_count.unwrap_or(0) as i32,
 
-                        category: place.category.unwrap_or_default(), 
-                        customer_id: place.customer_id.unwrap_or_default(), 
-                        place_id: place.place_id.unwrap_or_default(),    
+                        http_status: status,
+                        is_https,
+                        redirect_count: 0,
+                        fetch_duration_ms,
+                        response_size_bytes,
+                        content_type,
+                        response_headers,
+
+                        raw_html: html_body,
+                        text_content,
+                        page_title,
+
+                        anchor_hrefs,
+                        script_srcs,
+                        stylesheet_hrefs,
+
+                        robots_txt, 
+                        sitemap_xml,
+                        manifest_url,
+
+                        place_id: place.place_id.unwrap_or_default(),
+                        customer_id: place.customer_id.unwrap_or_default(),
                     };
 
 
@@ -292,14 +533,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 }
                 Err(e) => {
-                    error!(url = %url, error = %e, "Failed to fetch");
+                    error!(url = %initial_url, error = %e, "Failed to fetch");
                 }
             }
 
 
         });
     }
-
+ 
     // Wait for all scraper tasks to finish
     while let Some(res) = scraper_tasks.join_next().await {
         if let Err(e) = res {
