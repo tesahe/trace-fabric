@@ -31,6 +31,4 @@ Cargo.lock.bk
 # Contains mutation testing data
 **/mutants.out*/
 
-#tests
-logic-engine/tests
-logic-engine/sync_db.py
+
