@@ -140,3 +140,117 @@ def directory_like_lead() -> dict:
         address="",
         rating_count=0,
     )
+
+
+def modern_business_lead() -> dict:
+    raw_html = """
+    <html>
+      <head>
+        <title>Northwest Comfort Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body>
+        <h1>Northwest Comfort Solutions</h1>
+        <p>Professional HVAC installation, repair, and maintenance in Portland.</p>
+        <p>Request a quote today.</p>
+        <form action="/quote">
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+        </form>
+        <a href="/contact">Contact</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+      </body>
+    </html>
+    """
+    text_content = (
+        "Northwest Comfort Solutions professional HVAC installation repair and maintenance "
+        "in Portland. Request a quote today. Contact us for service."
+    )
+    return make_base_lead(
+        raw_html=raw_html,
+        text_content=text_content,
+        source_url="https://northwestcomfortsolutions.com/",
+        anchor_hrefs=[
+            {"url": "https://northwestcomfortsolutions.com/contact", "is_internal": True, "label": "Contact"},
+            {"url": "https://northwestcomfortsolutions.com/privacy-policy", "is_internal": True, "label": "Privacy Policy"},
+        ],
+    )
+
+
+def sparse_lead() -> dict:
+    return make_base_lead(
+        raw_html="<html><body></body></html>",
+        text_content="",
+        source_url="https://example.com/",
+        page_title="",
+        phone_number="",
+        address="",
+        rating_count=0,
+        anchor_hrefs=[],
+        robots_exists=False,
+        sitemap_exists=False,
+    )
+
+
+def smma_candidate_with_socials() -> dict:
+    raw_html = """
+    <html>
+      <head>
+        <title>Rose City Auto Detail</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body>
+        <h1>Rose City Auto Detail</h1>
+        <p>Auto detailing and ceramic coating in Portland.</p>
+        <p>Book an appointment today.</p>
+        <a href="/contact">Contact</a>
+        <a href="https://instagram.com/rosecitydetail">Instagram</a>
+        <a href="https://facebook.com/rosecitydetail">Facebook</a>
+      </body>
+    </html>
+    """
+    text_content = (
+        "Rose City Auto Detail auto detailing and ceramic coating in Portland. "
+        "Book an appointment today. Follow us on Instagram and Facebook."
+    )
+    return make_base_lead(
+        raw_html=raw_html,
+        text_content=text_content,
+        source_url="https://rosecityautodetail.com/",
+        anchor_hrefs=[
+            {"url": "https://rosecityautodetail.com/contact", "is_internal": True, "label": "Contact"},
+            {"url": "https://instagram.com/rosecitydetail", "is_internal": False, "label": "Instagram"},
+            {"url": "https://facebook.com/rosecitydetail", "is_internal": False, "label": "Facebook"},
+        ],
+    )
+
+
+def cross_campaign_lead() -> dict:
+    raw_html = """
+    <html>
+      <head>
+        <title>Rapid Response HVAC</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body>
+        <h1>Rapid Response HVAC</h1>
+        <p>Emergency heating and cooling repair in Portland.</p>
+        <p>Call now for same-day service.</p>
+        <a href="tel:5035552222">Call Now</a>
+        <a href="/contact">Contact</a>
+      </body>
+    </html>
+    """
+    text_content = (
+        "Rapid Response HVAC emergency heating and cooling repair in Portland. "
+        "Call now for same-day service."
+    )
+    return make_base_lead(
+        raw_html=raw_html,
+        text_content=text_content,
+        source_url="https://rapidresponsehvac.com/",
+        phone_number="503-555-2222",
+        anchor_hrefs=[
+            {"url": "https://rapidresponsehvac.com/contact", "is_internal": True, "label": "Contact"},
+        ],
+    )

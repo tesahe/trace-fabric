@@ -20,12 +20,41 @@ class RuleSet:
     # Functions that take (soup, text_content) and return dict of flags
     custom_evaluators: List[Callable[[BeautifulSoup, str], Dict[str, Any]]]
 
+def evaluate_website_modernization(soup: BeautifulSoup, text_content: str) -> Dict[str, Any]:
+    """
+    Signifiers for identifying sites that need complete overhauls.
+    TEMP function to work AS IS but be updated later oncee:
+        DEEP RESEARCH completed on real correlations with:
+            non responsive sites
+            sites that need improvement
+            service gaps
+
+    
+    
+    """
+    flags = {}
+    
+    # 1. Lack of viewport meta tag strongly correlates with archaic, non-mobile responsive sites!
+    viewport = soup.find("meta", attrs={"name": "viewport"})
+    flags["missing_mobile_viewport"] = viewport is None
+    
+    # 2. Check if it's Wordpress (if it is, and missing viewport, it's a prime target)
+    flags["is_wordpress"] = bool(re.search(r'wp-content|wp-includes', str(soup)))
+    
+    return flags
+
 
 WEBSITE_MODERNIZATION_CAMPAIGN = RuleSet(
     campaign_name="website_modernization",
-    rejection_signatures=[],
-    custom_evaluators=[],
+    rejection_signatures=[
+        re.compile(r"Static\.SQUARESPACE", re.IGNORECASE),
+        re.compile(r"cdn\.shopify\.com", re.IGNORECASE),
+        re.compile(r"wix\.com", re.IGNORECASE),
+        re.compile(r"weebly\.com", re.IGNORECASE),
+    ],
+    custom_evaluators=[evaluate_website_modernization],
 )
+
 VOICE_AI_AGENT_CAMPAIGN = RuleSet(
     campaign_name="voice_ai_agent",
     rejection_signatures=[],
@@ -52,28 +81,7 @@ def get_ruleset_for_campaign(campaign_type: str) -> RuleSet:
 
 
 
-def evaluate_website_modernization(soup: BeautifulSoup, text_content: str) -> Dict[str, Any]:
-    """
-    Signifiers for identifying sites that need complete overhauls.
-    TEMP function to work AS IS but be updated later oncee:
-        DEEP RESEARCH completed on real correlations with:
-            non responsive sites
-            sites that need improvement
-            service gaps
 
-    
-    
-    """
-    flags = {}
-    
-    # 1. Lack of viewport meta tag strongly correlates with archaic, non-mobile responsive sites!
-    viewport = soup.find("meta", attrs={"name": "viewport"})
-    flags["missing_mobile_viewport"] = viewport is None
-    
-    # 2. Check if it's Wordpress (if it is, and missing viewport, it's a prime target)
-    flags["is_wordpress"] = bool(re.search(r'wp-content|wp-includes', str(soup)))
-    
-    return flags
 
 
 
