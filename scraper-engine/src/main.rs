@@ -5,6 +5,12 @@ use std::env;
 use reqwest::Client;
 use std::time::Duration;
 use std::time::Instant;
+use std::sync::Mutex;
+use std::sync::Arc;
+
+use prost::Message;
+use zmq::Context;
+
 
 
 // tracing
@@ -13,7 +19,6 @@ use tracing_subscriber::EnvFilter;
 
 use governor::{Quota, RateLimiter};
 use std::num::NonZeroU32;
-use std::sync::Arc;
 
 use tokio::sync::mpsc;
 
@@ -376,7 +381,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     // While loop to listen to channel indefinitely.
 
-    // Init ZEROMQ Sockets here later
+    // Init ZEROMQ PUSH once and share it across workers
+    let zmq_context = Context::new();
+    let zmq_socket = zmq_context.socket(zmq::PUSH).expect("Failed to create ZMQ PUSH socket");
+    zmq_socket
+        .connect("tcp://127.0.0.1:5555")
+        .expect("Failed to connect ZMQ PUSH socket");
+
+    // Wrap in Arc for safe sharing across threads
+    let zmq_socket = Arc::new(Mutex::new(zmq_socket)); // v1 level sharing - good for now
+
+    // v1 solution - in future, re check:
+    // dedicate one task to own zmq socket, send payloads and avoid mutex
+    // internal rust channel
+
+    info!("ZMQ PUSH socket connected to master");
+
+
 
     // drop master sender
     drop(tx);
@@ -390,6 +411,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // 1. Clone global so new thread can use for each URL
         let limiter = rate_limiter.clone();
         let worker_client = http_client.clone();
+        let zmq_socket = zmq_socket.clone();
 
         // 2. Dedicating spawn scraping task for this specific URL
         let url = place.website.clone().unwrap();
@@ -483,7 +505,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     );
 
                     // 6. Serialize into Protobuf, build payload
-                    let _payload = schema::RawLead { // remove underscore once zmq setup
+                    let payload = schema::RawLead {
                         id: uuid::Uuid::new_v4().to_string(),
                         timestamp: chrono::Utc::now().to_rfc3339(),
 
@@ -526,9 +548,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 
                     // 
+                    let mut batch = schema::LeadBatch { leads: vec![ ]};
+                    batch.leads.push(payload);
 
-                    // Send over ZeroMQ
-                    // zmq_socket.send(payload.encode_to_vec()), 0).unwrap();
+                    let encoded = batch.encode_to_vec();
+
+                    match zmq_socket.lock() {
+                        Ok(socket) => {
+                            if let Err(e) = socket.send(encoded, 0) {
+                                error!(url = %initial_url, error = %e, "Failed to send payload over ZMQ");
+                            } else {
+                                info!(url = %initial_url, "Payload sent over ZMQ");
+                            }
+                        }
+                        Err(e) => {
+                            error!(url = %initial_url, error = %e, "Failed to acquire lock on ZMQ socket");
+                        }
+                    }
 
 
                 }

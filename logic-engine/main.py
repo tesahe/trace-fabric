@@ -70,8 +70,12 @@ async def zmq_pull_worker():
                 print(f"[Ingest] Lead ID: {lead.id} | Source: {lead.source_url}")
 
                 # TIER 0: Heuristic Scanner
+                print(f"[Tier 0] Starting heuristic scan for Lead ID: {lead.id}")
+
                 scanner = HeuristicScanner(lead.raw_html, WEBSITE_MODERNIZATION_CAMPAIGN)
                 passed, heuristic_flags, status = scanner.run_all_checks()
+                print(f"[Tier 0] Completed for Lead ID: {lead.id} | passed={passed} | status={status}")
+
 
                 if not passed: 
                     print(f"[Tier 0] Rejected Lead {lead.id} | Reason: {status}")
@@ -91,11 +95,17 @@ async def zmq_pull_worker():
                     continue
 
                 # TIER 1: Probabilistic LLM Validator
+                print(f"[Tier 1] Starting LLM validation for Lead ID: {lead.id}")
+
 
                 tier1_result = await protected_tier1_call(tier1, scanner.text_content)
+                print(f"[Tier 1] Completed LLM validation for Lead ID: {lead.id} | is_real_local_business={tier1_result.is_real_local_business}")
+
 
                 if not tier1_result.is_real_local_business:
                     print(f"[Tier1 REJECT] Lead ID: {lead.id} | Reason: {tier1_result.reason}")
+                    print(f"[DB] Starting persist for Lead ID: {lead.id}")
+
                     async with AsyncSessionLocal() as session:
                         async with session.begin():
                             rejected_record = ScoredLeadModel(
@@ -118,11 +128,13 @@ async def zmq_pull_worker():
                                 rating=lead.rating,
                                 rating_count=lead.rating_count,
                                 category=lead.category,
-                                customer_id=lead.customer_id,
-                                place_id=lead.place_id,
+                                #customer_id=lead.customer_id,
+                                #place_id=lead.place_id,
 
                             )
                             session.add(rejected_record)
+                            print(f"[DB] Added ORM record for Lead ID: {lead.id}")
+
                     continue
 
                 # TIERS 0 + 1 PASSED → Proceed to XGBoost / Tier 2
