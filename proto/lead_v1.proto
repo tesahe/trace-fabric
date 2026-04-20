@@ -3,28 +3,83 @@ syntax = "proto3";
 package tracefabric;
 
 message RawLead {
+
+  // Identity
   string id = 1;
+  string timestamp = 2;
 
-  string source_url = 2;
+  // Discovery metadata
   string company_name = 3;
-  string raw_html = 4;
-  string timestamp = 5;
+  string category = 4; // business type
+  string source_url = 5; // homepage url
+  string initial_url = 6; // requested first
+  string final_url = 7; // after redirect
+
+  string phone_number = 8;
+  string address = 9;
+  double latitude = 10;
+  double longitude = 11;
+  float rating = 12;
+  int32 rating_count = 13;
+
+  // everything above - comes from source that found the lead
+
+  // Fetch metadata
+  int32 http_status = 14; // response code eg 200, 301, 404
+  bool is_https = 15;
+  int32 redirect_count = 16;
+  int32 fetch_duration_ms = 17;
+  int32 response_size_bytes = 18;
+  string content_type = 19; // eg text/html, application/json
 
 
-  // should be epoch or ISO8601 string
-  string phone_number = 6;
-  string address = 7;
+  repeated Header response_headers = 20;
 
-  double latitude = 8;
-  double longitude = 9;
-  float rating = 10;
-  int32 rating_count = 11;
+  // Homepage content artifacts
+  string raw_html = 21;
+  string text_content = 22;
+  string page_title = 23;
 
-  string category = 12;
-  string customer_id = 13;
-  string place_id = 14;
+  // URL/resource inventories from homepage
+
+  repeated UrlArtifact anchor_hrefs = 24;
+  repeated UrlArtifact script_srcs = 25;
+  repeated UrlArtifact stylesheet_hrefs = 26;
+
+  // root level Technical file checks
+  RootFile robots_txt = 27;
+  RootFile sitemap_xml = 28;
+  
+  // Optional homepage manifest
+  string manifest_url = 29;
+
+  // Optional source system IDs
+  string place_id = 30;
+  string customer_id = 31;
 
 }
+
+message Header {
+  string key = 1;
+  string value = 2;
+}
+
+message UrlArtifact {
+  string url = 1;
+  bool is_internal = 2;
+  string label = 3;
+}
+
+message RootFile {
+  string path = 1;
+  int32 http_status = 2;
+  bool exists = 3;
+  string content_type = 4;
+  string body = 5;
+
+}
+
+
 
 message LeadBatch {
   repeated RawLead leads = 1;
