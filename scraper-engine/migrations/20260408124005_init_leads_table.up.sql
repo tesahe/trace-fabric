@@ -4,21 +4,32 @@ CREATE TABLE leads (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
-    company_name TEXT,
-    category TEXT,
+    timestamp TEXT,
+
     source_url TEXT NOT NULL,
     initial_url TEXT,
     final_url TEXT,
 
+    discovery_source TEXT,
+    target_industry TEXT,
+    target_location TEXT,
+
+    crawl_allowed BOOLEAN,
+    crawl_disallowed_reason TEXT,
+    is_no_website_opportunity BOOLEAN NOT NULL DEFAULT FALSE,
+
+    provider_fsq_id TEXT,
+
+    provider_provenance JSONB NOT NULL DEFAULT '{}'::jsonb,
+    website_provenance JSONB NOT NULL DEFAULT '{}'::jsonb,
+
+    location_confidence REAL,
+    category_confidence REAL,
+
+    company_name TEXT,
+    category TEXT,
     phone_number TEXT,
     address TEXT,
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
-    rating REAL,
-    rating_count INTEGER,
-
-    place_id TEXT,
-    customer_id TEXT,
 
     http_status INTEGER,
     is_https BOOLEAN,
@@ -39,13 +50,10 @@ CREATE TABLE leads (
     robots_txt JSONB NOT NULL DEFAULT '{}'::jsonb,
     sitemap_xml JSONB NOT NULL DEFAULT '{}'::jsonb,
 
-    pipeline_status TEXT NOT NULL DEFAULT 'fetched',
+    pipeline_status TEXT NOT NULL DEFAULT 'discovered',
     score REAL NOT NULL DEFAULT 0.0,
     heuristic_flags JSONB NOT NULL DEFAULT '{}'::jsonb,
     deterministic_evidence JSONB NOT NULL DEFAULT '{}'::jsonb,
-    external_enrichments JSONB NOT NULL DEFAULT '{}'::jsonb,
-    campaign_type TEXT,
-    target_industry TEXT,
 
     is_qualified_lead BOOLEAN NOT NULL DEFAULT FALSE,
     has_booking_widget BOOLEAN,
@@ -55,7 +63,10 @@ CREATE TABLE leads (
     rejection_reason TEXT,
     identified_service_gaps JSONB NOT NULL DEFAULT '[]'::jsonb,
     missing_critical_features JSONB NOT NULL DEFAULT '[]'::jsonb,
+
     llm_output JSONB NOT NULL DEFAULT '{}'::jsonb,
     full_llm_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
     llm_processing_cost REAL NOT NULL DEFAULT 0.0
 );
+
+-- TODO In Future: Add columns for lead_stage_events

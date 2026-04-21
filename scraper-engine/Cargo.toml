@@ -33,9 +33,7 @@ mpsc = "0.2.6"
 serde = { version = "1.0.228", features = ["derive"] }
 scraper = "0.24"
 url = "2.5"
-
-
-
+regex = "1.11"
 
 
 [build-dependencies]

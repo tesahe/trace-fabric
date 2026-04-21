@@ -6,10 +6,13 @@ def make_base_lead(
     page_title: str = "Example HVAC",
     phone_number: str = "503-555-1234",
     address: str = "123 Main St, Portland, OR",
-    rating_count: int = 10,
     anchor_hrefs: list | None = None,
     robots_exists: bool = True,
     sitemap_exists: bool = True,
+    crawl_allowed: bool = True,
+    crawl_disallowed_reason: str = "",
+    is_no_website_opportunity: bool = False,
+    discovery_source: str = "brave",
 ) -> dict:
     return {
         "raw_html": raw_html,
@@ -33,7 +36,10 @@ def make_base_lead(
         "source_url": source_url,
         "phone_number": phone_number,
         "address": address,
-        "rating_count": rating_count,
+        "crawl_allowed": crawl_allowed,
+        "crawl_disallowed_reason": crawl_disallowed_reason,
+        "is_no_website_opportunity": is_no_website_opportunity,
+        "discovery_source": discovery_source,
     }
 
 
@@ -138,7 +144,6 @@ def directory_like_lead() -> dict:
         source_url="https://www.yelp.com/biz/example",
         phone_number="",
         address="",
-        rating_count=0,
     )
 
 
@@ -185,7 +190,6 @@ def sparse_lead() -> dict:
         page_title="",
         phone_number="",
         address="",
-        rating_count=0,
         anchor_hrefs=[],
         robots_exists=False,
         sitemap_exists=False,
@@ -253,4 +257,30 @@ def cross_campaign_lead() -> dict:
         anchor_hrefs=[
             {"url": "https://rapidresponsehvac.com/contact", "is_internal": True, "label": "Contact"},
         ],
+    )
+
+
+def crawl_disallowed_lead() -> dict:
+    return make_base_lead(
+        raw_html="",
+        text_content="",
+        source_url="https://blocked-example.com/",
+        phone_number="",
+        address="",
+        crawl_allowed=False,
+        crawl_disallowed_reason="robots_txt_disallow_all",
+    )
+
+
+def no_website_opportunity_lead() -> dict:
+    return make_base_lead(
+        raw_html="",
+        text_content="",
+        source_url="",
+        phone_number="",
+        address="",
+        is_no_website_opportunity=True,
+        crawl_allowed=False,
+        crawl_disallowed_reason="no_canonical_website",
+        discovery_source="foursquare",
     )

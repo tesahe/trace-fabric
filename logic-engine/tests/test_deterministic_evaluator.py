@@ -1,8 +1,10 @@
 from deterministic_evaluator import evaluate_lead
 from tests.fixtures import (
+    crawl_disallowed_lead,
     cross_campaign_lead,
     directory_like_lead,
     modern_business_lead,
+    no_website_opportunity_lead,
     smma_candidate_with_socials,
     smma_candidate_without_socials,
     sparse_lead,
@@ -135,3 +137,35 @@ def test_same_lead_behaves_differently_across_campaigns():
     assert website_result["pipeline_status"] in {"qualified_deterministic", "rejected_deterministic"}
     assert voice_result["pipeline_status"] in {"qualified_deterministic", "rejected_deterministic"}
     assert website_result["missing_critical_features"] != voice_result["missing_critical_features"]
+
+
+def test_crawl_disallowed_lead_is_excluded_from_evaluation():
+    lead_data = crawl_disallowed_lead()
+
+    result = evaluate_lead(
+        lead_data=lead_data,
+        campaign_type="website_modernization",
+        target_industry="HVAC",
+        heuristic_flags={"campaign": "website_modernization"},
+    )
+
+    assert result["is_qualified_lead"] is False
+    assert result["pipeline_status"] == "excluded_crawl_disallowed"
+    assert result["rejection_reason"] == "robots_txt_disallow_all"
+    assert result["score"] == 0.0
+
+
+def test_no_website_opportunity_is_excluded_from_website_evaluator():
+    lead_data = no_website_opportunity_lead()
+
+    result = evaluate_lead(
+        lead_data=lead_data,
+        campaign_type="website_modernization",
+        target_industry="HVAC",
+        heuristic_flags={"campaign": "website_modernization"},
+    )
+
+    assert result["is_qualified_lead"] is False
+    assert result["pipeline_status"] == "excluded_no_website_opportunity"
+    assert result["rejection_reason"] == "no_website_opportunity"
+    assert result["score"] == 0.0

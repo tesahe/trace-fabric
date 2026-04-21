@@ -49,35 +49,7 @@ Read the below links for additional information.
 
 ### Installation
 
-To install and run TraceFabric, follow these steps:
 
-1. Clone the TraceFabric repository:
-
-```bash
-git clone https://github.com/tesahe/trace-fabric.git
-```
-
-2. Navigate to the project directory and start the data infrastructure:
-
-```
-cd tracefabric
-docker-compose up -d
-```
-
-3. Initialize the Python Logic Engine (ML Gatekeeper / LLM Router):
-
-```
-cd logic-engine
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-4. In a new terminal window, start the Rust Ingestion Engine to begin feeding data across the IPC bridge:
-
-```
-cd scraper-engine
-cargo run --release
-```
 
 ## Roadmap
 

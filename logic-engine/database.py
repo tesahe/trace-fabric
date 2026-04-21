@@ -33,32 +33,43 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 class ScoredLeadModel(Base):
     """
-    Canonical source of truth for a fetched lead and its later evaluation state.
+    Canonical durable lead record centered on first-party website crawl data,
+    with explicit discovery provenance and crawl compliance state.
     """
     __tablename__ = "leads"
 
-    # --- IDENTITY / DISCOVERY ---
+    # --- identity / routing ---
     id: Mapped[str] = mapped_column(String, primary_key=True)
-    company_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    category: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    source_url: Mapped[str] = mapped_column(String)
-    initial_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    final_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     timestamp: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # Source traceability
-    place_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    customer_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    source_url: Mapped[str] = mapped_column(String, nullable=False)
+    initial_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    final_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # Discovery metadata
+    # --- discovery / provenance / compliance ---
+    discovery_source: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    target_industry: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    target_location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    crawl_allowed: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    crawl_disallowed_reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    is_no_website_opportunity: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    provider_fsq_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    provider_provenance: Mapped[dict] = mapped_column(JSON, default=dict)
+    website_provenance: Mapped[dict] = mapped_column(JSON, default=dict)
+
+    location_confidence: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    category_confidence: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+
+    # --- website-derived business fields only ---
+    company_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    category: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     phone_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     address: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    latitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    rating: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    rating_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
-    # Fetch metadata
+    # --- fetch metadata ---
     http_status: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     is_https: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
     redirect_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
@@ -68,7 +79,7 @@ class ScoredLeadModel(Base):
     page_title: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     manifest_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # Raw artifacts
+    # --- durable website crawl artifacts ---
     raw_html: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     text_content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     response_headers: Mapped[list] = mapped_column(JSON, default=list)
@@ -78,16 +89,13 @@ class ScoredLeadModel(Base):
     robots_txt: Mapped[dict] = mapped_column(JSON, default=dict)
     sitemap_xml: Mapped[dict] = mapped_column(JSON, default=dict)
 
-    # Pipeline / evaluation state
-    pipeline_status: Mapped[str] = mapped_column(String, default="fetched")
+    # --- deterministic / workflow state ---
+    pipeline_status: Mapped[str] = mapped_column(String, default="discovered")
     score: Mapped[float] = mapped_column(Float, default=0.0)
     heuristic_flags: Mapped[dict] = mapped_column(JSON, default=dict)
     deterministic_evidence: Mapped[dict] = mapped_column(JSON, default=dict)
-    external_enrichments: Mapped[dict] = mapped_column(JSON, default=dict)
-    campaign_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    target_industry: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
-    # Tier 2 / LLM evaluation
+    # --- qualification outputs ---
     is_qualified_lead: Mapped[bool] = mapped_column(Boolean, default=False)
     has_booking_widget: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
     is_mobile_optimized: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
@@ -96,8 +104,9 @@ class ScoredLeadModel(Base):
     rejection_reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     identified_service_gaps: Mapped[list] = mapped_column(JSON, default=list)
     missing_critical_features: Mapped[list] = mapped_column(JSON, default=list)
-    llm_output: Mapped[dict] = mapped_column(JSON, default=dict)
 
+    # --- optional later-stage ML / LLM state ---
+    llm_output: Mapped[dict] = mapped_column(JSON, default=dict)
     full_llm_payload: Mapped[dict] = mapped_column(JSON, default=dict)
     llm_processing_cost: Mapped[float] = mapped_column(Float, default=0.0)
 
@@ -110,3 +119,4 @@ class ScoredLeadModel(Base):
         server_default=func.now(),
         onupdate=func.now(),
     )
+

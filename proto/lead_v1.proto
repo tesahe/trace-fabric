@@ -8,56 +8,62 @@ message RawLead {
   string id = 1;
   string timestamp = 2;
 
-  // Discovery metadata
-  string company_name = 3;
-  string category = 4; // business type
-  string source_url = 5; // homepage url
-  string initial_url = 6; // requested first
-  string final_url = 7; // after redirect
+  // Canonical lead identity / routing
+  string source_url = 3;   // canonical website URL used for crawl routing
+  string initial_url = 4;  // first requested URL
+  string final_url = 5;    // final URL after redirects
 
-  string phone_number = 8;
-  string address = 9;
-  double latitude = 10;
-  double longitude = 11;
-  float rating = 12;
-  int32 rating_count = 13;
+  // Discovery / provenance / compliance
+  string discovery_source = 6;          // brave, foursquare, manual, etc.
+  string target_industry = 7;
+  string target_location = 8;
+  bool crawl_allowed = 9;
+  string crawl_disallowed_reason = 10;
+  bool is_no_website_opportunity = 11;
 
-  // everything above - comes from source that found the lead
+  //double check this 
+  string provider_fsq_id = 12;          // only retained provider ID currently allowed by policy
+
+  // Website-derived business fields only , nullable / set to empty string if not found
+  string company_name = 13;
+  string category = 14;
+  string phone_number = 15;
+  string address = 16;
+
+  // Optional provenance/confidence metadata
+  string provider_provenance_json = 17;
+  string website_provenance_json = 18;
+  float location_confidence = 19;
+  float category_confidence = 20;
 
   // Fetch metadata
-  int32 http_status = 14; // response code eg 200, 301, 404
-  bool is_https = 15;
-  int32 redirect_count = 16;
-  int32 fetch_duration_ms = 17;
-  int32 response_size_bytes = 18;
-  string content_type = 19; // eg text/html, application/json
+  int32 http_status = 21;
+  bool is_https = 22;
+  int32 redirect_count = 23;
+  int32 fetch_duration_ms = 24;
+  int32 response_size_bytes = 25;
+  string content_type = 26;
 
-
-  repeated Header response_headers = 20;
+  repeated Header response_headers = 27;
 
   // Homepage content artifacts
-  string raw_html = 21;
-  string text_content = 22;
-  string page_title = 23;
+  string raw_html = 28;
+  string text_content = 29;
+  string page_title = 30;
 
   // URL/resource inventories from homepage
+  repeated UrlArtifact anchor_hrefs = 31;
+  repeated UrlArtifact script_srcs = 32;
+  repeated UrlArtifact stylesheet_hrefs = 33;
 
-  repeated UrlArtifact anchor_hrefs = 24;
-  repeated UrlArtifact script_srcs = 25;
-  repeated UrlArtifact stylesheet_hrefs = 26;
+  // Root-level technical file checks
+  RootFile robots_txt = 34;
+  RootFile sitemap_xml = 35;
 
-  // root level Technical file checks
-  RootFile robots_txt = 27;
-  RootFile sitemap_xml = 28;
-  
   // Optional homepage manifest
-  string manifest_url = 29;
-
-  // Optional source system IDs
-  string place_id = 30;
-  string customer_id = 31;
-
+  string manifest_url = 36;
 }
+
 
 message Header {
   string key = 1;
