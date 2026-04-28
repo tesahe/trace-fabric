@@ -1,5 +1,5 @@
-use std::sync::{Arc, Mutex};
 use prost::Message;
+use std::sync::{Arc, Mutex};
 use tracing::{error, info};
 
 use crate::schema;

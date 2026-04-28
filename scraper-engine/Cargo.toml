@@ -34,6 +34,7 @@ serde = { version = "1.0.228", features = ["derive"] }
 scraper = "0.24"
 url = "2.5"
 regex = "1.11"
+clap = { version = "4.5", features = ["derive"] }
 
 
 [build-dependencies]

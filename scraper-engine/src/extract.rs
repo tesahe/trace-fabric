@@ -15,7 +15,14 @@ pub fn extract_page_title(document: &Html) -> String {
     document
         .select(&selector)
         .next()
-        .map(|element| element.text().collect::<Vec<_>>().join(" ").trim().to_string())
+        .map(|element| {
+            element
+                .text()
+                .collect::<Vec<_>>()
+                .join(" ")
+                .trim()
+                .to_string()
+        })
         .unwrap_or_default()
 }
 
@@ -116,9 +123,13 @@ pub fn extract_company_name(document: &Html, page_title: &str) -> String {
     }
 }
 
-
 pub fn normalize_whitespace(value: &str) -> String {
-    value.split_whitespace().collect::<Vec<_>>().join(" ").trim().to_string()
+    value
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+        .trim()
+        .to_string()
 }
 
 pub fn looks_like_company_name_candidate(value: &str) -> bool {
@@ -161,7 +172,6 @@ pub fn looks_like_company_name_candidate(value: &str) -> bool {
     true
 }
 
-
 pub fn clean_phone_candidate(raw_value: &str) -> String {
     let normalized = raw_value
         .trim()
@@ -190,7 +200,6 @@ pub fn clean_phone_candidate(raw_value: &str) -> String {
     String::new()
 }
 
-
 pub fn looks_like_generic_title(value: &str) -> bool {
     let lower = value.to_ascii_lowercase();
     [
@@ -205,8 +214,6 @@ pub fn looks_like_generic_title(value: &str) -> bool {
     .any(|token| lower == *token || lower.starts_with(&format!("{token} |")))
 }
 
-
-
 pub fn looks_like_postal_address(value: &str) -> bool {
     let lower = value.to_ascii_lowercase();
 
@@ -220,11 +227,9 @@ pub fn looks_like_postal_address(value: &str) -> bool {
     .expect("valid street type regex")
     .is_match(value);
 
-    let has_city_state_zip = Regex::new(
-        r"(?i)\b[a-z .'-]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?\b",
-    )
-    .expect("valid city/state/zip regex")
-    .is_match(value);
+    let has_city_state_zip = Regex::new(r"(?i)\b[a-z .'-]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
+        .expect("valid city/state/zip regex")
+        .is_match(value);
 
     let contains_bad_tokens = [
         "copyright",
@@ -276,17 +281,39 @@ pub fn extract_address(document: &Html) -> String {
     String::new()
 }
 
-
 pub fn infer_category_from_text(text_content: &str) -> String {
     let lower = text_content.to_ascii_lowercase();
 
     let keyword_groups = [
-        ("hvac", &["hvac", "heating", "cooling", "air conditioning", "furnace"][..]),
-        ("plumbing", &["plumb", "plumbing", "water heater", "drain cleaning"][..]),
-        ("dentist", &["dentist", "dental", "teeth cleaning", "orthodontic"][..]),
-        ("auto_detailing", &["auto detailing", "ceramic coating", "paint correction", "car detail"][..]),
-        ("roofing", &["roofing", "roofer", "roof repair", "roof replacement"][..]),
-        ("landscaping", &["landscaping", "lawn care", "hardscape", "irrigation"][..]),
+        (
+            "hvac",
+            &["hvac", "heating", "cooling", "air conditioning", "furnace"][..],
+        ),
+        (
+            "plumbing",
+            &["plumb", "plumbing", "water heater", "drain cleaning"][..],
+        ),
+        (
+            "dentist",
+            &["dentist", "dental", "teeth cleaning", "orthodontic"][..],
+        ),
+        (
+            "auto_detailing",
+            &[
+                "auto detailing",
+                "ceramic coating",
+                "paint correction",
+                "car detail",
+            ][..],
+        ),
+        (
+            "roofing",
+            &["roofing", "roofer", "roof repair", "roof replacement"][..],
+        ),
+        (
+            "landscaping",
+            &["landscaping", "lawn care", "hardscape", "irrigation"][..],
+        ),
     ];
 
     for (category, keywords) in keyword_groups {
@@ -349,7 +376,6 @@ pub fn build_website_provenance_json(
     })
     .to_string()
 }
-
 
 pub fn resolve_url(base_url: &str, raw_url: &str) -> Option<String> {
     if raw_url.is_empty() {
@@ -453,22 +479,8 @@ fn internal_link_priority_score(path: &str, label: &str) -> i32 {
     let joined = format!("{path} {label}");
 
     if [
-        "privacy",
-        "terms",
-        "policy",
-        "login",
-        "sign in",
-        "signin",
-        "account",
-        "cart",
-        "checkout",
-        "careers",
-        "jobs",
-        "blog",
-        "news",
-        "article",
-        "tag/",
-        "/feed",
+        "privacy", "terms", "policy", "login", "sign in", "signin", "account", "cart", "checkout",
+        "careers", "jobs", "blog", "news", "article", "tag/", "/feed",
     ]
     .iter()
     .any(|token| joined.contains(token))
@@ -560,4 +572,3 @@ pub fn select_priority_internal_links(
         .map(|(_, url)| url)
         .collect()
 }
-

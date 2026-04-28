@@ -11,10 +11,10 @@ infra/.env
 .claude/
 claude.md
 skills/
-commands/
-docs/personal-docs
 docs/
-diagrams/
+docs/personal-docs
+commands/classification-latest.json
+commands/*
 
 # --- Python ---
 __pycache__/

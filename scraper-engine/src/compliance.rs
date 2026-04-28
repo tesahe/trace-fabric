@@ -1,7 +1,7 @@
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
 
-use reqwest::header::{CONTENT_TYPE, LOCATION};
 use reqwest::Client;
+use reqwest::header::{CONTENT_TYPE, LOCATION};
 use tokio::net::lookup_host;
 use url::Url;
 
@@ -75,7 +75,6 @@ fn is_disallowed_ipv4(ip: Ipv4Addr) -> bool {
         || a >= 240
 }
 
-
 fn is_disallowed_ipv6(ip: Ipv6Addr) -> bool {
     let first_segment = ip.segments()[0];
 
@@ -86,7 +85,6 @@ fn is_disallowed_ipv6(ip: Ipv6Addr) -> bool {
         || ((first_segment & 0xffc0) == 0xfe80)
         || (ip.segments()[0] == 0x2001 && ip.segments()[1] == 0x0db8)
 }
-
 
 fn is_disallowed_ip(ip: IpAddr) -> bool {
     match ip {
@@ -267,7 +265,9 @@ pub async fn fetch_root_file(
         .unwrap_or("")
         .to_string();
 
-    let body = read_response_body_with_limit(response, 250_000).await.ok()?;
+    let body = read_response_body_with_limit(response, 250_000)
+        .await
+        .ok()?;
 
     Some(schema::RootFile {
         path: path.to_string(),

@@ -66,6 +66,7 @@ async def process_incoming_lead(lead) -> None:
 
     lead_payload = {
         "id": lead.id,
+        "run_id": lead.run_id,
         "source_url": lead.source_url,
         "initial_url": lead.initial_url,
         "final_url": lead.final_url,
@@ -134,6 +135,7 @@ async def process_incoming_lead(lead) -> None:
                 rejected_record = ScoredLeadModel(
                     id=lead.id,
                     timestamp=lead.timestamp,
+                    run_id=lead.run_id,
                     source_url=lead.source_url,
                     initial_url=lead.initial_url,
                     final_url=lead.final_url,
@@ -178,7 +180,7 @@ async def process_incoming_lead(lead) -> None:
     evaluation = evaluate_lead(
         lead_data=lead_payload,
         campaign_type=runtime_config.campaign_type,
-        target_industry=runtime_config.target_industry,
+        target_industry=lead.target_industry,
         heuristic_flags=heuristic_flags,
     )
 
@@ -199,6 +201,7 @@ async def process_incoming_lead(lead) -> None:
                     rejected_record = ScoredLeadModel(
                         id=lead.id,
                         timestamp=lead.timestamp,
+                        run_id=lead.run_id,
                         source_url=lead.source_url,
                         initial_url=lead.initial_url,
                         final_url=lead.final_url,
@@ -252,6 +255,7 @@ async def process_incoming_lead(lead) -> None:
             new_record = ScoredLeadModel(
                 id=lead.id,
                 timestamp=lead.timestamp,
+                run_id=lead.run_id,
                 source_url=lead.source_url,
                 initial_url=lead.initial_url,
                 final_url=lead.final_url,

@@ -29,7 +29,36 @@ AsyncSessionLocal = async_sessionmaker(
 class Base(AsyncAttrs, DeclarativeBase):
     pass
 
+
 # Database schema definition
+
+class EvaluationRunModel(Base):
+    __tablename__ = "evaluation_runs"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    input_mode: Mapped[str] = mapped_column(String, nullable=False)
+    status: Mapped[str] = mapped_column(String, default="queued", nullable=False)
+
+    target_industry: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    target_location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    direct_url: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    candidate_limit: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    max_pages: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    campaign_type: Mapped[str] = mapped_column(String, nullable=False)
+    llm_enabled: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    created_at: Mapped[Optional[str]] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+    updated_at: Mapped[Optional[str]] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
 
 class ScoredLeadModel(Base):
     """
@@ -41,6 +70,7 @@ class ScoredLeadModel(Base):
     # --- identity / routing ---
     id: Mapped[str] = mapped_column(String, primary_key=True)
     timestamp: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    run_id: Mapped[Optional[str]] = mapped_column(String, nullable=True) # nullable is temp
 
     source_url: Mapped[str] = mapped_column(String, nullable=False)
     initial_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)

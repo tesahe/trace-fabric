@@ -1,5 +1,6 @@
 #[derive(Debug, Clone)]
 pub struct DiscoveredCandidate {
+    pub run_id: String,
     pub website_url: String,
     pub discovery_source: String,
     pub target_industry: String,

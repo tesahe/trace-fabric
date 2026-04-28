@@ -4,41 +4,28 @@ mod extract;
 mod transport;
 mod types;
 
-
+use clap::{Args, Parser, Subcommand};
 use compliance::{evaluate_crawl_eligibility, fetch_page_with_limits, fetch_root_file};
-
-
-
-
 use dotenvy::dotenv;
-use sqlx::postgres::PgPoolOptions;
-use std::env;
-
+use governor::{Quota, RateLimiter};
 use reqwest::Client;
-use std::time::Duration;
-use std::time::Instant;
-use std::sync::Mutex;
-use std::sync::Arc;
-use std::num::NonZeroU32;
+use scraper::Html;
+use sqlx::postgres::PgPoolOptions;
 use std::collections::HashSet;
-
-use zmq::Context;
-
-// tracing
+use std::env;
+use std::num::NonZeroU32;
+use std::sync::{Arc, Mutex};
+use std::time::{Duration, Instant};
+use tokio::sync::mpsc;
 use tracing::{debug, error, info};
 use tracing_subscriber::EnvFilter;
+use zmq::Context;
 
-use governor::{Quota, RateLimiter};
-
-use tokio::sync::mpsc;
-
-use scraper::Html;
-
-use types::DiscoveredCandidate;
 use discovery::{
     brave_more_results_available, canonical_domain_key, extract_brave_web_candidates,
     normalize_canonical_website_url,
 };
+use types::DiscoveredCandidate;
 
 use extract::{
     build_website_provenance_json, extract_address, extract_anchor_hrefs, extract_company_name,
@@ -54,8 +41,274 @@ pub mod schema {
     include!(concat!(env!("OUT_DIR"), "/tracefabric.rs"));
 }
 
+type AppResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync>>;
+
+#[derive(Parser, Debug)]
+#[command(name = "scraper-engine")]
+#[command(about = "TraceFabric ingestion worker")]
+struct Cli {
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(Subcommand, Debug)]
+enum Command {
+    Discover(DiscoverArgs),
+    Url(UrlArgs),
+}
+
+#[derive(Args, Debug, Clone)]
+struct DiscoverArgs {
+    #[arg(long)]
+    industry: String,
+    #[arg(long)]
+    location: String,
+    #[arg(long, default_value_t = 3)]
+    limit: usize,
+    #[arg(long, default_value_t = 1)]
+    max_pages: usize,
+    #[arg(long)]
+    run_id: String,
+}
+
+#[derive(Args, Debug, Clone)]
+struct UrlArgs {
+    #[arg(long)]
+    website: String,
+    #[arg(long)]
+    run_id: String,
+    #[arg(long, default_value = "")]
+    industry: String,
+    #[arg(long, default_value = "")]
+    location: String,
+}
+
+async fn queue_discovery_candidates(
+    args: DiscoverArgs,
+    discovery_tx: mpsc::Sender<DiscoveredCandidate>,
+    brave_api_key: String,
+) -> AppResult<()> {
+    info!("Stage 1 (Brave discovery) background task started");
+
+    let client = Client::new();
+    let discovery_query = format!("{} in {}", args.industry, args.location);
+    let discovery_limit = args.limit;
+    let discovery_max_pages = args.max_pages.clamp(1, 10);
+    let discovery_fetch_target = discovery_limit
+        .saturating_mul(discovery_max_pages)
+        .clamp(20, discovery_max_pages.saturating_mul(20));
+
+    info!(
+        query = %discovery_query,
+        limit = discovery_limit,
+        max_pages = discovery_max_pages,
+        fetch_target = discovery_fetch_target,
+        run_id = %args.run_id,
+        "Querying Brave web search for candidate websites"
+    );
+
+    let mut seen_domains: HashSet<String> = HashSet::new();
+    let mut queued_count = 0usize;
+    let mut skipped_non_canonical = 0usize;
+    let mut skipped_duplicate = 0usize;
+    let mut raw_results = 0usize;
+    let mut page_index = 0usize;
+    let mut remaining_target = discovery_fetch_target;
+    let mut pages_fetched = 0usize;
+
+    while queued_count < discovery_limit
+        && remaining_target > 0
+        && page_index < discovery_max_pages
+        && page_index <= 9
+    {
+        let page_count = remaining_target.min(20);
+        let discovery_count = page_count.to_string();
+        let offset = page_index.to_string();
+
+        let response = client
+            .get("https://api.search.brave.com/res/v1/web/search")
+            .header("Accept", "application/json")
+            .header("X-Subscription-Token", &brave_api_key)
+            .query(&[
+                ("q", discovery_query.as_str()),
+                ("count", discovery_count.as_str()),
+                ("offset", offset.as_str()),
+                ("country", "us"),
+                ("search_lang", "en"),
+            ])
+            .send()
+            .await;
+
+        let (results, more_results_available) = match response {
+            Ok(resp) => {
+                let status = resp.status();
+                let body = resp.text().await.unwrap_or_default();
+
+                if !status.is_success() {
+                    return Err(format!(
+                        "Brave Search API returned non-success status: {} body={}",
+                        status, body
+                    )
+                    .into());
+                }
+
+                let results = extract_brave_web_candidates(&body);
+                let more_results_available = brave_more_results_available(&body);
+
+                if results.is_empty() {
+                    info!(page = page_index, "Brave response contained no web results");
+                    break;
+                }
+
+                info!(
+                    page = page_index,
+                    page_results = results.len(),
+                    page_count = page_count,
+                    more_results_available = more_results_available,
+                    "Brave API returned paginated web results"
+                );
+
+                (results, more_results_available)
+            }
+            Err(e) => {
+                return Err(format!("Failed to connect to Brave Search API: {}", e).into());
+            }
+        };
+
+        pages_fetched += 1;
+        raw_results += results.len();
+
+        for (result_url, result_title, result_description) in results {
+            if queued_count >= discovery_limit {
+                info!(
+                    queued = queued_count,
+                    limit = discovery_limit,
+                    "Discovery limit reached"
+                );
+                break;
+            }
+
+            let Some(normalized_website) = normalize_canonical_website_url(&result_url) else {
+                skipped_non_canonical += 1;
+                debug!(url = %result_url, "Skipping non-canonical or invalid website URL");
+                continue;
+            };
+
+            let Some(domain_key) = canonical_domain_key(&normalized_website) else {
+                skipped_non_canonical += 1;
+                debug!(url = %normalized_website, "Skipping candidate without canonical domain key");
+                continue;
+            };
+
+            if seen_domains.contains(&domain_key) {
+                skipped_duplicate += 1;
+                debug!(url = %normalized_website, domain = %domain_key, "Skipping duplicate discovered website domain");
+                continue;
+            }
+
+            seen_domains.insert(domain_key.clone());
+
+            let candidate = DiscoveredCandidate {
+                run_id: args.run_id.clone(),
+                website_url: normalized_website.clone(),
+                discovery_source: "brave".to_string(),
+                target_industry: args.industry.clone(),
+                target_location: args.location.clone(),
+                provider_provenance_json: serde_json::json!({
+                    "provider": "brave",
+                    "query": discovery_query,
+                    "transient_only": true,
+                    "provider_payload_stored": false,
+                    "page": page_index,
+                    "domain_key": domain_key
+                })
+                .to_string(),
+                provider_fsq_id: String::new(),
+                is_no_website_opportunity: false,
+            };
+
+            debug!(
+                title = %result_title,
+                url = %candidate.website_url,
+                description = %result_description,
+                run_id = %candidate.run_id,
+                "Brave discovered candidate website"
+            );
+
+            if let Err(e) = discovery_tx.send(candidate).await {
+                return Err(
+                    format!("Failed to send discovered candidate to pipeline: {}", e).into(),
+                );
+            }
+
+            queued_count += 1;
+        }
+
+        remaining_target = remaining_target.saturating_sub(page_count);
+        if !more_results_available {
+            break;
+        }
+
+        page_index += 1;
+    }
+
+    info!(
+        queued = queued_count,
+        raw_results = raw_results,
+        skipped_non_canonical = skipped_non_canonical,
+        skipped_duplicate = skipped_duplicate,
+        limit = discovery_limit,
+        max_pages = discovery_max_pages,
+        fetch_target = discovery_fetch_target,
+        pages_fetched = pages_fetched,
+        run_id = %args.run_id,
+        "Discovery filtering summary"
+    );
+
+    info!("Discovery task finished queuing URLs.");
+    Ok(())
+}
+
+async fn queue_direct_url_candidate(
+    args: UrlArgs,
+    tx: mpsc::Sender<DiscoveredCandidate>,
+) -> AppResult<()> {
+    let normalized_website = normalize_canonical_website_url(&args.website)
+        .ok_or_else(|| format!("Invalid or non-canonical website URL: {}", args.website))?;
+
+    let candidate = DiscoveredCandidate {
+        run_id: args.run_id.clone(),
+        website_url: normalized_website.clone(),
+        discovery_source: "direct_url".to_string(),
+        target_industry: args.industry.clone(),
+        target_location: args.location.clone(),
+        provider_provenance_json: serde_json::json!({
+            "provider": "direct_url",
+            "input_website": args.website,
+            "normalized_website": normalized_website,
+            "transient_only": true,
+            "provider_payload_stored": false,
+        })
+        .to_string(),
+        provider_fsq_id: String::new(),
+        is_no_website_opportunity: false,
+    };
+
+    info!(
+        url = %candidate.website_url,
+        run_id = %candidate.run_id,
+        "Queued direct URL candidate"
+    );
+
+    tx.send(candidate)
+        .await
+        .map_err(|e| format!("Failed to queue direct URL candidate: {}", e).into())
+}
+
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> AppResult<()> {
+    let cli = Cli::parse();
+
     // ==========================================
     // START OF GLOBAL INITIALIZATION
     // ==========================================
@@ -92,17 +345,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     info!("HTTP client configured.");
 
-
     // 5. Init Rate Limiter
     let quota = Quota::per_second(NonZeroU32::new(2).unwrap());
     let rate_limiter = Arc::new(RateLimiter::direct(quota));
 
     info!("Rate limiter initialized: 2 req/s (Token Bucket, NotKeyed).");
 
+    let zmq_push_addr =
+        env::var("ZMQ_PUSH_ADDR").unwrap_or_else(|_| "tcp://127.0.0.1:5555".to_string());
+
     // ==========================================
     // END OF GLOBAL INITIALIZATION
     // ==========================================
-
 
     // ==========================================
     // STAGE 2: DISCOVERY PIPELINE (PRODUCER)
@@ -112,201 +366,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // tx - transmitter / rx - receiver / mpsc - multi-producer, single-consumer
     let (tx, mut rx) = mpsc::channel::<DiscoveredCandidate>(500);
 
-    let discovery_tx = tx.clone();
+    match cli.command {
+        Command::Discover(args) => {
+            let brave_api_key =
+                env::var("BRAVE_API_KEY").expect("BRAVE_API_KEY must be set for discover mode");
+            let discovery_tx = tx.clone();
 
-    let target_industry = env::var("TARGET_INDUSTRY")
-        .unwrap_or_else(|_| "HVAC".to_string());
-    let target_location = env::var("TARGET_LOCATION")
-        .unwrap_or_else(|_| "Portland, OR".to_string());
-
-    let discovery_query = format!("{} in {}", target_industry, target_location);
-
-
-    let discovery_limit: usize = env::var("DISCOVERY_LIMIT")
-        .ok()
-        .and_then(|v| v.parse::<usize>().ok())
-        .unwrap_or(3);
-
-    let discovery_max_pages: usize = env::var("DISCOVERY_MAX_PAGES")
-        .ok()
-        .and_then(|v| v.parse::<usize>().ok())
-        .map(|v| v.clamp(1, 10))
-        .unwrap_or(1);
-
-    // Discovery Task
-    tokio::spawn(async move {
-        info!("Stage 1 (Brave discovery) background task started");
-
-        let brave_api_key = env::var("BRAVE_API_KEY").expect("BRAVE_API_KEY must be set");
-        let client = Client::new();
-
-        let discovery_fetch_target = discovery_limit
-            .saturating_mul(discovery_max_pages)
-            .clamp(20, discovery_max_pages.saturating_mul(20));
-
-        info!(
-            query = %discovery_query,
-            limit = discovery_limit,
-            max_pages = discovery_max_pages,
-            fetch_target = discovery_fetch_target,
-            "Querying Brave web search for candidate websites"
-        );
-
-        let mut seen_domains: HashSet<String> = HashSet::new();
-        let mut queued_count = 0usize;
-        let mut skipped_non_canonical = 0usize;
-        let mut skipped_duplicate = 0usize;
-        let mut raw_results = 0usize;
-        let mut page_index = 0usize;
-        let mut remaining_target = discovery_fetch_target;
-        let mut pages_fetched = 0usize;
-
-        while queued_count < discovery_limit
-            && remaining_target > 0
-            && page_index < discovery_max_pages
-            && page_index <= 9
-        {
-            let page_count = remaining_target.min(20);
-            let discovery_count = page_count.to_string();
-            let offset = page_index.to_string();
-
-            let response = client
-                .get("https://api.search.brave.com/res/v1/web/search")
-                .header("Accept", "application/json")
-                .header("X-Subscription-Token", &brave_api_key)
-                .query(&[
-                    ("q", discovery_query.as_str()),
-                    ("count", discovery_count.as_str()),
-                    ("offset", offset.as_str()),
-                    ("country", "us"),
-                    ("search_lang", "en"),
-                ])
-                .send()
-                .await;
-
-            let (results, more_results_available) = match response {
-                Ok(resp) => {
-                    let status = resp.status();
-                    let body = resp.text().await.unwrap_or_default();
-
-                    if !status.is_success() {
-                        error!(
-                            status = %status,
-                            page = page_index,
-                            body = %body,
-                            "Brave Search API returned non-success status"
-                        );
-                        return;
-                    }
-
-                    let results = extract_brave_web_candidates(&body);
-                    let more_results_available = brave_more_results_available(&body);
-
-                    if results.is_empty() {
-                        info!(page = page_index, "Brave response contained no web results");
-                        break;
-                    }
-
-                    info!(
-                        page = page_index,
-                        page_results = results.len(),
-                        page_count = page_count,
-                        more_results_available = more_results_available,
-                        "Brave API returned paginated web results"
-                    );
-
-                    (results, more_results_available)
+            tokio::spawn(async move {
+                if let Err(e) = queue_discovery_candidates(args, discovery_tx, brave_api_key).await
+                {
+                    error!(error = %e, "Discovery task failed");
                 }
-                Err(e) => {
-                    error!(page = page_index, error = %e, "Failed to connect to Brave Search API");
-                    return;
-                }
-            };
-
-            pages_fetched += 1;
-            raw_results += results.len();
-
-            for (result_url, result_title, result_description) in results {
-                if queued_count >= discovery_limit {
-                    info!(queued = queued_count, limit = discovery_limit, "Discovery limit reached");
-                    break;
-                }
-
-                let Some(normalized_website) = normalize_canonical_website_url(&result_url) else {
-                    skipped_non_canonical += 1;
-                    debug!(url = %result_url, "Skipping non-canonical or invalid website URL");
-                    continue;
-                };
-
-                let Some(domain_key) = canonical_domain_key(&normalized_website) else {
-                    skipped_non_canonical += 1;
-                    debug!(url = %normalized_website, "Skipping candidate without canonical domain key");
-                    continue;
-                };
-
-                if seen_domains.contains(&domain_key) {
-                    skipped_duplicate += 1;
-                    debug!(url = %normalized_website, domain = %domain_key, "Skipping duplicate discovered website domain");
-                    continue;
-                }
-
-                seen_domains.insert(domain_key.clone());
-
-                let candidate = DiscoveredCandidate {
-                    website_url: normalized_website.clone(),
-                        discovery_source: "brave".to_string(),
-                    target_industry: target_industry.clone(),
-                    target_location: target_location.clone(),
-                    provider_provenance_json: serde_json::json!({
-                        "provider": "brave",
-                        "query": discovery_query,
-                        "transient_only": true,
-                        "provider_payload_stored": false,
-                        "page": page_index,
-                        "domain_key": domain_key
-                    })
-                    .to_string(),
-                    provider_fsq_id: String::new(),
-                    is_no_website_opportunity: false,
-                };
-
-                debug!(
-                    title = %result_title,
-                    url = %candidate.website_url,
-                    description = %result_description,
-                    "Brave discovered candidate website"
-                );
-
-                if let Err(e) = discovery_tx.send(candidate).await {
-                    error!(error = %e, "Failed to send discovered candidate to pipeline");
-                    break;
-                }
-
-                queued_count += 1;
-            }
-
-            remaining_target = remaining_target.saturating_sub(page_count);
-            if !more_results_available {
-                break;
-            }
-
-            page_index += 1;
+            });
         }
+        Command::Url(args) => {
+            let direct_tx = tx.clone();
 
-        info!(
-            queued = queued_count,
-            raw_results = raw_results,
-            skipped_non_canonical = skipped_non_canonical,
-            skipped_duplicate = skipped_duplicate,
-            limit = discovery_limit,
-            max_pages = discovery_max_pages,
-            fetch_target = discovery_fetch_target,
-            pages_fetched = pages_fetched,
-            "Discovery filtering summary"
-        );
-
-        info!("Discovery task finished queuing URLs.");
-    });
+            tokio::spawn(async move {
+                if let Err(e) = queue_direct_url_candidate(args, direct_tx).await {
+                    error!(error = %e, "Direct URL task failed");
+                }
+            });
+        }
+    }
 
     // ==========================================
     // STAGE 3: SCRAPER CONSUMER TASKS
@@ -314,9 +396,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Init ZeroMQ PUSH socket once; share via Arc<Mutex<_>> across workers.
     let zmq_context = Context::new();
-    let zmq_socket = zmq_context.socket(zmq::PUSH).expect("Failed to create ZMQ PUSH socket");
+    let zmq_socket = zmq_context
+        .socket(zmq::PUSH)
+        .expect("Failed to create ZMQ PUSH socket");
     zmq_socket
-        .connect("tcp://127.0.0.1:5555")
+        .connect(zmq_push_addr.as_str())
         .expect("Failed to connect ZMQ PUSH socket");
 
     let zmq_socket = Arc::new(Mutex::new(zmq_socket));
@@ -350,6 +434,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let payload = schema::RawLead {
                     id: uuid::Uuid::new_v4().to_string(),
                     timestamp: chrono::Utc::now().to_rfc3339(),
+                    run_id: candidate.run_id.clone(),
 
                     source_url: initial_url.clone(),
                     initial_url: initial_url.clone(),
@@ -497,7 +582,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                         let (
                             _supporting_page_title,
-                            supporting_text_content,
+                            _supporting_text_content,
                             supporting_company_name,
                             supporting_phone_number,
                             supporting_address,
@@ -594,6 +679,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let payload = schema::RawLead {
                 id: uuid::Uuid::new_v4().to_string(),
                 timestamp: chrono::Utc::now().to_rfc3339(),
+                run_id: candidate.run_id.clone(),
 
                 source_url: initial_url.clone(),
                 initial_url: initial_url.clone(),

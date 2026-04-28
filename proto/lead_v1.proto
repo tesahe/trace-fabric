@@ -4,6 +4,8 @@ package tracefabric;
 
 message RawLead {
 
+  string run_id = 37;
+
   // Identity
   string id = 1;
   string timestamp = 2;

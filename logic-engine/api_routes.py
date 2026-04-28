@@ -1,7 +1,31 @@
 from fastapi import FastAPI, HTTPException
 from sqlalchemy import select
 
-from database import AsyncSessionLocal, ScoredLeadModel
+from database import AsyncSessionLocal, ScoredLeadModel, EvaluationRunModel
+
+import uuid
+from run_schemas import CreateDiscoveryRunRequest, CreateUrlRunRequest
+
+import asyncio
+from run_launcher import launch_discovery_run, launch_url_run
+
+
+async def track_run_process(run_id: str, process: asyncio.subprocess.Process) -> None:
+    stdout, stderr = await process.communicate()
+    final_status = "completed" if process.returncode == 0 else "failed"
+
+    async with AsyncSessionLocal() as session:
+        async with session.begin():
+            stmt = select(EvaluationRunModel).where(EvaluationRunModel.id == run_id)
+            result = await session.execute(stmt)
+            run = result.scalar_one_or_none()
+            if run is not None:
+                run.status = final_status
+
+    if stdout:
+        print(f"[Run {run_id}] stdout:\n{stdout.decode(errors='replace')}")
+    if stderr:
+        print(f"[Run {run_id}] stderr:\n{stderr.decode(errors='replace')}")
 
 
 def register_routes(app: FastAPI) -> None:
@@ -92,3 +116,181 @@ def register_routes(app: FastAPI) -> None:
                 "robots_txt": lead.robots_txt,
                 "sitemap_xml": lead.sitemap_xml,
             }
+
+    @app.get("/runs")
+    async def get_recent_runs(limit: int = 10):
+        safe_limi = max(1, min(limit, 50))
+
+        async with AsyncSessionLocal() as session:
+            stmt = (
+                select(EvaluationRunModel)
+                .order_by(EvaluationRunModel.created_at.desc())
+                .limit(safe_limi)
+            )
+
+            result = await session.execute(stmt)
+            runs = result.scalars().all()
+
+            return {
+                "count": len(runs),
+                "items": [
+                    {
+                        "id": run.id,
+                        "input_mode": run.input_mode,
+                        "status": run.status,
+                        "target_industry": run.target_industry,
+                        "target_location": run.target_location,
+                        "direct_url": run.direct_url,
+                        "candidate_limit": run.candidate_limit,
+                        "max_pages": run.max_pages,
+                        "campaign_type": run.campaign_type,
+                        "llm_enabled": run.llm_enabled,
+                        "created_at": run.created_at,
+                        "updated_at": run.updated_at,
+                    }
+                    for run in runs
+                ],
+            }
+
+    @app.get("/runs/{run_id}")
+    async def get_run_by_id(run_id: str):
+        async with AsyncSessionLocal() as session:
+            stmt = select(EvaluationRunModel).where(EvaluationRunModel.id == run_id)
+            result = await session.execute(stmt)
+            run = result.scalar_one_or_none()
+
+            if run is None:
+                raise HTTPException(status_code=404, detail="Run not found")
+
+            return {
+                "id": run.id,
+                "input_mode": run.input_mode,
+                "status": run.status,
+                "target_industry": run.target_industry,
+                "target_location": run.target_location,
+                "direct_url": run.direct_url,
+                "candidate_limit": run.candidate_limit,
+                "max_pages": run.max_pages,
+                "campaign_type": run.campaign_type,
+                "llm_enabled": run.llm_enabled,
+                "created_at": run.created_at,
+                "updated_at": run.updated_at,
+            }
+
+    @app.get("/runs/{run_id}/leads")
+    async def get_leads_for_run(run_id: str, limit: int = 50):
+        safe_limit = max(1, min(limit, 200))
+
+        async with AsyncSessionLocal() as session:
+            run_stmt = select(EvaluationRunModel).where(EvaluationRunModel.id == run_id)
+            run_result = await session.execute(run_stmt)
+            run = run_result.scalar_one_or_none()
+
+            if run is None:
+                raise HTTPException(status_code=404, detail="Run not found")
+
+            lead_stmt = (
+                select(ScoredLeadModel)
+                .where(ScoredLeadModel.run_id == run_id)
+                .order_by(ScoredLeadModel.created_at.desc())
+                .limit(safe_limit)
+            )
+            lead_result = await session.execute(lead_stmt)
+            leads = lead_result.scalars().all()
+
+            return {
+                "run_id": run_id,
+                "count": len(leads),
+                "items": [
+                    {
+                        "id": lead.id,
+                        "created_at": lead.created_at,
+                        "company_name": lead.company_name,
+                        "source_url": lead.source_url,
+                        "pipeline_status": lead.pipeline_status,
+                        "score": lead.score,
+                        "is_qualified_lead": lead.is_qualified_lead,
+                        "rejection_reason": lead.rejection_reason,
+                        "overall_digital_health": lead.overall_digital_health,
+                        "identified_service_gaps": lead.identified_service_gaps,
+                        "missing_critical_features": lead.missing_critical_features,
+                    }
+                    for lead in leads
+                ],
+            }
+
+    @app.post("/runs/discovery")
+    async def create_discovery_run(payload: CreateDiscoveryRunRequest):
+        run_id = str(uuid.uuid4())
+
+        async with AsyncSessionLocal() as session:
+            async with session.begin():
+                run = EvaluationRunModel(
+                    id=run_id,
+                    input_mode="discover",
+                    status="queued",
+                    target_industry=payload.industry,
+                    target_location=payload.location,
+                    direct_url=None,
+                    candidate_limit=payload.limit,
+                    max_pages=payload.max_pages,
+                    campaign_type=payload.campaign_type,
+                    llm_enabled=payload.llm_enabled,
+                )
+                session.add(run)
+
+        process = await launch_discovery_run(
+            run_id=run_id,
+            industry=payload.industry,
+            location=payload.location,
+            limit=payload.limit,
+            max_pages=payload.max_pages,
+        )
+
+        async with AsyncSessionLocal() as session:
+            async with session.begin():
+                stmt = select(EvaluationRunModel).where(EvaluationRunModel.id == run_id)
+                result = await session.execute(stmt)
+                run = result.scalar_one()
+                run.status = "running"
+
+        asyncio.create_task(track_run_process(run_id, process))
+        return {"run_id": run_id, "status": "running"}
+
+    @app.post("/runs/url")
+    async def create_url_run(payload: CreateUrlRunRequest):
+        run_id = str(uuid.uuid4())
+
+        async with AsyncSessionLocal() as session:
+            async with session.begin():
+                run = EvaluationRunModel(
+                    id=run_id,
+                    input_mode="url",
+                    status="queued",
+                    target_industry=payload.industry,
+                    target_location=payload.location,
+                    direct_url=str(payload.website),
+                    candidate_limit=None,
+                    max_pages=None,
+                    campaign_type=payload.campaign_type,
+                    llm_enabled=payload.llm_enabled,
+                )
+                session.add(run)
+
+        process = await launch_url_run(
+            run_id=run_id,
+            website=str(payload.website),
+            industry=payload.industry,
+            location=payload.location,
+        )
+
+        async with AsyncSessionLocal() as session:
+            async with session.begin():
+                stmt = select(EvaluationRunModel).where(EvaluationRunModel.id == run_id)
+                result = await session.execute(stmt)
+                run = result.scalar_one()
+                run.status = "running"
+
+        asyncio.create_task(track_run_process(run_id, process))
+        return {"run_id": run_id, "status": "running"}
+
