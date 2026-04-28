@@ -119,13 +119,13 @@ def register_routes(app: FastAPI) -> None:
 
     @app.get("/runs")
     async def get_recent_runs(limit: int = 10):
-        safe_limi = max(1, min(limit, 50))
+        safe_limit = max(1, min(limit, 50))
 
         async with AsyncSessionLocal() as session:
             stmt = (
                 select(EvaluationRunModel)
                 .order_by(EvaluationRunModel.created_at.desc())
-                .limit(safe_limi)
+                .limit(safe_limit)
             )
 
             result = await session.execute(stmt)
