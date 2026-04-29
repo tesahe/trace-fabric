@@ -1,4 +1,4 @@
-import type { Lead, TierState } from "../types";
+import type { DeterministicEvidence, Lead, TierState } from "../types";
 import { StatusBadge } from "./StatusBadge";
 
 function TierCell({ state, reason }: { state: TierState; reason?: string }) {
@@ -15,26 +15,34 @@ function TierCell({ state, reason }: { state: TierState; reason?: string }) {
   return <span className="tier-cell tier-cell--bad" title={reason || "failed"}>✗</span>;
 }
 
+function evidenceTokens(ev: DeterministicEvidence): string[] {
+  const checks: [string, boolean | undefined][] = [
+    ["contact", ev.has_contact_page],
+    ["booking", ev.has_booking_widget],
+    ["hours", ev.has_hours_signal],
+    ["cta", ev.has_cta],
+    ["form", ev.has_contact_form],
+  ];
+  return checks
+    .filter(([, v]) => v != null)
+    .map(([label, v]) => `${label} ${v ? "✓" : "✗"}`);
+}
+
 function EvidenceLine({ lead }: { lead: Lead }) {
-  if (lead.status === "running" && lead.score === null) {
+  if (lead.pipelineStatus === "running" && lead.score === null) {
     return <span className="evidence-summary">…</span>;
   }
-  if (lead.status === "failed") {
-    return <span className="evidence-summary evidence-bad">{lead.decisionReason}</span>;
+  if (lead.pipelineStatus === "failed") {
+    return <span className="evidence-summary evidence-bad">{lead.rejectionReason}</span>;
   }
-  if (lead.status === "skipped") {
-    return <span className="evidence-summary">{lead.decisionReason}</span>;
+  if (lead.pipelineStatus.startsWith("excluded_")) {
+    return <span className="evidence-summary">{lead.rejectionReason}</span>;
   }
-  const tokens = lead.evidence
-    .map((e) => {
-      if (e.key === "social") return `social ${e.detail ?? ""}`.trim();
-      return `${e.label} ${e.ok ? "✓" : "✗"}`;
-    })
-    .slice(0, 5);
-  if (lead.status === "rejected") {
+  const tokens = evidenceTokens(lead.deterministicEvidence).slice(0, 5);
+  if (lead.pipelineStatus === "rejected_deterministic") {
     return (
       <span className="evidence-summary">
-        {tokens.join(", ")} → <span className="evidence-bad">rejected: {lead.decisionReason}</span>
+        {tokens.join(", ")} → <span className="evidence-bad">rejected: {lead.rejectionReason}</span>
       </span>
     );
   }
@@ -82,7 +90,10 @@ export function ResultsTable({
         </thead>
         <tbody>
           {leads.map((l) => {
-            const faint = l.status === "running" || l.status === "rejected" || l.status === "skipped";
+            const faint =
+              l.pipelineStatus === "running" ||
+              l.pipelineStatus === "rejected_deterministic" ||
+              l.pipelineStatus.startsWith("excluded_");
             return (
               <tr
                 key={l.id}
@@ -91,12 +102,12 @@ export function ResultsTable({
               >
                 <td className="col-num tabular">{l.index}</td>
                 <td>
-                  <span className="site">{l.host}</span>
+                  <span className="site">{l.sourceHost}</span>
                 </td>
                 <td className="col-status">
-                  <StatusBadge status={l.status} />
+                  <StatusBadge status={l.pipelineStatus} />
                 </td>
-                <td className={`col-score tabular ${l.status === "persisted" ? "score-bold" : ""}`}>
+                <td className={`col-score tabular ${l.pipelineStatus === "qualified_deterministic" ? "score-bold" : ""}`}>
                   {l.score === null ? "—" : l.score.toFixed(2)}
                 </td>
                 <td>
@@ -109,7 +120,7 @@ export function ResultsTable({
                   <TierCell state={l.tier2.state} reason={l.tier2.reason} />
                 </td>
                 <td>
-                  <span className="evidence-summary">{l.decisionReason || "…"}</span>
+                  <span className="evidence-summary">{l.rejectionReason || "…"}</span>
                 </td>
                 <td className="col-ms tabular">{l.totalMs == null ? "—" : l.totalMs}</td>
               </tr>

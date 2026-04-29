@@ -6,6 +6,7 @@ import { KeyValueGrid } from "../components/KeyValueGrid";
 import { JsonBlock } from "../components/JsonBlock";
 import { fetchLeadById } from "../api";
 import type { ApiLead } from "../api";
+import type { PipelineStatus } from "../types";
 
 export function LeadDetail() {
   const { id } = useParams<{ id: string }>();
@@ -54,7 +55,7 @@ export function LeadDetail() {
                 <div className="detail__title-row">
                   <div className="detail__hostname">{lead.company_name || lead.source_url}</div>
                   <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                    <StatusBadge status={lead.pipeline_status as never} />
+                    <StatusBadge status={lead.pipeline_status as PipelineStatus} />
                     <span className="mono tabular" style={{ fontSize: 14 }}>
                       score {lead.score == null ? "—" : lead.score.toFixed(2)}
                     </span>

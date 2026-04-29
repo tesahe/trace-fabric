@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { Lead, TierResult } from "../types";
+import type { Lead, TierResult, DeterministicEvidence, EvidenceSignal } from "../types";
 import { StatusBadge } from "./StatusBadge";
 import { Timeline } from "./Timeline";
 import { KeyValueGrid } from "./KeyValueGrid";
@@ -74,6 +74,20 @@ function TierBlock({ tier, label }: { tier: TierResult; label: string }) {
   );
 }
 
+function buildEvidenceSignals(ev: DeterministicEvidence): EvidenceSignal[] {
+  return [
+    { key: "is_https",           label: "HTTPS",           ok: !!ev.crawl_allowed },
+    { key: "crawl_allowed",      label: "Crawl allowed",   ok: !!ev.crawl_allowed,       detail: ev.crawl_disallowed_reason },
+    { key: "has_contact_page",   label: "Contact page",    ok: !!ev.has_contact_page },
+    { key: "has_contact_form",   label: "Contact form",    ok: !!ev.has_contact_form },
+    { key: "has_booking_widget", label: "Booking widget",  ok: !!ev.has_booking_widget },
+    { key: "has_hours_signal",   label: "Hours signal",    ok: !!ev.has_hours_signal },
+    { key: "has_cta",            label: "Clear CTA",       ok: !!ev.has_cta },
+    { key: "has_privacy_policy", label: "Privacy policy",  ok: !!ev.has_privacy_policy },
+    { key: "has_reviews_signal", label: "Reviews signal",  ok: !!ev.has_reviews_signal },
+  ];
+}
+
 export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -82,6 +96,8 @@ export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => voi
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+
+  const evidenceSignals = buildEvidenceSignals(lead.deterministicEvidence);
 
   return (
     <>
@@ -94,27 +110,27 @@ export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => voi
         <div className="drawer__body">
           {/* Identity */}
           <div className="drawer-section" style={{ paddingTop: 0 }}>
-            <div className="identity__host">{lead.host}</div>
-            <div className="identity__url">{lead.url}</div>
-            {lead.title && (
-              <div style={{ marginTop: 4, color: "var(--text-muted)", fontSize: 12 }}>{lead.title}</div>
+            <div className="identity__host">{lead.sourceHost}</div>
+            <div className="identity__url">{lead.sourceUrl}</div>
+            {lead.pageTitle && (
+              <div style={{ marginTop: 4, color: "var(--text-muted)", fontSize: 12 }}>{lead.pageTitle}</div>
             )}
           </div>
 
           {/* Status & score */}
           <div className="drawer-section" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <StatusBadge status={lead.status} />
+            <StatusBadge status={lead.pipelineStatus} />
             <span className="mono tabular" style={{ fontSize: 14 }}>
               score {lead.score == null ? "—" : lead.score.toFixed(2)}
             </span>
-            {lead.persistedAt && (
+            {lead.createdAt && (
               <span style={{ fontSize: 12, color: "var(--text-muted)" }} className="mono">
-                persisted {new Date(lead.persistedAt).toLocaleTimeString()}
+                {new Date(lead.createdAt).toLocaleTimeString()}
               </span>
             )}
           </div>
           <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: -8 }}>
-            {lead.decisionReason}
+            {lead.rejectionReason}
           </div>
 
           {/* Timeline */}
@@ -125,7 +141,7 @@ export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => voi
           {/* Deterministic evidence */}
           <Section title="Deterministic evidence">
             <KeyValueGrid
-              rows={lead.evidence.map((e) => ({
+              rows={evidenceSignals.map((e) => ({
                 k: e.label,
                 v: (
                   <span>
@@ -140,18 +156,27 @@ export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => voi
           <TierBlock tier={lead.tier1} label="Tier 1 validation" />
           <TierBlock tier={lead.tier2} label="Tier 2 structured extraction" />
 
-          {lead.status === "persisted" && lead.finalOutput && (
-            <Section title="Persisted record">
+          {lead.pipelineStatus === "qualified_deterministic" && (
+            <Section title="Qualification record">
               <KeyValueGrid
                 rows={[
                   { k: "id", v: lead.id },
-                  { k: "schema", v: lead.schemaVersion || "—" },
-                  { k: "qualification", v: lead.qualification || "—" },
+                  { k: "qualified", v: lead.isQualifiedLead ? "yes" : "no" },
+                  { k: "digital health", v: lead.overallDigitalHealth || "—" },
                 ]}
               />
-              <div style={{ marginTop: 12 }}>
-                <JsonBlock value={lead.finalOutput} />
-              </div>
+              {lead.identifiedServiceGaps.length > 0 && (
+                <div style={{ marginTop: 12 }}>
+                  <div className="section-title">identified service gaps</div>
+                  <JsonBlock value={lead.identifiedServiceGaps} />
+                </div>
+              )}
+              {lead.missingCriticalFeatures.length > 0 && (
+                <div style={{ marginTop: 12 }}>
+                  <div className="section-title">missing critical features</div>
+                  <JsonBlock value={lead.missingCriticalFeatures} />
+                </div>
+              )}
             </Section>
           )}
         </div>

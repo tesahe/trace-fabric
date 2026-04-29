@@ -1,6 +1,6 @@
-import type { LeadStatus } from "../types";
+import type { PipelineStatus } from "../types";
 
-export function StatusBadge({ status }: { status: LeadStatus }) {
+export function StatusBadge({ status }: { status: PipelineStatus }) {
   return (
     <span className={`status status--${status}`}>
       <span className="status__dot" />
