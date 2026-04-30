@@ -54,11 +54,19 @@ def backend() -> str:
     return _BACKEND
 
 
-# A single shared executor for fallback timeouts. Daemon threads so they do
-# not block process exit. A pool of 1 is intentional: each match call blocks
-# the caller anyway, and a larger pool would just hide concurrency issues.
+# A shared executor for fallback timeouts. Daemon threads so they do not
+# block process exit.
+#
+# IMPORTANT: when a regex match times out we abandon the future, but Python
+# cannot actually kill the underlying thread — the regex.search() call
+# continues running on the worker until it returns. With max_workers=1 a
+# single pathological pattern would block every subsequent submit() until
+# the stuck thread finishes (potentially many seconds). With a larger pool
+# we tolerate a handful of concurrent zombie threads at the cost of a
+# small amount of memory. 4 workers is a pragmatic upper bound for our
+# expected per-lead pattern fan-out under ReDoS conditions.
 _TIMEOUT_EXECUTOR = ThreadPoolExecutor(
-    max_workers=1, thread_name_prefix="regex_safe_timeout"
+    max_workers=4, thread_name_prefix="regex_safe_timeout"
 )
 
 
@@ -216,7 +224,12 @@ def compile(pattern: str) -> Optional[CompiledPattern]:  # noqa: A001 - intentio
     backend_name = _BACKEND
     try:
         if _BACKEND == "re2" and _re2_module is not None:
-            compiled_obj = _re2_module.compile(regex_src, _re2_module.IGNORECASE)
+            # The PyPI `re2` package does NOT expose module-level flags like
+            # IGNORECASE. Case-insensitive matching is requested via Options
+            # (which not all wrappers honor uniformly) or — more reliably —
+            # via an inline `(?i)` prefix in the pattern itself. We prepend
+            # `(?i)` here so behavior matches stdlib re's IGNORECASE.
+            compiled_obj = _re2_module.compile("(?i)" + regex_src)
         else:
             compiled_obj = re.compile(regex_src, re.IGNORECASE)
     except Exception as exc:
