@@ -1,171 +1,162 @@
 # TraceFabric
 
-TraceFabric is an async lead-evaluation pipeline for small-batch business website analysis. It starts from a niche-and-location query or a known website, extracts deterministic website evidence, applies staged LLM validation, and stores structured qualification results as reusable teacher-labeled data.
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Rust](https://img.shields.io/badge/Rust-1.85+-orange.svg)](https://www.rust-lang.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+[![Status](https://img.shields.io/badge/Status-Active%20Portfolio%20Project-yellow.svg)](#project-status)
 
-The project is designed to show applied AI engineering rather than generic scraping. The core story is typed service boundaries, cost-aware LLM cascading, auditable outputs, and a dataset foundation for future student-model training.
+## Table of Contents
 
-## Why This Project Matters
+- [About](#about)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Documentation](#documentation)
+- [Project Status](#project-status)
+- [Local Development](#local-development)
+- [Roadmap](#roadmap)
+- [Ethics](#ethics)
+- [License](#license)
 
-Most lead-gen tooling either stops at scraping or jumps straight to opaque AI summaries. TraceFabric takes a different approach:
+## About
 
-- It keeps discovery small-batch and treats it as setup, not the differentiator.
-- It extracts evidence-backed website signals before spending LLM tokens.
-- It uses staged evaluation so cheap deterministic checks and narrower LLM passes reduce cost and improve traceability.
-- It persists each evaluated lead as a structured record that can later support lower-cost local modeling.
+An async lead-ingestion and evaluation engine built for operators who need an ethical, cost-disciplined way to find and qualify local business leads by analyzing real websites for customer compatibility.
 
-## What This Project Demonstrates
+TraceFabric is an asynchronous, two-service pipeline that identifies localized digital service gaps and evaluates their economic viability. It bridges deterministic evaluation and staged LLM orchestration by being cost-aware: cheap, evidence-backed deterministic checks run first, and LLM stages only run on candidates that earn the spend.
 
-- Async systems design across Rust and Python services
-- Typed inter-process boundaries with Protobuf and ZeroMQ
-- Cost-aware LLM routing and cascading evaluation
-- Structured extraction instead of free-form AI summaries
-- Teacher-labeled dataset creation for future model handoff
-- Explainable, evidence-backed qualification logic
+Every decision — qualified, rejected, or excluded — is persisted as a structured, teacher-labeled record. That data foundation is the basis for future student-model training, so the pipeline gets cheaper and more self-sufficient over time.
 
-## Core Architecture
+## Key Features
 
-TraceFabric currently has four major parts:
+* **Mass Ingestion Engine (Rust):** Memory-safe, high-concurrency crawling and DOM parsing built on `tokio`, `sqlx`, and `reqwest`.
+* **ZeroMQ IPC Bridge:** Sub-millisecond inter-process communication using strict Protobuf serialization, bypassing HTTP/REST overhead between services.
+* **Cost-Gated LLM Cascade:** A local XGBoost gatekeeper plus deterministic evidence extraction filter leads for economic viability before any frontier LLM tokens are spent. Tier 1 constrained validation and Tier 2 structured extraction (via Instructor) run only on candidates that earn the cost.
+* **"No-Drop" Data Strategy:** All leads — qualified, rejected, or excluded — flow into a central PostgreSQL warehouse to build a teacher-student self-reinforcing cycle for future local model training.
 
-1. `scraper-engine` in Rust handles small-batch discovery, compliance checks, homepage fetches, and typed lead payload assembly.
-2. Protobuf plus ZeroMQ provide the async service boundary between ingestion and evaluation.
-3. `logic-engine` in Python performs deterministic screening, optional constrained LLM validation, optional structured extraction, and persistence.
-4. Postgres stores the canonical lead record, deterministic evidence, workflow status, and future teacher-label data.
-
-### System Context
+## Architecture
 
 ```mermaid
+%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px"}, "flowchart": {"curve": "basis", "padding": 20, "nodeSpacing": 80, "rankSpacing": 100}}}%%
 flowchart LR
-    U[User or Operator] --> Q[Query or Website Input]
-    Q --> R[Rust scraper-engine]
-    R --> Z[Protobuf + ZeroMQ]
-    Z --> P[Python logic-engine]
-    P --> D[(Postgres)]
-    P -. optional constrained calls .-> L[LLM Provider]
-    D --> O[Structured Lead Record]
-```
+    U(["Operator"]) --> Q["Niche+Location or URL"]
 
-This diagram is the recruiter-friendly overview: one ingestion service, one evaluation service, one persistence layer, and optional LLM calls only when the pipeline needs them.
-
-## LLM Cascading And Evaluation
-
-The pipeline is intentionally staged instead of relying on one large model call:
-
-1. Deterministic evidence extraction captures website signals like mobile readiness, contact presence, forms, privacy markers, and crawl/compliance state.
-2. Tier 0 heuristic screening rejects obvious junk or campaign mismatches cheaply.
-3. Tier 1 constrained LLM validation checks whether the site appears to be a real local business before more expensive extraction work.
-4. Tier 2 structured extraction produces a constrained, schema-driven lead assessment.
-5. The resulting record is stored as a teacher-labeled artifact for later student-model experimentation.
-
-### Pipeline Flow
-
-```mermaid
-sequenceDiagram
-    participant U as Operator
-    participant R as scraper-engine
-    participant Z as Protobuf/ZeroMQ
-    participant P as logic-engine
-    participant T1 as Tier 1 LLM
-    participant T2 as Tier 2 LLM
-    participant DB as Postgres
-
-    U->>R: niche + location or website
-    R->>R: discover candidates / fetch website / check compliance
-    R->>Z: RawLead batch
-    Z->>P: typed payload
-    P->>P: Tier 0 deterministic screening
-    alt rejected by deterministic checks
-        P->>DB: save rejected lead + evidence
-    else passes Tier 0
-        P->>T1: constrained validation
-        alt rejected by Tier 1
-            P->>DB: save rejected lead + reason
-        else passes Tier 1
-            P->>DB: save deterministic result
-            P->>T2: structured extraction
-            T2-->>P: qualified/rejected JSON
-            P->>DB: update teacher-labeled record
-        end
+    subgraph P1[Phase 1 - Rust Ingestion]
+        R["scraper-engine<br/>(tokio · sqlx · governor)"]
     end
+
+    subgraph P2[Phase 2 - Python Evaluation]
+        L["logic-engine<br/>(FastAPI · Gatekeeper · LLM cascade)"]
+    end
+
+    Q --> R
+    R -->|"  Protobuf over ZeroMQ  "| L
+    L ==>|"  No-Drop persistence  "| DB[("PostgreSQL<br/>lead warehouse")]
+    L -.->|"  structured LLM calls  "| LLM["LLM Provider"]
+    F["Vite + React<br/>operator console"] --> L
+
+    classDef default fill:#FFFFFF,stroke:#3A3A3A,stroke-width:1.5px,color:#1A1A1A
+    classDef actor fill:#F5F5F5,stroke:#3A3A3A,stroke-width:1.5px,color:#1A1A1A
+    classDef rust fill:#FBEFE2,stroke:#A0612A,stroke-width:1.5px,color:#5A330F
+    classDef python fill:#E8F0FA,stroke:#2E5A8C,stroke-width:1.5px,color:#0F2A52
+    classDef data fill:#EDEDED,stroke:#2A2A2A,stroke-width:1.5px,color:#1A1A1A
+    classDef external fill:#FAFAFA,stroke:#7A7A7A,stroke-width:1.2px,stroke-dasharray:4 3,color:#3A3A3A
+    classDef ui fill:#F0EAF4,stroke:#5C3A6E,stroke-width:1.5px,color:#2A1538
+
+    class U actor
+    class R rust
+    class L python
+    class DB data
+    class LLM external
+    class F ui
+
+    style P1 fill:#FDF6EE,stroke:#C9A983,stroke-width:1px,color:#5A330F
+    style P2 fill:#F2F6FB,stroke:#90AFCE,stroke-width:1px,color:#0F2A52
+
+
 ```
-
-This is the main interview diagram because it shows cost control, workflow branching, and where structured outputs enter the system.
-
-## Current Capabilities
-
-The current repository already supports the core shape of the system:
-
-- Rust discovery and fetch scaffolding for small candidate sets
-- Compliance-aware fetch path with typed payload construction
-- Protobuf contract between ingestion and evaluation services
-- Tier 0 heuristic scanning and deterministic lead evaluation
-- Optional Tier 1 constrained business-validation pass
-- Optional Tier 2 structured extraction orchestrator
-- Postgres-backed canonical lead storage
-
-The current emphasis is pipeline integrity and demo readiness, not high-volume discovery or production-scale crawling.
-
-## Demo Flow
-
-A realistic demo path for the project is:
-
-1. Start with a small niche-and-location query such as `autobody shops in San Francisco`.
-2. Let the Rust service discover a short candidate set and fetch the homepage of each site.
-3. Show the typed payload crossing the Rust-to-Python boundary.
-4. Show deterministic evidence such as contact signals, forms, viewport presence, trust markers, and crawl state.
-5. Show whether the lead is rejected early or passed to the LLM stages.
-6. Show the final persisted row containing qualification state, evidence, and structured outputs.
-
-## Technical Design Principles
-
-- Small-batch discovery over scraping-platform ambition
-- Typed boundaries over loose JSON handoffs
-- Bounded queues and async workers over blocking monolith flows
-- Evidence-backed qualification over opaque model summaries
-- Cost discipline over always-on model usage
-- Dataset readiness over premature student-model optimization
-
-## Roadmap
-
-### Current
-
-- Rust and Python services exist with a typed async boundary
-- Deterministic evaluation and persistence scaffolding are in place
-- Tiered LLM flow exists conceptually and partially in code
-
-### Next
-
-- Complete a demo-ready vertical slice that runs cleanly end to end
-- Tighten setup, verification, and result inspection paths
-- Expand deterministic evidence only where it improves the demo and label quality
-
-### Later
-
-- Add a reliable demo dataset or cached candidate path
-- Formalize teacher-label export for baseline student-model experiments
-- Improve observability and operational polish for broader real-world use
 
 ## Documentation
 
-- [Project Overview](docs/OVERVIEW.md)
+Read the below links for additional information.
+
+- [System Overview](docs/OVERVIEW.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data Model](docs/DATA_MODEL.md)
 - [Evaluation Strategy](docs/EVALUATION_STRATEGY.md)
+- [Frontend](docs/FRONTEND.md)
 - [Roadmap](docs/ROADMAP.md)
+- [Decisions (ADR log)](docs/DECISIONS.md)
 - [Demo Guide](docs/DEMO.md)
-- [Key Decisions](docs/DECISIONS.md)
-
-## Diagram Index
-
-- [System Context Diagram](docs/diagrams/system-context.md)
-- [Pipeline Sequence Diagram](docs/diagrams/pipeline-sequence.md)
-- [Evaluation Cascade Diagram](docs/diagrams/evaluation-cascade.md)
-- [Data Lifecycle Diagram](docs/diagrams/data-lifecycle.md)
-- [Runtime Component Diagram](docs/diagrams/runtime-components.md)
 
 ## Project Status
 
-TraceFabric should be read as an applied-AI systems project in active development. The current public scope is a small-batch lead-evaluation pipeline with deterministic evidence extraction, constrained LLM cascading, and persisted structured outputs. It is not positioned as a mass-ingestion scraper, a generic agent platform, or an autonomous deployment system.
+TraceFabric is an active project demonstrating applied AI engineering across Rust, Python, and a typed IPC boundary. It is **not currently packaged for public redistribution** — there is no hosted demo, no published SDK, and no support model. The repository is open so reviewers can read the code, the architecture decisions, and the evaluation strategy alongside a live development log.
+
+## Local Development
+
+This section is for reviewers, contributors, and future-me. The [Documentation](#documentation) and [Architecture](#architecture) sections give the full picture without needing to run anything locally.
+
+### Prerequisites
+
+Versions reflect what's pinned in this repo today.
+
+* Docker & Docker Compose
+* Rust 1.85+ with Cargo (project uses edition 2024, `tokio` 1.51, `sqlx` 0.8)
+* Python 3.11+ (logic-engine pins `protobuf` 6.33, `pyzmq` 27.1, `xgboost` 3.2)
+* Node 20+ (frontend uses Vite 5, React 18, TypeScript 5)
+* PostgreSQL 15 (provisioned via `infra/docker-compose.yml`)
+* `protoc` (Protocol Buffer compiler) — required to build the Rust side
+
+### Running locally
+
+1. Start the data infrastructure (Postgres 15):
+
+   ```bash
+   docker compose -f infra/docker-compose.yml up -d
+   ```
+2. Start the Python logic-engine (deterministic eval + LLM router):
+
+   ```bash
+   cd logic-engine
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload
+   ```
+3. In a new terminal, start the Rust scraper-engine (ingestion + IPC):
+
+   ```bash
+   cd scraper-engine
+   cargo run --release
+   ```
+4. (Optional) Start the operator console:
+
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+A walkthrough of the demo flow lives in [docs/DEMO.md](docs/DEMO.md).
+
+## Roadmap
+
+* **Phase 1:** `tokio` crawler + ZeroMQ/Protobuf IPC bridge benchmarked.
+* **Phase 2:** Tier 0 Deterministic evidence extraction + FastAPI integration live.
+* **Phase 3:** Deterministic structured-output generation via Instructor across Tier 1 and Tier 2.
+* **Phase 4:** Gatekeeper-Eval CI/CD gate, OpenTelemetry tracing, teacher-label dataset export.
+* **Phase 5:** XGBoost integration into Tier 0 with saturated dataset export.
+
+See [ROADMAP.md](docs/ROADMAP.md) for detailed exit criteria and out-of-scope items.
+
+## Ethics
+
+TraceFabric is designed to be a responsible web citizen with the following guardrails hardcoded into the architecture.
+
+1. **User-Agent Transparency:** Every request identifies as `TraceFabric/1.0 (+https://github.com/tesahe/trace-fabric)`.
+2. **Robots.txt Compliance:** The Rust ingestion layer parses `robots.txt` and respects crawl exclusions. Disallowed sites are recorded as excluded leads and are never fetched.
+3. **Rate-Limiting:** Implements a Token Bucket algorithm via the `governor` crate to prevent server strain.
+4. **Data Minimization:** Only structural DOM markers required for economic viability analysis are retained; raw PII is not stored.
+5. **Auditable Decisions:** Every qualification or rejection is backed by deterministic evidence and persisted alongside model outputs, so any decision can be inspected after the fact.
 
 ## License
 
-TraceFabric is licensed under Apache License 2.0. See [LICENSE](LICENSE).
+TraceFabric is licensed under Apache License 2.0. See the `LICENSE` file for more information.

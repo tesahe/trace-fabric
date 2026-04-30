@@ -54,15 +54,19 @@ def parse_json_object(raw_value: str) -> dict:
 async def process_incoming_lead(lead) -> None:
     print(f"[Ingest] Lead ID: {lead.id} | Source: {lead.source_url}")
 
-    print(f"[Tier 0] Starting heuristic scan for Lead ID: {lead.id}")
-
-    scanner = HeuristicScanner(
-        lead.raw_html,
-        get_ruleset_for_campaign(runtime_config.campaign_type),
-    )
-
-    passed, heuristic_flags, status = scanner.run_all_checks()
-    print(f"[Tier 0] Completed for Lead ID: {lead.id} | passed={passed} | status={status}")
+    if lead.crawl_allowed is False:
+        print(f"[Tier 0] Skipped heuristic scan for Lead ID: {lead.id} (Disallowed by Compliance: {lead.crawl_disallowed_reason})")
+        passed = False
+        status = "rejected_compliance"
+        heuristic_flags = {"reason": lead.crawl_disallowed_reason}
+    else:
+        print(f"[Tier 0] Starting heuristic scan for Lead ID: {lead.id}")
+        scanner = HeuristicScanner(
+            lead.raw_html,
+            get_ruleset_for_campaign(runtime_config.campaign_type),
+        )
+        passed, heuristic_flags, status = scanner.run_all_checks()
+        print(f"[Tier 0] Completed for Lead ID: {lead.id} | passed={passed} | status={status}")
 
     lead_payload = {
         "id": lead.id,
