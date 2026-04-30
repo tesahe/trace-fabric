@@ -23,6 +23,8 @@ from typing import Iterable, Optional
 
 from bs4 import BeautifulSoup
 
+from . import blocklist as blocklist_mod
+from .blocklist import BlocklistConfig, EMPTY_CONFIG
 from .detection import Detection, MatchSource, truncate_value
 from .loader import LoadedPattern, Technology, load_all_packs
 from .regex_safe import CompiledPattern
@@ -32,6 +34,9 @@ logger = logging.getLogger(__name__)
 
 # Default location of the vendored signal packs (this file's parent dir).
 _DEFAULT_SIGNALS_ROOT = Path(__file__).resolve().parent
+
+# Default blocklist YAML — lives next to this module for trivially deterministic loading.
+_DEFAULT_BLOCKLIST_PATH = _DEFAULT_SIGNALS_ROOT / "false_positive_blocklist.yaml"
 
 # DNS-style header keys we are willing to treat as "DNS hints" without
 # doing a live lookup. Keep this small; over-broad inclusion creates
@@ -211,11 +216,25 @@ class Matcher:
     the expensive bit, and the matcher itself holds no per-scan state.
     """
 
-    def __init__(self, packs_root: Optional[Path] = None) -> None:
+    def __init__(
+        self,
+        packs_root: Optional[Path] = None,
+        apply_blocklist: bool = True,
+        blocklist_path: Optional[Path] = None,
+    ) -> None:
         root = packs_root if packs_root is not None else _DEFAULT_SIGNALS_ROOT
         self.catalog: dict[str, Technology] = load_all_packs(root)
         self._techs_list: list[Technology] = list(self.catalog.values())
         logger.info("Matcher: loaded %d technologies across all packs", len(self._techs_list))
+
+        # Blocklist is opt-in (default True). When opted out we still hold a
+        # config object so callers can inspect / swap it without None-checks.
+        self.apply_blocklist = apply_blocklist
+        bl_path = blocklist_path if blocklist_path is not None else _DEFAULT_BLOCKLIST_PATH
+        if apply_blocklist:
+            self.blocklist_config: BlocklistConfig = blocklist_mod.load_blocklist(bl_path)
+        else:
+            self.blocklist_config = EMPTY_CONFIG
 
     def match(self, raw_lead: dict) -> list[Detection]:
         """Run every applicable signature against ``raw_lead``.
@@ -376,4 +395,7 @@ class Matcher:
                     raw_detections.append(det)
 
         # Final pass: implies/requires/excludes + dedup.
-        return resolve(raw_detections, self.catalog)
+        resolved = resolve(raw_detections, self.catalog)
+        if not self.apply_blocklist:
+            return resolved
+        return blocklist_mod.apply(resolved, self.blocklist_config)

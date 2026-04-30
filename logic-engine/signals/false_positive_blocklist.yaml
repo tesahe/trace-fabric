@@ -1,0 +1,63 @@
+version: 1
+description: |
+  Detections that are too generic / produce known false positives.
+  Each entry can either suppress the detection entirely or downgrade its
+  confidence. Sourced from prior-art research
+  (phase1c-prior-art-validation.md) plus observations from the Sprint-1
+  fixture corpus.
+
+suppress:
+  # Drop these detections outright — too generic to be informative or are
+  # upstream sentinel data.
+  - name: "dont check"
+    pack: retirejs
+    reason: >
+      Upstream retire.js jsrepository.json contains a literal entry named
+      "dont check" — a sentinel/placeholder, not a real library. Drop on
+      sight so it never bubbles up to the gatekeeper.
+
+downgrade:
+  # Cap confidence to this value when these detections are matched only via
+  # the listed sources. A real match via a stronger source keeps full
+  # confidence.
+  - name: "Cloudflare"
+    pack: wappalyzer
+    only_source: ["headers"]
+    cap_confidence: 30
+    reason: >
+      Cloudflare headers (cf-ray, cf-cache-status) appear on millions of
+      sites that don't actually choose Cloudflare as a meaningful tech
+      decision. Treat as weak signal unless corroborated by other signals.
+
+  - name: "jQuery"
+    pack: wappalyzer
+    only_source: ["script_src", "html"]
+    cap_confidence: 40
+    requires_corroboration: true
+    reason: >
+      jQuery is on ~70% of sites. Useful only when version is extracted
+      (then retire.js handles outdated detection separately). Lone jQuery
+      hit is not a meaningful signal.
+
+  - name: "Google Analytics"
+    pack: wappalyzer
+    only_source: ["script_src"]
+    cap_confidence: 60
+    reason: >
+      GA is near-universal. Presence alone says little; meaningful only
+      as part of a "modern marketing stack" ensemble signal.
+
+  - name: "Bootstrap"
+    pack: wappalyzer
+    only_source: ["css", "html"]
+    cap_confidence: 40
+    requires_corroboration: true
+    reason: >
+      Bootstrap CDN URL appears on countless sites built once and
+      abandoned. Weak modernization signal alone.
+
+require_corroboration:
+  # These detections only count if at least one OTHER detection is also
+  # present from the same lead. Drops lone-hit cases regardless of source.
+  - "jQuery"
+  - "Bootstrap"

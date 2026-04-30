@@ -23,6 +23,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .matcher import Matcher
+from .raw_lead_builder import build_raw_lead_from_html
 from .regex_safe import backend
 
 
@@ -55,51 +56,6 @@ def _build_parser() -> argparse.ArgumentParser:
     return p
 
 
-def _make_lead(html: str, url: str) -> dict:
-    """Synthesize the smallest RawLead dict that drives the matcher.
-
-    For ad-hoc CLI testing we parse <script src> and <link rel="stylesheet">
-    out of the HTML so the script_src / css patterns have something to
-    chew on. In production the Rust scraper does this and ships a
-    pre-parsed lead — we are just simulating that step here.
-    """
-    from bs4 import BeautifulSoup
-
-    script_srcs: list[dict] = []
-    stylesheet_hrefs: list[dict] = []
-    text_content = ""
-    page_title = ""
-
-    try:
-        soup = BeautifulSoup(html, "lxml")
-        for s in soup.find_all("script", src=True):
-            script_srcs.append({"url": s.get("src", ""), "is_internal": False, "label": ""})
-        for l in soup.find_all("link", rel=True):
-            rels = l.get("rel") or []
-            if "stylesheet" in rels and l.get("href"):
-                stylesheet_hrefs.append({"url": l.get("href", ""), "is_internal": False, "label": ""})
-        if soup.title and soup.title.string:
-            page_title = soup.title.string.strip()
-        text_content = soup.get_text(separator=" ", strip=True)
-    except Exception:
-        pass
-
-    return {
-        "raw_html": html,
-        "text_content": text_content,
-        "page_title": page_title,
-        "anchor_hrefs": [],
-        "script_srcs": script_srcs,
-        "stylesheet_hrefs": stylesheet_hrefs,
-        "response_headers": [],
-        "robots_txt": {"path": "", "http_status": 0, "exists": False, "content_type": "", "body": ""},
-        "sitemap_xml": {"path": "", "http_status": 0, "exists": False, "content_type": "", "body": ""},
-        "manifest_url": "",
-        "source_url": url,
-        "final_url": url,
-    }
-
-
 def main(argv: list[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     logging.basicConfig(
@@ -114,8 +70,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: HTML file not found: {args.html}", file=sys.stderr)
         return 2
 
-    html = args.html.read_text(encoding="utf-8", errors="replace")
-    lead = _make_lead(html, args.url)
+    lead = build_raw_lead_from_html(args.html, args.url)
     matcher = Matcher()
     detections = matcher.match(lead)
 
