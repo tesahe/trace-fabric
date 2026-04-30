@@ -1,0 +1,3230 @@
+{
+  "RBS Change": {
+    "cats": [
+      1,
+      6
+    ],
+    "dom": [
+      "html[xmlns\\:change*='www.rbs.fr']"
+    ],
+    "html": [
+      "<html[^>]+xmlns:change="
+    ],
+    "icon": "RBS Change.png",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "RBS Change"
+    },
+    "website": "https://www.rbschange.fr"
+  },
+  "RCMS": {
+    "cats": [
+      1
+    ],
+    "icon": "Valve.svg",
+    "meta": {
+      "generator": "^(?:RCMS|ReallyCMS)"
+    },
+    "website": "https://www.valve.fi"
+  },
+  "RD Station": {
+    "cats": [
+      32
+    ],
+    "description": "RD Station is a platform that helps medium and small businesses manage and automate their Digital Marketing strategy.",
+    "icon": "RD Station.svg",
+    "js": {
+      "RDStation": "",
+      "RDStationTrackingCodeChecker": ""
+    },
+    "scriptSrc": [
+      "d335luupugsy2\\.cloudfront\\.net/js/loader-scripts/.*-loader\\.js"
+    ],
+    "website": "https://rdstation.com.br"
+  },
+  "RE-OS.com": {
+    "cats": [
+      53
+    ],
+    "description": "RE-OS.com is a platform providing multiple listing service (MLS) functionality and customer relationship management (CRM) tools for managing real estate data and client interactions.",
+    "dom": [
+      "link[href*='cdnc.re-os.com/']"
+    ],
+    "icon": "RE-OS.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://re-os.com"
+  },
+  "RE:Guest": {
+    "cats": [
+      32
+    ],
+    "description": "Re:Guest is a digital room seller that helps hoteliers increase their online visibility and reach more guests.",
+    "icon": "REGuest.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reguest-hub-api\\.reguest\\.io"
+    ],
+    "website": "https://www.reguest.io"
+  },
+  "REC": {
+    "cats": [
+      1,
+      6
+    ],
+    "description": "REC is a customizable content management and ecommerce platform.",
+    "icon": "REC.svg",
+    "meta": {
+      "generator": "^REC$"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.recplus.co.uk"
+  },
+  "REDAXO": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:redaxo:redaxo:*:*:*:*:*:*:*:*",
+    "description": "REDAXO is a content management system that provides business optimisation through web projects and output codes.",
+    "icon": "REDAXO.svg",
+    "implies": [
+      "PHP"
+    ],
+    "js": {
+      "redaxo": "\\;confidence:50"
+    },
+    "oss": true,
+    "url": [
+      "^https?://(?:www\\.)?[\\d\\w\\-]+\\.[\\w]+/redaxo/\\;confidence:50"
+    ],
+    "website": "https://redaxo.org"
+  },
+  "REI Chat": {
+    "cats": [
+      52
+    ],
+    "description": "REI Chat is an AI-powered chatbot designed to understand and communicate within the real estate domain.",
+    "icon": "REIChat.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "my\\.reichat\\.ai"
+    ],
+    "website": "https://reichat.ai"
+  },
+  "RELOOP": {
+    "cats": [
+      6
+    ],
+    "description": "RELOOP is a platform for buying and selling clothing items through a personal network of contacts.",
+    "icon": "Reloop.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.reloop\\.com\\.au/"
+    ],
+    "website": "https://www.reloop.com.au"
+  },
+  "REVE Chat": {
+    "cats": [
+      52
+    ],
+    "description": "REVE Chat is an AI-powered platform that automates and enhances customer service interactions through chatbots and live chat support.",
+    "icon": "REVEChat.svg",
+    "js": {
+      "$REVECHAT_MEDIA_GALLERY": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.revechat\\.com"
+    ],
+    "website": "https://www.revechat.com"
+  },
+  "REsimpli": {
+    "cats": [
+      53
+    ],
+    "description": "REsimpli is a customer relationship management platform designed for real estate investors, providing integrated tools for managing sales, marketing, and business operations.",
+    "icon": "REsimpli.svg",
+    "js": {
+      "resimpli_iframe_stop_comman_callback": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://resimpli.com"
+  },
+  "RMZ": {
+    "cats": [
+      6
+    ],
+    "description": "RMZ is a platform that allows users to create a store with features including payment processing, management tools, and access to statistics.",
+    "icon": "RMZ.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "assets\\.rmz\\.gg/"
+    ],
+    "website": "https://rmz.gg"
+  },
+  "RND": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      ".RND.Antiforgery": "",
+      ".RND.Customer": "",
+      "rnd_csid": ""
+    },
+    "description": "RND is a software technology used for companies to set up ecommerce infrastructure.",
+    "dom": [
+      "div#rnd-mobile-menu, a[href*='www.rnd.com.tr/?utm_source='][target='_blank'], a[href*='www.rndecommerce.com/'] > span > svg[title*='RND']"
+    ],
+    "headers": {
+      "X-Powered-By": "RND"
+    },
+    "icon": "RND.svg",
+    "js": {
+      "rndImgConfiguration": ""
+    },
+    "meta": {
+      "apple-mobile-web-app-title": "^Rnd Commerce$",
+      "generator": "^RND Ecommerce$"
+    },
+    "pricing": [
+      "recurring"
+    ],
+    "requires": [
+      "Microsoft ASP.NET",
+      "New Relic"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/Scripts/plugins/rnd-mobilemenu/"
+    ],
+    "website": "https://www.rnd.com.tr/en/"
+  },
+  "ROC Commerce": {
+    "cats": [
+      6
+    ],
+    "description": "ROC Commerce is an omni-channel commerce solution designed for B2B and B2C businesses, enabling streamlined ecommerce operations across multiple platforms.",
+    "headers": {
+      "Content-Security-Policy": "search\\.roccommerce\\.com"
+    },
+    "icon": "ROCCommerce.svg",
+    "js": {
+      "RocConfig.api": "",
+      "RocTemplates": ""
+    },
+    "saas": true,
+    "website": "https://www.roccommerce.com"
+  },
+  "Raaft": {
+    "cats": [
+      97
+    ],
+    "description": "Raaft is a tool designed to help SaaS companies lower customer churn and gather feedback from users who choose to cancel their subscriptions.",
+    "icon": "Raaft.svg",
+    "js": {
+      "RAAFT_APP_ID": "",
+      "raaft": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://raaft.io"
+  },
+  "Rabfy": {
+    "cats": [
+      6
+    ],
+    "description": "Rabfy is a platform that enables building a print-on-demand business model that operates without the need to maintain physical inventory.",
+    "headers": {
+      "Powered-By": "^Rabfy$"
+    },
+    "icon": "Rabfy.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "(?:cdn|www)\\.rabfy\\.com"
+    ],
+    "website": "https://rabfy.com"
+  },
+  "Race Roster": {
+    "cats": [
+      104
+    ],
+    "description": "Race Roster is an event organization platform that provides tools for planning, managing, and tracking endurance events such as races and fundraisers.",
+    "icon": "RaceRoster.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.raceroster\\.com/"
+    ],
+    "website": "https://raceroster.com"
+  },
+  "Radario": {
+    "cats": [
+      104
+    ],
+    "description": "Radario is a Russia-based ticketing system designed for event management and ticket sales.",
+    "icon": "Radario.svg",
+    "js": {
+      "radario.accentColor": "",
+      "radarioButtonScript": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://business.radario.ru"
+  },
+  "Radial Ecommerce": {
+    "cats": [
+      6
+    ],
+    "description": "Radial Ecommerce is a platform that streamlines order processing, from checkout to final delivery, to support customer fulfillment.",
+    "icon": "Radial.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.radial\\.com"
+    ],
+    "scripts": [
+      "\\.radial\\.com"
+    ],
+    "website": "https://www.radial.com"
+  },
+  "Rain": {
+    "cats": [
+      6
+    ],
+    "description": "Rain is a cloud-based point of sale (POS) system for small to midsized retailers.",
+    "icon": "Rain.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rainpos\\.com/"
+    ],
+    "website": "https://www.rainpos.com"
+  },
+  "RaiseDonors": {
+    "cats": [
+      111
+    ],
+    "description": "RaiseDonors is for anyone raising money and cultivating donor relationships online.",
+    "dom": [
+      "a[href*='//raisedonors.com/'][target='_blank']"
+    ],
+    "icon": "RaiseDonors.svg",
+    "meta": {
+      "author": "^RaiseDonors$"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://explore.raisedonors.com"
+  },
+  "Raisely": {
+    "cats": [
+      111
+    ],
+    "description": "Raisely is a cloud-based fundraising platform that helps non-profits and charities drive fundraising campaigns and collect donations.",
+    "icon": "Raisely.svg",
+    "js": {
+      "RaiselyComponents": "",
+      "__raiselyDebug": "",
+      "wpRaisely": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://raisely.com"
+  },
+  "Rake": {
+    "cats": [
+      52
+    ],
+    "description": "Rake is a messaging platform and conversion optimization solution designed for communication between customers, visitors, and co-workers.",
+    "icon": "Rake.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.rake\\.ai/"
+    ],
+    "website": "https://www.rake.ai"
+  },
+  "Raku-uru Cart": {
+    "cats": [
+      6
+    ],
+    "description": "Raku-uru Cart is an all-in-one ecommerce platform from Japan.",
+    "icon": "Raku-uru Cart.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.raku-uru\\.jp/cms"
+    ],
+    "website": "https://business.kuronekoyamato.co.jp/raku-uru/"
+  },
+  "Rakuten Digital Commerce": {
+    "cats": [
+      6
+    ],
+    "icon": "RakutenDigitalCommerce.png",
+    "js": {
+      "RakutenApplication": ""
+    },
+    "website": "https://digitalcommerce.rakuten.com.br"
+  },
+  "Rally": {
+    "cats": [
+      1
+    ],
+    "description": "Rally is a CMS designed for K-12 schools, enabling the development of websites and apps.",
+    "icon": "Rally.svg",
+    "saas": true,
+    "scriptSrc": [
+      "analytics\\.rallycms\\.ca"
+    ],
+    "website": "https://www.rallyonline.co"
+  },
+  "Rambler": {
+    "cats": [
+      10
+    ],
+    "description": "Rambler is a site rating system and visitor counter developed in Russia.",
+    "dom": [
+      "a[href*='.rambler.ru/'] > img[src*='counter.rambler.ru/']"
+    ],
+    "icon": "Rambler.svg",
+    "saas": true,
+    "scriptSrc": [
+      "counter\\.rambler\\.ru"
+    ],
+    "website": "https://www.rambler.ru"
+  },
+  "Ramper": {
+    "cats": [
+      32
+    ],
+    "description": "Ramper is a B2B marketing and sales platform designed to streamline business operations.",
+    "icon": "Ramper.svg",
+    "js": {
+      "LaharApp.criacao_elementos": "",
+      "PopupLahar.create": "",
+      "SourceLahar.init": "",
+      "TrackingLahar.create": ""
+    },
+    "saas": true,
+    "website": "https://ramper.com.br"
+  },
+  "RandemRetail": {
+    "cats": [
+      6
+    ],
+    "description": "RandemRetail is a platform that centralizes multichannel selling operations into a single interface.",
+    "icon": "RandemRetail.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.cc\\.randemcommerce\\.com"
+    ],
+    "website": "https://www.randemretail.com"
+  },
+  "RankMath SEO": {
+    "cats": [
+      87,
+      54
+    ],
+    "description": "RankMath SEO is a search engine optimisation plugin for WordPress.",
+    "dom": [
+      "link[href*='/wp-content/plugins/seo-by-rank-math/'], script.rank-math-schema-pro, script.rank-math-schema"
+    ],
+    "icon": "RankMath SEO.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "scriptSrc": [
+      "/wp-content/plugins/seo-by-rank-math(?:-pro)?/.+\\.js(?:\\?ver=(\\d+(?:\\.\\d+)+))?\\;version:\\1"
+    ],
+    "website": "https://rankmath.com"
+  },
+  "RankScience": {
+    "cats": [
+      74
+    ],
+    "description": "RankScience is a split testing platform that uses data science to optimize search traffic.",
+    "icon": "RankScience.svg",
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.ranksci\\.com"
+    ],
+    "website": "https://www.rankscience.com"
+  },
+  "Rapid Active CRM": {
+    "cats": [
+      53
+    ],
+    "description": "Rapid Active CRM is an all-in-one sales and marketing automation platform designed to drive business growth.",
+    "icon": "RapidActiveCRM.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.rapidactivecrm\\.com"
+    ],
+    "website": "https://rapidactivecrm.com"
+  },
+  "Rapid Search": {
+    "cats": [
+      100
+    ],
+    "description": "Rapid Search is an AI-powered Shopify search tool that enhances store conversions through an advanced search bar, product filters, and instant search functionality.",
+    "icon": "RapidSearch.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.rapidsearch\\.dev"
+    ],
+    "website": "https://www.rapidsearch.app"
+  },
+  "RapidWeaver": {
+    "cats": [
+      51
+    ],
+    "description": "RapidWeaver is a web design software for Mac that enables users to create and publish websites using a visual interface with templates and plugins.",
+    "icon": "RapidWeaver.svg",
+    "meta": {
+      "generator": "^RapidWeaver$"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.realmacsoftware.com/rapidweaver/"
+  },
+  "Ratesight": {
+    "cats": [
+      90
+    ],
+    "description": "Ratesight is an online review management software that helps businesses collect and track online reviews.",
+    "dom": [
+      "script#ratesight-sidebar-widget"
+    ],
+    "icon": "RateSight.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.ratesight\\.com/"
+    ],
+    "website": "https://ratesight.com"
+  },
+  "Rawabit": {
+    "cats": [
+      51
+    ],
+    "cookies": {
+      "rawabit_session": ""
+    },
+    "description": "Rawabit is a website builder that lets small businesses design landing pages, modify sections, and embed content links using a drag and drop editor.",
+    "icon": "Rawabit.svg",
+    "meta": {
+      "powered-by": "^Rawabit$"
+    },
+    "pricing": [
+      "freemium",
+      "recurring",
+      "low"
+    ],
+    "saas": true,
+    "website": "https://www.rawabit.me"
+  },
+  "Raychat": {
+    "cats": [
+      52
+    ],
+    "description": "Raychat is a free customer messaging platform.",
+    "icon": "raychat.svg",
+    "js": {
+      "Raychat": ""
+    },
+    "scriptSrc": [
+      "app\\.raychat\\.io/scripts/js"
+    ],
+    "website": "https://raychat.io"
+  },
+  "Rayo": {
+    "cats": [
+      1
+    ],
+    "icon": "Rayo.png",
+    "implies": [
+      "AngularJS",
+      "Microsoft ASP.NET"
+    ],
+    "js": {
+      "Rayo": ""
+    },
+    "meta": {
+      "generator": "^Rayo"
+    },
+    "website": "https://www.rayo.ir"
+  },
+  "Razorpay": {
+    "cats": [
+      41
+    ],
+    "description": "Razorpay is a provider of an online payment gateway that allows businesses to accept, process, and disburse payments.",
+    "icon": "Razorpay.svg",
+    "js": {
+      "Razorpay": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "scriptSrc": [
+      "checkout\\.razorpay\\.com"
+    ],
+    "website": "https://razorpay.com/"
+  },
+  "Re:amaze": {
+    "cats": [
+      52
+    ],
+    "description": "Re:amaze is a multi-brand customer service, live chat, and help desk solution.",
+    "icon": "Re-amaze.svg",
+    "js": {
+      "reamaze.version": "^([\\d\\.]+)$\\;version:\\1"
+    },
+    "pricing": [
+      "payg",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reamaze\\.com/"
+    ],
+    "website": "https://www.reamaze.com"
+  },
+  "Re:plain": {
+    "cats": [
+      52
+    ],
+    "description": "Re:plain is a live chat integration for WhatsApp, Facebook Messenger, and Telegram, allowing you to connect live chat to your website.",
+    "icon": "Replain.svg",
+    "js": {
+      "replainInitialized": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.replain\\.cc/"
+    ],
+    "website": "https://replain.cc"
+  },
+  "ReConvert": {
+    "cats": [
+      100
+    ],
+    "description": "ReConvert is a post-purchase upsell & thank you page.",
+    "icon": "ReConvert.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "low",
+      "payg",
+      "freemium",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.stilyoapps\\.com/reconvert/assets/js/store_reconvert_node\\.js"
+    ],
+    "website": "https://www.reconvert.io"
+  },
+  "React Bricks": {
+    "cats": [
+      1
+    ],
+    "description": "React Bricks is a visual editing CMS based on React components.",
+    "dom": {
+      "img[src*='react']": {
+        "attributes": {
+          "src": "react(?:-)?bricks\\."
+        }
+      }
+    },
+    "icon": "React Bricks.svg",
+    "implies": [
+      "React"
+    ],
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "requires": [
+      "React"
+    ],
+    "saas": true,
+    "website": "https://reactbricks.com"
+  },
+  "Reactful": {
+    "cats": [
+      10
+    ],
+    "description": "Reactful is a platform that responds to visitor intent in real time to enhance engagement and optimize website interactions.",
+    "icon": "Reactful.svg",
+    "saas": true,
+    "scriptSrc": [
+      "visitor\\.reactful\\.com"
+    ],
+    "website": "https://app.reactful.com"
+  },
+  "Reactive": {
+    "cats": [
+      1,
+      6
+    ],
+    "description": "Reactive is a subscription-based software that allows you to set up an online store and website. It has a CMS and has been created to support retail, coffee bars, restaurants owners and accomodation properties such as hotels or villas. With Reactive one can sell products or accept reservations and online orders.",
+    "icon": "Reactive.svg",
+    "implies": [
+      "Ruby on Rails"
+    ],
+    "meta": {
+      "generator": "Reactive"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "url": [
+      "^https?//.+\\.reactiveonline\\.io"
+    ],
+    "website": "https://reactiveonline.io"
+  },
+  "ReadMe": {
+    "cats": [
+      4,
+      1
+    ],
+    "description": "ReadMe is a content management system that businesses use to create and manage technical or API documentation.",
+    "icon": "readme.svg",
+    "meta": {
+      "readme-deploy": "^[\\d\\.]+$",
+      "readme-version": "^[\\d\\.]+$"
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "scriptSrc": [
+      "/cdn\\.readme\\.io/js/"
+    ],
+    "website": "https://readme.com"
+  },
+  "ReadyPlanet": {
+    "cats": [
+      32
+    ],
+    "description": "ReadyPlanet is a marketing platform from Thailand, offering various widgets to support businesses in their online marketing efforts.",
+    "dom": [
+      "link[href*='rwidget.readyplanet.com']"
+    ],
+    "icon": "ReadyPlanet.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.readyplanet\\.com/"
+    ],
+    "website": "https://www.readyplanet.com"
+  },
+  "Readymag": {
+    "cats": [
+      51
+    ],
+    "description": "Readymag is a browser-based design tool that helps create websites, portfolios and all kinds of online publications without coding.",
+    "icon": "Readymag.svg",
+    "meta": {
+      "generator": "^Readymag$"
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://readymag.com"
+  },
+  "Reaktion": {
+    "cats": [
+      6
+    ],
+    "description": "Reaktion is a provider of ecommerce solutions designed to help businesses enhance their online profits.",
+    "icon": "Reaktion.svg",
+    "js": {
+      "reaktionLock": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "payg",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "api\\.reaktion\\.com"
+    ],
+    "website": "https://reaktion.com"
+  },
+  "Real Geeks": {
+    "cats": [
+      51,
+      53
+    ],
+    "description": "Real Geeks is a SaaS platform for real estate professionals that combines CRM, lead generation, and website building tools.",
+    "icon": "Real Geeks.svg",
+    "js": {
+      "realgeeks": ""
+    },
+    "meta": {
+      "og:image": "\\.realgeeks\\.media/"
+    },
+    "pricing": [
+      "high",
+      "recurring"
+    ],
+    "requires": [
+      "React"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.realgeeks\\.com/"
+    ],
+    "website": "https://www.realgeeks.com"
+  },
+  "RealNex MarketPlace": {
+    "cats": [
+      6
+    ],
+    "description": "RealNex Marketplace is a platform for buying, selling, leasing, and transacting in commercial real estate, offering advanced search tools, alerts for new listings, and automated matching based on user-defined criteria.",
+    "icon": "RealNex.svg",
+    "js": {
+      "NEX_MAP_ID": ""
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://realnex.com"
+  },
+  "RealSatisfied": {
+    "cats": [
+      90
+    ],
+    "description": "RealSatisfied is a platform that enables the collection of client feedback and facilitates its promotion across online channels to enhance credibility and visibility.",
+    "icon": "RealSatisfied.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.realsatisfied\\.com"
+    ],
+    "website": "https://www.realsatisfied.com"
+  },
+  "Realist": {
+    "cats": [
+      54
+    ],
+    "description": "Realist is a website tracker and link exchange platform designed to monitor site activity and facilitate reciprocal linking between domains.",
+    "saas": true,
+    "scriptSrc": [
+      "www\\.realist\\.gen\\.tr"
+    ],
+    "website": "https://www.realist.gen.tr"
+  },
+  "Realytics": {
+    "cats": [
+      10
+    ],
+    "description": "Realytics is a platform for real-time tracking and analysis of TV advertisements.",
+    "icon": "Realytics.svg",
+    "saas": true,
+    "scripts": [
+      "www\\.realytics\\.io"
+    ],
+    "website": "https://www.realytics.io"
+  },
+  "RebelMouse": {
+    "cats": [
+      1
+    ],
+    "headers": {
+      "x-rebelmouse-cache-control": "",
+      "x-rebelmouse-surrogate-control": ""
+    },
+    "html": [
+      "<!-- Powered by RebelMouse\\."
+    ],
+    "icon": "RebelMouse.svg",
+    "js": {
+      "REBELMOUSE_ACTIVE_TASKS_QUEUE": ""
+    },
+    "website": "https://www.rebelmouse.com/"
+  },
+  "Rebuy": {
+    "cats": [
+      76,
+      100
+    ],
+    "description": "Rebuy offers personlisation solutions for ecommerce sites.",
+    "icon": "Rebuy.svg",
+    "implies": [
+      "Cart Functionality"
+    ],
+    "js": {
+      "rebuyConfig": ""
+    },
+    "pricing": [
+      "recurring",
+      "payg",
+      "low"
+    ],
+    "scriptSrc": [
+      "rebuyengine\\.com"
+    ],
+    "website": "https://rebuyengine.com/"
+  },
+  "Recapture": {
+    "cats": [
+      98
+    ],
+    "description": "Recapture is an abandoned cart recovery and email marketing solution.",
+    "icon": "Recapture.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.recapture\\.io/.+\\?v=\\d+(?:&ver=([\\d\\.]+)?)?\\;version:\\1"
+    ],
+    "website": "https://recapture.io"
+  },
+  "Recart": {
+    "cats": [
+      98
+    ],
+    "description": "Recart is a tool to engage users who abandoned their shopping cart via Facebook Messenger.",
+    "icon": "Recart.svg",
+    "js": {
+      "__recart": "",
+      "recart": ""
+    },
+    "scriptSrc": [
+      "api\\.recart\\.com"
+    ],
+    "website": "https://recart.com/"
+  },
+  "Recharge": {
+    "cats": [
+      41
+    ],
+    "description": "Recharge is the a subscription payments platform designed for merchants to set up and manage dynamic recurring billing across web and mobile.",
+    "icon": "Recharge.svg",
+    "implies": [
+      "Cart Functionality"
+    ],
+    "js": {
+      "ReChargeWidget": ""
+    },
+    "pricing": [
+      "recurring",
+      "payg",
+      "mid"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "rechargeassets-bootstrapheroes-rechargeapps\\.netdna-ssl\\.com",
+      "\\.rechargecdn\\.com/"
+    ],
+    "website": "https://rechargepayments.com"
+  },
+  "Recomify": {
+    "cats": [
+      100
+    ],
+    "description": "Recomify is a 1-click install, cost-effective smart product recommendation engine.",
+    "icon": "Recomify.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.recomify\\.com/"
+    ],
+    "website": "https://www.recomify.com"
+  },
+  "Recommy": {
+    "cats": [
+      73
+    ],
+    "description": "Recommy is a customer feedback gathering tool designed to collect, organize, and analyze user input to support service evaluation and improvement.",
+    "icon": "Recommy.svg",
+    "js": {
+      "RecommyFeedbackWidget": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.recommy\\.com"
+    ],
+    "website": "https://recommy.com"
+  },
+  "Reconline": {
+    "cats": [
+      93
+    ],
+    "description": "Reconline is a cloud-based online reservation system designed for hotels and hotel groups to manage bookings and availability.",
+    "icon": "Reconline.svg",
+    "saas": true,
+    "scripts": [
+      "www\\.reconline\\.com"
+    ],
+    "website": "http://reconline.com"
+  },
+  "RecoverMyCart": {
+    "cats": [
+      76,
+      100
+    ],
+    "description": "RecoverMyCart is a Shopify app for abandoned basket recovery.",
+    "icon": "RecoverMyCart.png",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "low",
+      "freemium",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.recovermycart\\.com"
+    ],
+    "website": "https://app.recovermycart.com/"
+  },
+  "Recras": {
+    "cats": [
+      72
+    ],
+    "description": "Recras is a Dutch-based booking engine that manages reservations, schedules, and operational data for service providers.",
+    "icon": "Recras.svg",
+    "js": {
+      "RecrasBooking": "",
+      "submitRecrasForm": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.recras\\.nl/"
+    ],
+    "website": "https://www.recras.com"
+  },
+  "Recurly": {
+    "cats": [
+      41
+    ],
+    "description": "Recurly provides enterprise-class subscription billing and recurring payment management for thousands of businesses worldwide.",
+    "dom": [
+      "input[data-recurly]"
+    ],
+    "html": [
+      "<input[^>]+data-recurly"
+    ],
+    "icon": "Recurly.svg",
+    "js": {
+      "recurly.version": "^(.+)$\\;version:\\1"
+    },
+    "scriptSrc": [
+      "js\\.recurly\\.com"
+    ],
+    "website": "https://recurly.com"
+  },
+  "RedCart": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "rc2c-erotica": "\\d+"
+    },
+    "description": "RedCart is an all-in-one ecommerce platform from Poland.",
+    "icon": "RedCart.svg",
+    "js": {
+      "RC_SHOP_ID": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://redcart.pl"
+  },
+  "RedShop": {
+    "cats": [
+      6
+    ],
+    "description": "RedShop provides a platform for SMEs to manage their ecommerce business.",
+    "dom": [
+      "link[href*='//redshop.s3.amazonaws.com/']"
+    ],
+    "icon": "RedShop.svg",
+    "implies": [
+      "Amazon S3",
+      "TypeScript",
+      "Next.js",
+      "React"
+    ],
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.redshop.io"
+  },
+  "RediRedi": {
+    "cats": [
+      6
+    ],
+    "description": "RediRedi is a platform that combines product catalog, customer management, and AI-powered sales intelligence to help businesses increase sales from existing customers.",
+    "icon": "RediRedi.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "url": [
+      "\\.rdi\\.store"
+    ],
+    "website": "https://rediredi.com"
+  },
+  "Redicom": {
+    "cats": [
+      6
+    ],
+    "description": "Redicom is a Portuguese-based platform specializing in premium ecommerce solutions.",
+    "icon": "Redicom.svg",
+    "meta": {
+      "generator": "^Redicom Prolepse$"
+    },
+    "saas": true,
+    "website": "https://www.redicom.pt"
+  },
+  "Redrive": {
+    "cats": [
+      32
+    ],
+    "description": "Redrive is a sales platform for WhatsApp that provides automation tools to help companies increase sales through the messaging app.",
+    "icon": "Redrive.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.redrive\\.com\\.br"
+    ],
+    "website": "https://redrive.com.br"
+  },
+  "Reevoo": {
+    "cats": [
+      90
+    ],
+    "description": "Reevoo is a provider of UGC solutions like reviews.",
+    "icon": "Reevoo.svg",
+    "js": {
+      "ReevooApi": "",
+      "reevooAccessCode": "",
+      "reevooLoader.tracking": "",
+      "reevooUrl": "\\.reevoo\\.com/"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reevoo\\.com/"
+    ],
+    "website": "https://www.reevoo.com"
+  },
+  "Refiner": {
+    "cats": [
+      73
+    ],
+    "description": "Refiner provides a survey solution designed to help SaaS companies get more survey responses and gain a better understanding of their users.",
+    "dom": [
+      "div#refiner-widget-wrapper"
+    ],
+    "icon": "Refiner.svg",
+    "js": {
+      "_refiner": "",
+      "_refinerAlreadyBooted": "",
+      "_refinerQueue": "",
+      "_refinerTracker": ""
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "js\\.refiner\\.io/v([\\d]+)/client\\.js\\;version:\\1"
+    ],
+    "website": "https://refiner.io"
+  },
+  "Refix": {
+    "cats": [
+      10
+    ],
+    "description": "Refix is a tracking tool that monitors clicks, views, scrolls, and other key user engagement metrics through a single script.",
+    "icon": "Refix.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "script\\.refix\\.ai"
+    ],
+    "website": "https://www.refix.ai"
+  },
+  "Reform": {
+    "cats": [
+      110
+    ],
+    "description": "Reform is a conversion-focused form builder designed to optimize data collection.",
+    "icon": "Reform.svg",
+    "js": {
+      "Reform": "",
+      "ReformHandlers": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.reform.app"
+  },
+  "Regiondo": {
+    "cats": [
+      5,
+      72
+    ],
+    "description": "Regiondo is a online booking system for tour and activity providers.",
+    "icon": "Regiondo.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.regiondo\\.net"
+    ],
+    "website": "https://www.regiondo.com"
+  },
+  "Registria": {
+    "cats": [
+      97
+    ],
+    "description": "Registria is a platform that enables durable product companies to engage with customers and deliver personalized experiences.",
+    "icon": "Registria.svg",
+    "js": {
+      "Registria.Cases": "",
+      "getRegistriaData": "",
+      "getRegistriaDateData": ""
+    },
+    "saas": true,
+    "website": "https://www.registria.com"
+  },
+  "Reinvigorate": {
+    "cats": [
+      10
+    ],
+    "icon": "Reinvigorate.png",
+    "js": {
+      "reinvigorate": ""
+    },
+    "website": "https://www.reinvigorate.net"
+  },
+  "Rela": {
+    "cats": [
+      32
+    ],
+    "description": "Rela is a set of property marketing tools for real estate professionals to enhance listings, attract potential buyers, and streamline the sales process.",
+    "icon": "Rela.svg",
+    "js": {
+      "relaAjaxLink": "",
+      "relaAjaxPost": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.relahq.com"
+  },
+  "Releasit COD Form & Upsells": {
+    "cats": [
+      100
+    ],
+    "description": "Releasit COD Form & Upsells is a Shopify app that replaces the standard checkout with a customizable cash-on-delivery order form and supports upsell features to increase average order value.",
+    "dom": [
+      "script#rsi-cod-form-product-cache"
+    ],
+    "icon": "Releasit.svg",
+    "js": {
+      "RSI_CSS_LOADER": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "website": "https://www.releas.it/products/releasit-cod-form-upsells"
+  },
+  "Releva": {
+    "cats": [
+      32
+    ],
+    "description": "Releva is a marketing automation platform for ecommerce that uses AI to manage revenue in real time and automate brand communication.",
+    "icon": "Releva.svg",
+    "js": {
+      "Releva.clearCookies": ""
+    },
+    "saas": true,
+    "website": "https://releva.ai"
+  },
+  "Remarkable Commerce": {
+    "cats": [
+      6
+    ],
+    "description": "Remarkable Commerce is a technology and services company which provides a ecommerce platform for mid-sized retailers.",
+    "headers": {
+      "x-powered-by": "Remarkable Commerce"
+    },
+    "icon": "Remarkable.svg",
+    "js": {
+      "Remarkable.BasketItems": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://remarkable.net/"
+  },
+  "Remedo": {
+    "cats": [
+      32
+    ],
+    "description": "Remedo is a digital healthcare marketing platform that helps doctors improve their Google search visibility through advanced strategies and technology.",
+    "headers": {
+      "Content-Security-Policy": "\\.remedo\\.io"
+    },
+    "icon": "Remedo.svg",
+    "saas": true,
+    "scripts": [
+      "\\.remedo\\.io"
+    ],
+    "website": "https://www.remedo.io"
+  },
+  "Render Better": {
+    "cats": [
+      92,
+      100
+    ],
+    "description": "Render Better is automated site speed and core web vital optimisation platform for Shopify.",
+    "dns": {
+      "CNAME": [
+        "\\.renderbetter\\.app"
+      ]
+    },
+    "icon": "renderbetter.svg",
+    "js": {
+      "renderbetter": ""
+    },
+    "requires": [
+      "Shopify"
+    ],
+    "website": "https://www.renderbetter.com"
+  },
+  "Rent Syst": {
+    "cats": [
+      53
+    ],
+    "description": "Rent Syst is a CRM system designed to manage customer relationships, bookings, and communication for car rental businesses.",
+    "icon": "RentSyst.svg",
+    "js": {
+      "RentsystFrame": "",
+      "Rentsyst_Activate": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://rentsyst.com"
+  },
+  "RentCafe": {
+    "cats": [
+      53
+    ],
+    "description": "RentCafe is a residential rent management platform.",
+    "icon": "RentCafe.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rentcafe\\.com/"
+    ],
+    "website": "https://www.rentcafe.com"
+  },
+  "Rep.co": {
+    "cats": [
+      90
+    ],
+    "description": "Rep.co is a review generation platform that helps businesses and agencies manage their online reputation through automated tools.",
+    "icon": "Repco.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.rep\\.co"
+    ],
+    "website": "https://rep.co"
+  },
+  "Replo": {
+    "cats": [
+      51
+    ],
+    "description": "Replo is a platform offering customizable landing pages designed for ecommerce teams.",
+    "dom": [
+      "div[id='replo-fullpage-element']",
+      "script[id='replo-deps-element-id']"
+    ],
+    "icon": "replo.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "replocdn\\.com/"
+    ],
+    "website": "https://www.replo.app"
+  },
+  "Replyco": {
+    "cats": [
+      52
+    ],
+    "description": "Replyco is a helpdesk software designed for ecommerce sellers to manage and centralise inbox messages across various marketplaces.",
+    "icon": "Replyco.svg",
+    "js": {
+      "replycoChat": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.replyco\\.com/"
+    ],
+    "website": "https://replyco.com"
+  },
+  "Repro": {
+    "cats": [
+      10,
+      32
+    ],
+    "description": "Repro is a growth platform for mobile apps offering flexible analytics, user studies with play-by-play action videos, and marketing strategies like push notifications and in-app messages.",
+    "icon": "Repro.svg",
+    "js": {
+      "reproio": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.reproio\\.com/web/v([\\d\\.]+)/repro-sdk\\.min\\.js\\;version:\\1"
+    ],
+    "website": "https://repro.io"
+  },
+  "Repuso": {
+    "cats": [
+      90
+    ],
+    "description": "Repuso is a tool that collects, displays, and manages customer reviews across multiple platforms to support brand reputation and engagement.",
+    "icon": "Repuso.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "//repuso\\.com/"
+    ],
+    "website": "https://repuso.com"
+  },
+  "Reputon": {
+    "cats": [
+      90,
+      100
+    ],
+    "description": "Reputon is an customer reviews Shopify app.",
+    "icon": "Reputon.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reputon\\.com/"
+    ],
+    "website": "https://reputon.com"
+  },
+  "ResDiary": {
+    "cats": [
+      93
+    ],
+    "description": "ResDiary, is a online reservation system for hospitality operators.",
+    "dom": {
+      "iframe[src*='resdiary']": {
+        "attributes": {
+          "src": "\\.resdiary\\.\\w+/"
+        }
+      }
+    },
+    "icon": "ResDiary.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.resdiary\\.\\w+/"
+    ],
+    "website": "https://www.resdiary.com"
+  },
+  "Resengo": {
+    "cats": [
+      93
+    ],
+    "description": "Resengo is a restaurant table booking widget.",
+    "dom": {
+      "iframe[src*='resengo']": {
+        "attributes": {
+          "src": "www\\.resengo\\.\\w+"
+        }
+      }
+    },
+    "icon": "Resengo.svg",
+    "js": {
+      "wpJsonpResengoReservationWidget": ""
+    },
+    "scriptSrc": [
+      "www\\.resengo\\.\\w+"
+    ],
+    "website": "https://wwc.resengo.com"
+  },
+  "Reserva INK": {
+    "cats": [
+      6
+    ],
+    "description": "Reserva INK is a platform that enables users to sell personalized t-shirts without the need for stock, offering nationwide delivery and a professional online store for easy management of orders and sales.",
+    "icon": "ReservaINK.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "www\\.reserva\\.ink"
+    ],
+    "website": "https://reserva.ink"
+  },
+  "Reserve In-Store": {
+    "cats": [
+      100,
+      93
+    ],
+    "description": "Reserve In-Store app will allow customers to reserve an item in your store online to come to pick it up or view the item before making the purchase.",
+    "icon": "Reserve In-Store.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "js": {
+      "reserveInStore.version": "([\\d\\.]+)\\;version:\\1",
+      "reserveInStoreJsUrl": "/reserveinstore\\.js.+\\.myshopify\\.com"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.reserveinstore.com"
+  },
+  "Reservio": {
+    "cats": [
+      93,
+      72
+    ],
+    "description": "Reservio is a cloud-based appointment scheduling and online booking solution.",
+    "dom": [
+      ".reservio-booking-button",
+      "a[href*='.reservio.com'][target='_blank']",
+      "a[href*='bookings.reservio.com']"
+    ],
+    "icon": "Reservio.svg",
+    "pricing": [
+      "freemium",
+      "recurring",
+      "low"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.reservio\\.com"
+    ],
+    "website": "https://www.reservio.com"
+  },
+  "Resmio": {
+    "cats": [
+      93
+    ],
+    "description": "Resmio is a restaurant table booking widget.",
+    "icon": "Resmio.svg",
+    "js": {
+      "ResmioButton": ""
+    },
+    "pricing": [
+      "low",
+      "freemium",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.resmio\\.\\w+/static/"
+    ],
+    "website": "https://www.resmio.com"
+  },
+  "Resonate": {
+    "cats": [
+      10
+    ],
+    "description": "Resonate is a consumer intelligence platform that collects, analyzes, and interprets audience data to provide insights into consumer behavior, preferences, and motivations for strategic decision-making.",
+    "icon": "Resonate.svg",
+    "js": {
+      "resonateAnalytics": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.resonate\\.com"
+    ],
+    "website": "https://www.resonate.com"
+  },
+  "Resova": {
+    "cats": [
+      72
+    ],
+    "description": "Resova is an online booking software.",
+    "dom": {
+      "a[href*='.resova.']": {
+        "attributes": {
+          "href": "\\.resova\\.(?:us|eu|co\\.uk)"
+        }
+      }
+    },
+    "icon": "Resova.svg",
+    "js": {
+      "baseUrl": "\\.resova\\.(?:us|eu|co\\.uk)",
+      "initResova": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://resova.com"
+  },
+  "Respond.io": {
+    "cats": [
+      52
+    ],
+    "description": "Respond.io is an AI-powered customer conversation management software.",
+    "dom": [
+      "script#respondio__growth_tool"
+    ],
+    "icon": "RespondIO.svg",
+    "js": {
+      "$__respond": "",
+      "$respond": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.respond.io"
+  },
+  "Respondi": {
+    "cats": [
+      110
+    ],
+    "description": "Respondi is a tool for creating forms, including surveys, questionnaires, quizzes, and other custom data collection formats.",
+    "icon": "Respondi.svg",
+    "js": {
+      "respondiElement": ""
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "embed\\.respondi\\.app"
+    ],
+    "website": "https://respondi.app"
+  },
+  "Responsa": {
+    "cats": [
+      52
+    ],
+    "description": "Responsa is a conversational AI platform designed to increase sales and reduce operational costs by automating customer interactions and streamlining communication processes.",
+    "icon": "Responsa.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "//goresponsa\\.com/"
+    ],
+    "website": "https://responsa.ai"
+  },
+  "Restaumatic": {
+    "cats": [
+      6
+    ],
+    "description": "Restaumatic is an ecommerce online restaurant ordering system.",
+    "icon": "Restaumatic.svg",
+    "js": {
+      "RestaumaticRegistry": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.restaumatic.com"
+  },
+  "Resultify": {
+    "cats": [
+      32
+    ],
+    "description": "Resultify is a platform focused on online marketing management.",
+    "icon": "Resultify.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.resultify\\.com"
+    ],
+    "website": "https://www.resultify.com"
+  },
+  "Resupply": {
+    "cats": [
+      111
+    ],
+    "description": "Resupply is a service that offers 24-hour furniture donation pickups, supporting local nonprofits by facilitating the collection and redistribution of donated items.",
+    "icon": "Resupply.svg",
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.resupplyapp\\.com"
+    ],
+    "website": "https://resupplyapp.com"
+  },
+  "Resy": {
+    "cats": [
+      93
+    ],
+    "description": "Resy is an technology and media company that provides an app and back-end management software for restaurant reservations.",
+    "icon": "Resy.svg",
+    "js": {
+      "resyWidget": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "widgets\\.resy\\.\\w+"
+    ],
+    "website": "https://resy.com"
+  },
+  "Retain": {
+    "cats": [
+      52
+    ],
+    "description": "Retain is an online conversation system developed in Iran designed to facilitate digital communication.",
+    "saas": true,
+    "scriptSrc": [
+      "\\.retain\\.ir/"
+    ],
+    "website": "https://retain.ir"
+  },
+  "Retention.com": {
+    "cats": [
+      100,
+      36
+    ],
+    "description": "Retention.com's identity resolution software helps Shopify merchants recover lost shoppers.",
+    "icon": "Retention.com.svg",
+    "js": {
+      "B2BRetention": "",
+      "addedToCartRetentionButton": "",
+      "viewedProductRetention": ""
+    },
+    "pricing": [
+      "mid",
+      "payg",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://retention.com"
+  },
+  "Retisio": {
+    "cats": [
+      6
+    ],
+    "description": "Retisio is a digital commerce platform that enables retailers to increase sales, reduce costs, and manage risk through ecommerce software solutions.",
+    "icon": "Retisio.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.retisio\\.io/retisio-sdk\\.js"
+    ],
+    "website": "https://www.retisio.com"
+  },
+  "Retrina Builder": {
+    "cats": [
+      51
+    ],
+    "description": "Retrina Builder is a drag-and-drop page builder for OpenCart that enables website creation without requiring coding skills.",
+    "dom": [
+      "link[href*='/retrina-builder.min.css']",
+      "link[href*='/retrina_builder_custom.css']"
+    ],
+    "icon": "RetrinaBuilder.svg",
+    "saas": true,
+    "website": "https://retrina.com/ronixa-product"
+  },
+  "Return Prime": {
+    "cats": [
+      100,
+      102
+    ],
+    "description": "Return Prime is an application to manage returns for Shopify stores.",
+    "icon": "return-prime.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "scriptSrc": [
+      "//return-prime-proxy-prod\\.s3[^ ]*\\.amazonaws\\.com/"
+    ],
+    "website": "https://www.returnprime.com/"
+  },
+  "Reunion Marketing": {
+    "cats": [
+      32
+    ],
+    "description": "Reunion Marketing is a digital marketing platform for automotive dealerships.",
+    "icon": "ReunionMarketing.svg",
+    "js": {
+      "reunionMarketingApiDomain": ""
+    },
+    "saas": true,
+    "website": "https://reunionmarketing.com"
+  },
+  "Reuzenpanda": {
+    "cats": [
+      32
+    ],
+    "description": "Tossdown is an automated software solution that generates more leads and customers without repetitive tasks.",
+    "icon": "Reuzenpanda.svg",
+    "js": {
+      "_reuzenpandaWidget": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reuzenpanda\\.nl"
+    ],
+    "website": "https://www.reuzenpanda.nl"
+  },
+  "RevCent": {
+    "cats": [
+      41
+    ],
+    "description": "RevCent is a payment processing solution designed to manage and facilitate online transactions for businesses across various platforms.",
+    "icon": "RevCent.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.revcent\\.com"
+    ],
+    "website": "https://revcent.com"
+  },
+  "RevTrax": {
+    "cats": [
+      32
+    ],
+    "description": "RevTrax is an offer management platform designed to track performance metrics and connect actionable insights.",
+    "icon": "RevTrax.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.revtrax\\.com/RevTrax/js"
+    ],
+    "website": "https://www.revtrax.com"
+  },
+  "Reverse Market Insight": {
+    "cats": [
+      10
+    ],
+    "description": "Reverse Market Insight is a provider of performance data and analytics solutions for the reverse mortgage industry.",
+    "icon": "ReverseMarketInsight.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.rminsight\\.net"
+    ],
+    "website": "https://www.rminsight.net"
+  },
+  "Reviefy": {
+    "cats": [
+      90
+    ],
+    "description": "Reviefy is a product review collection solution designed for integration with the MyCashFlow ecommerce platform.",
+    "icon": "Reviefy.svg",
+    "js": {
+      "Reviefy": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "MyCashFlow"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "api\\.reviefy\\.com/"
+    ],
+    "website": "https://www.reviefy.com"
+  },
+  "Review Stars": {
+    "cats": [
+      90
+    ],
+    "description": "Review Stars is a digital marketing boutique that assists businesses in enhancing their positive online reputation using review generation technology.",
+    "icon": "ReviewStars.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reviewstars\\.com/"
+    ],
+    "website": "https://reviewstars.com/"
+  },
+  "Review Wave": {
+    "cats": [
+      90
+    ],
+    "description": "Review Wave is reputation management software that helps business owners obtain reviews on trusted websites to boost growth.",
+    "icon": "ReviewWave.svg",
+    "js": {
+      "RWEmbedJS": "",
+      "_rwReviewEmbed": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.reviewwave\\.com/"
+    ],
+    "website": "https://www.reviewwave.com"
+  },
+  "ReviewForest": {
+    "cats": [
+      90
+    ],
+    "description": "ReviewForest is a service that facilitates the collection of product reviews, contributing to environmental efforts.",
+    "icon": "ReviewForest.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reviewforest\\.org/"
+    ],
+    "website": "https://reviewforest.org/"
+  },
+  "ReviewLead": {
+    "cats": [
+      90
+    ],
+    "description": "ReviewLead is a platform that boosts reputation by systematically requesting reviews from past customers.",
+    "dom": [
+      "div[data-url*='www.reviewlead.com/']"
+    ],
+    "icon": "ReviewLead.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://get.reviewlead.com"
+  },
+  "ReviewPro": {
+    "cats": [
+      90
+    ],
+    "description": "ReviewPro is a hotel guest review system designed to collect and analyze guest feedback.",
+    "icon": "ReviewPro.svg",
+    "saas": true,
+    "scriptSrc": [
+      "sapi\\.reviewpro\\.com/"
+    ],
+    "website": "https://reviewpro.shijigroup.com"
+  },
+  "ReviewRail": {
+    "cats": [
+      90
+    ],
+    "description": "ReviewRail is an online review system designed to collect, manage, and display customer feedback.",
+    "icon": "ReviewRail.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.reviewrail\\.com/"
+    ],
+    "website": "https://reviewrail.com/"
+  },
+  "ReviewSolicitors": {
+    "cats": [
+      90
+    ],
+    "description": "ReviewSolicitors is a free and independent client-led review platform focusing on the UK legal market.",
+    "icon": "ReviewSolicitors.svg",
+    "js": {
+      "rs.getWidgetHtml": ""
+    },
+    "pricing": [
+      "freemium"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reviewsolicitors\\.co\\.uk/"
+    ],
+    "website": "https://www.reviewsolicitors.co.uk"
+  },
+  "Reviewdoku": {
+    "cats": [
+      90
+    ],
+    "description": "Reviewdoku is a review management platform that integrates with eCommerce stores to analyze customer feedback and optimize conversion rates.",
+    "icon": "Reviewdoku.svg",
+    "saas": true,
+    "scripts": [
+      "api\\.reviewdoku\\.com"
+    ],
+    "website": "https://reviewdoku.com"
+  },
+  "Reviewgrower": {
+    "cats": [
+      90
+    ],
+    "description": "Reviewgrower is a white-label reputation management platform that provides tools and services to improve online presence, increase reviews, convert prospects, and boost Google rankings.",
+    "icon": "ReviewGrower.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.reviewgrower\\.com"
+    ],
+    "website": "https://reviewgrower.com"
+  },
+  "Reviews Up": {
+    "cats": [
+      53
+    ],
+    "description": "Reviews Up is a platform that collects and displays user ratings and feedback to evaluate products, services, or experiences.",
+    "icon": "ReviewsUp.svg",
+    "js": {
+      "ReviewsUpWidgets": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.getreviewsup\\.com"
+    ],
+    "website": "https://reviewsup.com"
+  },
+  "Reviews.io": {
+    "cats": [
+      90
+    ],
+    "description": "Reviews.io is a review collection tool for companies to collect merchant (company) & product reviews from genuine customers, then share these on Google.",
+    "dom": [
+      "a[href*='.reviews.io/company-reviews/']"
+    ],
+    "icon": "Reviews.io.svg",
+    "js": {
+      "reviewsio_hasVoted": "",
+      "reviewsio_shareLink": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.reviews.io"
+  },
+  "Reviewshake": {
+    "cats": [
+      90
+    ],
+    "description": "Reviewshake is an all-in-one reputation management tool that generates reviews, enhances your brand, and monitors your reputation.",
+    "icon": "Reviewshake.svg",
+    "js": {
+      "Rails.appUrl": "app\\.reviewshake\\.com"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.reviewshake\\.com/"
+    ],
+    "website": "https://www.reviewshake.com/"
+  },
+  "Revinate": {
+    "cats": [
+      93
+    ],
+    "description": "Revinate is a direct booking platform used in the hospitality industry to help hotels increase reservations and manage guest engagement.",
+    "icon": "Revinate.svg",
+    "saas": true,
+    "scriptSrc": [
+      "contact-api\\.inguest\\.com/.*/revinate-form\\.js"
+    ],
+    "scripts": [
+      "contact-api\\.inguest\\.com/.*/revinate-form\\.js"
+    ],
+    "website": "https://www.revinate.com"
+  },
+  "Revize": {
+    "cats": [
+      51
+    ],
+    "description": "Revize is a platform designed to create and manage websites for government agencies.",
+    "icon": "Revize.svg",
+    "js": {
+      "RZ.MSIE": "",
+      "RZabsoluteUrl": ""
+    },
+    "saas": true,
+    "website": "https://www.revize.com"
+  },
+  "Revv": {
+    "cats": [
+      111
+    ],
+    "description": "Revv is a lead optimisation and donation platform.",
+    "icon": "Revv.svg",
+    "meta": {
+      "revv-api-domain": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://revv.com"
+  },
+  "Revy": {
+    "cats": [
+      100
+    ],
+    "description": "Revy is dedicated to build Shopify Apps to generate more sales for merchants.",
+    "icon": "Revy.svg",
+    "js": {
+      "RevyApp": "",
+      "RevyBundle": "",
+      "RevyUpsell": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "api\\.revy\\.io/"
+    ],
+    "website": "https://revy.io"
+  },
+  "Rewix": {
+    "cats": [
+      6
+    ],
+    "description": "Rewix is a B2B ecommerce platform that offers flexible and secure solutions to increase sales through data-driven tools.",
+    "icon": "Rewix.svg",
+    "js": {
+      "Rewix.trackUpdateCart": ""
+    },
+    "saas": true,
+    "website": "https://www.rewixecommerce.com"
+  },
+  "Rezdy": {
+    "cats": [
+      5,
+      72
+    ],
+    "description": "Rezdy is an online booking software for tours and attractions.",
+    "icon": "Rezdy.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "rezdy\\.\\w+/pluginJs"
+    ],
+    "website": "https://www.rezdy.com"
+  },
+  "Rezgo": {
+    "cats": [
+      5,
+      72
+    ],
+    "description": "Rezgo is a tour operator software that provides online booking system.",
+    "dom": [
+      "iframe[id*='rezgo_content_frame']",
+      "link[href*='wp-content/plugins/rezgo/rezgo/templates']"
+    ],
+    "icon": "Rezgo.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rezgo\\.com"
+    ],
+    "website": "https://www.rezgo.com"
+  },
+  "Rezku": {
+    "cats": [
+      6
+    ],
+    "description": "Rezku is a point-of-sale system for restaurants, designed by hospitality experts to manage orders, payments, inventory, and day-to-day operations.",
+    "dom": [
+      "iframe[src*='rezku.com/']"
+    ],
+    "icon": "Rezku.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://rezku.com"
+  },
+  "RhinoFit": {
+    "cats": [
+      1
+    ],
+    "description": "RhinoFit is a gym management software that supports membership management, billing, scheduling, and reporting for fitness businesses.",
+    "dom": [
+      "iframe[src*='my.rhinofit.ca/']"
+    ],
+    "icon": "RhinoFit.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "my\\.rhinofit\\.ca/"
+    ],
+    "website": "https://rhinofit.ca"
+  },
+  "Rhymix": {
+    "cats": [
+      1
+    ],
+    "description": "Rhymix is an open-source CMS and web application framework designed for building dynamic websites and managing content.",
+    "icon": "Rhymix.svg",
+    "meta": {
+      "generator": "^Rhymix$"
+    },
+    "oss": true,
+    "website": "https://rhymix.org"
+  },
+  "Rich Plugins Reviews": {
+    "cats": [
+      87,
+      90
+    ],
+    "description": "Rich Plugins Reviews is a WordPress plugin that integrates verified reviews from trusted sources such as Google and Facebook.",
+    "dom": [
+      "link[href*='/wp-content/plugins/widget-google-reviews/']"
+    ],
+    "icon": "Rich Plugins.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/wp-content/plugins/widget-google-reviews/"
+    ],
+    "website": "https://richplugins.com/business-reviews-bundle-wordpress-plugin"
+  },
+  "Richpanel": {
+    "cats": [
+      53
+    ],
+    "description": "Richpanel is a purpose-built CRM and customer support platform for ecommerce and DTC brands.",
+    "icon": "Richpanel.svg",
+    "js": {
+      "Richpanel.PLUGIN_API_URL": "",
+      "RichpanelAppProxy": "",
+      "richpanel_messenger_url": ""
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.richpanel\\.com/"
+    ],
+    "website": "https://www.richpanel.com"
+  },
+  "Riddle": {
+    "cats": [
+      73
+    ],
+    "description": "Riddle is a platform enabling creation of lists, polls, and quizzes.",
+    "icon": "Riddle.svg",
+    "js": {
+      "riddleAPI": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.riddle.com"
+  },
+  "RideBits": {
+    "cats": [
+      72,
+      104
+    ],
+    "description": "RideBits is a provider of trip booking apps for ground transportation companies, offering solutions for managing bookings.",
+    "icon": "RideBits.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.ridebitsapp\\.com/"
+    ],
+    "website": "https://ridebits.com"
+  },
+  "Ringba": {
+    "cats": [
+      10
+    ],
+    "description": "Ringba is a platform that offers call tracking solutions to businesses, pay-per-call networks, brokers, agencies, and performance marketers of all sizes.",
+    "icon": "Ringba.svg",
+    "js": {
+      "ringba.release": "",
+      "ringba_known_numbers": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.ringba.com"
+  },
+  "Ringostat": {
+    "cats": [
+      32
+    ],
+    "description": "Ringostat is an AI-powered platform designed for business phone systems and marketing performance.",
+    "icon": "Ringostat.svg",
+    "js": {
+      "ringostatAPI": "",
+      "ringostatAnalytics": "",
+      "ringostatRestartSubstitution": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "script\\.ringostat\\.com/"
+    ],
+    "website": "https://ringostat.com"
+  },
+  "Rinsed": {
+    "cats": [
+      53
+    ],
+    "description": "Rinsed is a customer relationship management software tailored for the car wash industry.",
+    "icon": "Rinsed.svg",
+    "js": {
+      "isRinsedScriptLoaded": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.app\\.rinsed\\.co/"
+    ],
+    "website": "https://www.rinsed.com"
+  },
+  "RioSEO": {
+    "cats": [
+      54
+    ],
+    "description": "RioSEO is a provider of management and local search marketing solutions operating at a global scale.",
+    "icon": "RioSEO.svg",
+    "saas": true,
+    "scripts": [
+      "rlscdn\\.rioseo\\.com"
+    ],
+    "website": "https://www.rioseo.com"
+  },
+  "Riskified": {
+    "cats": [
+      10,
+      16
+    ],
+    "description": "Riskified is a privately held company that provides SaaS fraud and chargeback prevention technology.",
+    "headers": {
+      "server": "Riskified Server"
+    },
+    "html": [
+      "<[^>]*beacon\\.riskified\\.com",
+      "<[^>]*c\\.riskified\\.com"
+    ],
+    "icon": "Riskified.svg",
+    "js": {
+      "RISKX": "",
+      "riskifiedBeaconLoad": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.riskified\\.com"
+    ],
+    "website": "https://www.riskified.com/"
+  },
+  "Rispose": {
+    "cats": [
+      52
+    ],
+    "description": "Rispose is a platform for building and embedding AI agents across websites and applications to automate support, sales, and user engagement through AI-powered assistants.",
+    "icon": "Rispose.svg",
+    "js": {
+      "__risposeAgent": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "rispose\\.com/cdn/"
+    ],
+    "website": "https://rispose.com"
+  },
+  "RiteCMS": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:ritecms:ritecms:*:*:*:*:*:*:*:*",
+    "icon": "RiteCMS.png",
+    "implies": [
+      "PHP",
+      "SQLite\\;confidence:80"
+    ],
+    "meta": {
+      "generator": "^RiteCMS(?: (.+))?\\;version:\\1"
+    },
+    "website": "https://ritecms.com"
+  },
+  "RiteKit": {
+    "cats": [
+      32
+    ],
+    "description": "RiteKit is a tool that enhances social media engagement by optimizing calls-to-action (CTAs), generating relevant hashtags, and integrating with social media management systems to streamline content distribution and audience interaction.",
+    "dom": [
+      "iframe[src*='cdn.ritekit.com/']"
+    ],
+    "icon": "RiteKit.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://ritekit.com"
+  },
+  "Roadiz CMS": {
+    "cats": [
+      1,
+      11
+    ],
+    "description": "Roadiz CMS is a polymorphic CMS based on Symfony Flex, Doctrine ORM, API Platform, and Twig.",
+    "headers": {
+      "X-Powered-By": "Roadiz CMS"
+    },
+    "icon": "Roadiz CMS.svg",
+    "implies": [
+      "PHP",
+      "Symfony"
+    ],
+    "meta": {
+      "generator": "^Roadiz ?(?:master|develop)? v?([0-9\\.]+)\\;version:\\1"
+    },
+    "oss": true,
+    "website": "https://www.roadiz.io"
+  },
+  "Roas Funnels": {
+    "cats": [
+      32
+    ],
+    "description": "Roas Funnels is an all-in-one digital marketing platform designed to support business growth through tools and strategies.",
+    "icon": "RoasFunnels.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.roasfunnels\\.com"
+    ],
+    "website": "https://roasfunnels.com"
+  },
+  "Robarov": {
+    "cats": [
+      32
+    ],
+    "description": "Robarov is an online marketing platform that delivers customized online strategies designed to attract and engage new customers.",
+    "icon": "Robarov.svg",
+    "js": {
+      "ROBAROV_CSRF_TOKEN": ""
+    },
+    "saas": true,
+    "website": "https://robarov.be"
+  },
+  "Robin": {
+    "cats": [
+      6
+    ],
+    "icon": "Robin.png",
+    "js": {
+      "_robin_getRobinJs": "",
+      "robin_settings": "",
+      "robin_storage_settings": ""
+    },
+    "website": "https://www.robinhq.com"
+  },
+  "Robly": {
+    "cats": [
+      32,
+      75
+    ],
+    "description": "Robly is an email marketing platform designed to simplify campaign creation and management for businesses.",
+    "dom": [
+      "form[action*='list.robly.com/']"
+    ],
+    "icon": "Robly.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.robly.com"
+  },
+  "RoboReception": {
+    "cats": [
+      52
+    ],
+    "description": "RoboReception is a digital assistant that manages patient inquiries, reduces queues, and tracks new leads to ease the workload on reception staff.",
+    "icon": "RoboReception.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.bot\\.roboreception\\.co\\.uk"
+    ],
+    "scripts": [
+      "\\.bot\\.roboreception\\.co\\.uk"
+    ],
+    "website": "https://www.roboreception.co.uk"
+  },
+  "Robofy": {
+    "cats": [
+      52
+    ],
+    "description": "Robofy is a platform providing AI chatbots for websites, enabling the creation of custom ChatGPT models trained on user-specific content.",
+    "icon": "Robofy.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.robofy\\.ai/"
+    ],
+    "website": "https://www.robofy.ai"
+  },
+  "RockRMS": {
+    "cats": [
+      1,
+      11,
+      32
+    ],
+    "description": "Rock RMS is a free, open-source Relationship Management System (RMS) built for churches and businesses.",
+    "icon": "RockRMS.svg",
+    "implies": [
+      "Windows Server",
+      "IIS",
+      "Microsoft ASP.NET"
+    ],
+    "meta": {
+      "generator": "^Rock v([0-9.]+)\\;version:\\1"
+    },
+    "website": "https://www.rockrms.com"
+  },
+  "Rockee": {
+    "cats": [
+      90
+    ],
+    "description": "Rockee is a content feedback and performance platform that provides insights into audience perceptions of content.",
+    "icon": "Rockee.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.rockee\\.io/"
+    ],
+    "website": "https://rockee.io"
+  },
+  "Rockerbox": {
+    "cats": [
+      32
+    ],
+    "description": "Rockerbox is a provider of multi-touch attribution software.",
+    "icon": "Rockerbox.svg",
+    "js": {
+      "RB.source": "\\;confidence:50"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "wxyz\\.rb\\.js"
+    ],
+    "website": "https://www.rockerbox.com"
+  },
+  "Rocket Tools": {
+    "cats": [
+      97
+    ],
+    "description": "Rocket Tools is an AI platform that connects brands with customers, transforming mall data into actionable insights for marketing performance.",
+    "icon": "RocketTools.svg",
+    "saas": true,
+    "scripts": [
+      "script\\.rocket-tools\\.io"
+    ],
+    "website": "https://www.rocket-tools.io"
+  },
+  "Rocket.Chat": {
+    "cats": [
+      52
+    ],
+    "cpe": "cpe:2.3:a:rocket.chat:rocket.chat:*:*:*:*:*:*:*:*",
+    "description": "Rocket.Chat is a communication hub that facilitates team collaboration and organizes conversations.",
+    "icon": "Rocket.Chat.svg",
+    "js": {
+      "RocketChat.livechat": ""
+    },
+    "meta": {
+      "application-name": "^Rocket.Chat$"
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://rocket.chat"
+  },
+  "Rocketfy": {
+    "cats": [
+      6,
+      51
+    ],
+    "description": "Rocketfy is a platform that allows users to build an online store and allows dropshipping at the same time.",
+    "icon": "Rocketfy.svg",
+    "implies": [
+      "React",
+      "Next.js"
+    ],
+    "meta": {
+      "generator": "^Rocketfy\\sMaker\\s-\\sv([\\d\\.]+)$\\;version:\\1"
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rocketfy\\.mx/"
+    ],
+    "website": "https://rocketfy.mx"
+  },
+  "Rocketspark": {
+    "cats": [
+      51
+    ],
+    "description": "Rocketspark is a website builder that enables users to design and manage professional-looking websites without coding, offering customizable templates and integrated ecommerce features.",
+    "icon": "Rocketspark.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.rocketspark\\.com"
+    ],
+    "website": "https://www.rocketspark.com"
+  },
+  "Rofofk": {
+    "cats": [
+      1,
+      6
+    ],
+    "description": "Rofofk is an Arabic multi-tenant e-commerce SaaS platform.",
+    "headers": {
+      "X-Powered-By": "Rofofk"
+    },
+    "icon": "Rofofk.svg",
+    "js": {
+      "Rofofk": ""
+    },
+    "meta": {
+      "generator": "Rofofk"
+    },
+    "website": "https://rofofk.com"
+  },
+  "Roistat": {
+    "cats": [
+      10,
+      74
+    ],
+    "description": "Roistat is a marketing analytics system.",
+    "icon": "roistat.svg",
+    "js": {
+      "roistatHost": "",
+      "roistatProjectId": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "website": "https://roistat.com/"
+  },
+  "Roller": {
+    "cats": [
+      53
+    ],
+    "description": "Roller is an all-in-one software that helps operators boost revenue and deliver a better guest experience.",
+    "dom": [
+      "iframe#roller-widget, template[data-nitro-marker-id='roller-checkout']"
+    ],
+    "icon": "Roller.svg",
+    "js": {
+      "RollerCheckout": "",
+      "RollerConstants": "",
+      "rollerDL": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.roller.software"
+  },
+  "Rollick": {
+    "cats": [
+      53
+    ],
+    "description": "Rollick is a lead management solution that connects manufacturers and dealers in the powersports, RV, marine, and industrial equipment industries.",
+    "icon": "Rollick.svg",
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.rollick\\.io"
+    ],
+    "website": "https://rollick.io"
+  },
+  "RomanCart": {
+    "cats": [
+      6
+    ],
+    "description": "RomanCart is a shopping cart and internet marketing system designed to support online sales, manage product listings, process transactions, and facilitate basic digital marketing functions for ecommerce websites.",
+    "icon": "RomanCart.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.romancart\\.com/"
+    ],
+    "website": "https://www.romancart.com"
+  },
+  "Ronin Sport": {
+    "cats": [
+      10
+    ],
+    "description": "Ronin Sport is a provider of high-quality sports TV data solutions that enhance engagement and drive revenue.",
+    "icon": "RoninSport.svg",
+    "saas": true,
+    "scripts": [
+      "\\.roninsport\\.io"
+    ],
+    "website": "https://www.roninsport.io"
+  },
+  "Roof": {
+    "cats": [
+      32
+    ],
+    "description": "Roof is a platform that supports real estate companies in increasing online revenue through integrated digital solutions powered by artificial intelligence and online marketing services.",
+    "icon": "Roof.svg",
+    "js": {
+      "RoofWebMessenger": "",
+      "openRoofChat": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.roof\\.ai/"
+    ],
+    "website": "https://www.roofai.com"
+  },
+  "Roojoom": {
+    "cats": [
+      32
+    ],
+    "description": "Roojoom is a content marketing platform that converts content into revenue, designed for guided browsing.",
+    "icon": "Roojoom.svg",
+    "js": {
+      "RoojoomsGridCtrl": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.roojoom\\.com/"
+    ],
+    "website": "https://www.roojoom.com"
+  },
+  "Roompot": {
+    "cats": [
+      93
+    ],
+    "description": "Roompot is a provider of holiday parks, specialising in the management and operation of parks and campsites.",
+    "dom": [
+      "link[href*='cdn.roompot.com']"
+    ],
+    "icon": "Roompot.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.roompot.com"
+  },
+  "Rosana": {
+    "cats": [
+      32
+    ],
+    "description": "Rosana is a platform that converts customer interactions into measurable business outcomes through automated conversation management.",
+    "icon": "Rosana.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.rosana\\.io"
+    ],
+    "website": "https://rosana.io"
+  },
+  "Rotic": {
+    "cats": [
+      52
+    ],
+    "description": "Rotic is a conversion chatbot that answers questions, captures contacts, and books meetings.",
+    "icon": "Rotic.svg",
+    "js": {
+      "Rotic.setting": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://rotic.io"
+  },
+  "Roya": {
+    "cats": [
+      1
+    ],
+    "description": "Roya is a digital platform designed to enhance online presence through streamlined tools and structured content management.",
+    "icon": "Roya.svg",
+    "saas": true,
+    "scripts": [
+      "static\\.royacdn\\.com"
+    ],
+    "website": "https://www.roya.com"
+  },
+  "Rubedo": {
+    "cats": [
+      1
+    ],
+    "description": "Rubedo is an open-source PHP CMS powered by the Zend Framework, NoSQL MongoDB, Elasticsearch, and AngularJS, offering advanced features for content management and development.",
+    "implies": [
+      "MongoDB",
+      "Elasticsearch",
+      "PHP"
+    ],
+    "js": {
+      "rubedoConfig": ""
+    },
+    "oss": true,
+    "website": "https://github.com/WebTales/rubedo"
+  },
+  "Rubic": {
+    "cats": [
+      53
+    ],
+    "description": "Rubic is an association management software designed to support organizations in handling membership, events, and administrative tasks.",
+    "icon": "Rubic.svg",
+    "saas": true,
+    "scriptSrc": [
+      "app\\.rubic\\.no"
+    ],
+    "scripts": [
+      "app\\.rubic\\.no"
+    ],
+    "website": "https://rubic.no"
+  },
+  "Ruby Chat": {
+    "cats": [
+      52
+    ],
+    "description": "Ruby Chat is a service offering live virtual receptionists and live chat to assist businesses in managing customer interactions and inquiries in real-time.",
+    "icon": "RubyChat.svg",
+    "js": {
+      "rubyChatLoading": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "chatwidget\\.ruby\\.com/"
+    ],
+    "website": "https://www.ruby.com/solutions/live-chat"
+  },
+  "Rudderstack": {
+    "cats": [
+      97
+    ],
+    "description": "Rudderstack is a customer data platform (CDP) that helps you collect, clean, and control your customer data.",
+    "icon": "Rudderstack.svg",
+    "js": {
+      "rudderanalytics": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.rudderlabs\\.com"
+    ],
+    "website": "https://rudderstack.com/"
+  },
+  "Ruler Analytics": {
+    "cats": [
+      10
+    ],
+    "description": "Ruler Analytics is a sales and marketing analytics tool designed to track performance, optimize campaigns, and provide data-driven insights.",
+    "icon": "RulerAnalytics.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "ruler\\.nyltx\\.com"
+    ],
+    "website": "https://www.ruleranalytics.com"
+  },
+  "Rybbit": {
+    "cats": [
+      10
+    ],
+    "description": "Rybbit is a privacy-focused, open-source web analytics platform that provides real-time tracking without cookies using a modular architecture and ClickHouse backend.",
+    "icon": "Rybbit.svg",
+    "js": {
+      "rybbit": ""
+    },
+    "oss": true,
+    "pricing": [
+      "freemium",
+      "payg",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rybbit\\.io/"
+    ],
+    "website": "https://www.rybbit.io"
+  },
+  "Ryviu": {
+    "cats": [
+      90
+    ],
+    "description": "Ryviu is customer product reviews app for building social proof for store.",
+    "icon": "Ryviu.svg",
+    "js": {
+      "ryviu_global_settings": ""
+    },
+    "pricing": [
+      "recurring",
+      "payg",
+      "low"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.ryviu\\.com"
+    ],
+    "website": "https://www.ryviu.com/"
+  },
+  "rSchoolToday": {
+    "cats": [
+      1
+    ],
+    "description": "rSchoolToday is an all-in-one platform for managing high school activities.",
+    "icon": "rSchoolToday.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.rschooltoday\\.com"
+    ],
+    "website": "https://rschooltoday.com"
+  },
+  "riyo.ai": {
+    "cats": [
+      10
+    ],
+    "description": "riyo.ai (formerly known as Traek) is a website insights, analytics and lead generation tool.",
+    "icon": "Riyo.AI.svg",
+    "js": {
+      "Traek": ""
+    },
+    "pricing": [
+      "payg",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.riyo.ai"
+  }
+}

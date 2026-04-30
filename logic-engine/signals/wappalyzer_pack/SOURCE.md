@@ -4,8 +4,17 @@
 
 - **Project:** [enthec/webappanalyzer](https://github.com/enthec/webappanalyzer)
 - **License:** GPL-3.0 (see `LICENSE` in this directory)
-- **Snapshot commit:** _to be filled in by Commit 2 (vendored data)_
-- **Snapshot date:** _to be filled in by Commit 2 (vendored data)_
+- **Snapshot commit:** `c2855b4652b4a205c55a7fa7cbf6f02d0d6dd82b`
+- **Snapshot date:** 2026-04-17 (upstream commit timestamp)
+- **Vendored on:** 2026-04-30
+
+## Filter run (this snapshot)
+
+- Categories kept: 24 of 108
+- Signatures kept: 4193 of 7518 (retention: 55.8%)
+- Output size: ~1.7 MB across 27 per-letter JSON files plus
+  `categories.json` (2.3 KB) and `groups.json`
+- Missing allowlisted category ids: none
 
 ## How this pack is produced
 
