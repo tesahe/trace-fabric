@@ -64,6 +64,41 @@ class Detection:
     oss: bool = False
     website: Optional[str] = None
 
+    def to_dict(self) -> dict:
+        """Serialize for storage in the ``heuristic_flags`` JSON column.
+
+        Tuples become lists so the payload survives ``json.dumps`` cleanly,
+        and ``MatchSource`` is reduced to its string ``value`` so the JSON
+        round-trip never depends on the enum class being importable in the
+        consumer.
+        """
+        return {
+            "name": self.name,
+            "pack": self.pack,
+            "categories": list(self.categories),
+            "confidence": self.confidence,
+            "version": self.version,
+            "source": self.source.value if hasattr(self.source, "value") else str(self.source),
+            "matched_field": self.matched_field,
+            "matched_value": self.matched_value,
+            "pattern_id": self.pattern_id,
+            "cpe": self.cpe,
+            "pricing": list(self.pricing),
+            "saas": self.saas,
+            "oss": self.oss,
+            "website": self.website,
+        }
+
+
+def detections_to_payload(detections: list[Detection]) -> list[dict]:
+    """Serialize a list of Detections into a JSON-storable list of dicts.
+
+    Convenience wrapper around ``Detection.to_dict`` so callers in
+    ``lead_processor`` (and any future Tier 0 consumer) don't have to
+    reach into the dataclass themselves.
+    """
+    return [d.to_dict() for d in detections]
+
 
 def truncate_value(value: str, limit: int = 200) -> str:
     """Truncate a matched value for inclusion in a Detection.
