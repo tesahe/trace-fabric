@@ -137,6 +137,10 @@ Versions reflect what's pinned in this repo today.
 
 A walkthrough of the demo flow lives in [docs/DEMO.md](docs/DEMO.md).
 
+### Feature flags
+
+* **`TRACEFAB_SIGNALS_V2`** — opt-in for the Tier 0 technology-fingerprint matcher (Wappalyzer + RetireJS + local-business signature packs). Default **off** so production behavior is unchanged. Enable per-process with `export TRACEFAB_SIGNALS_V2=1` before launching the logic-engine. When on, the matcher loads ~3000 signatures once at startup and writes detections into the existing `heuristic_flags["technologies"]` JSON column on each scored lead. Errors in the matcher are swallowed and logged so a bad signature never fails a lead.
+
 ## Roadmap
 
 * **Phase 1:** `tokio` crawler + ZeroMQ/Protobuf IPC bridge benchmarked.
