@@ -1,0 +1,24 @@
+{
+  "fixture": "wordpress_minimal.html",
+  "url": "https://example-blog.com/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "nginx/1.18.0"},
+    {"key": "X-Powered-By", "value": "PHP/8.1.27"},
+    {"key": "X-Pingback", "value": "https://example-blog.com/xmlrpc.php"},
+    {"key": "Set-Cookie", "value": "wordpress_logged_in_abc123=user; Path=/"}
+  ],
+  "must_detect": [
+    {"name": "WordPress", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Contact Form 7", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "PHP", "pack": "wappalyzer", "via": "implied"},
+    {"name": "MySQL", "pack": "wappalyzer", "via": "implied"}
+  ],
+  "must_not_detect": [
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Calendly"
+  ],
+  "notes": "WordPress meta generator + wp-content script paths + X-Pingback header. WordPress implies should expand to PHP + MySQL."
+}

@@ -1,0 +1,19 @@
+{
+  "fixture": "calendly_inline.html",
+  "url": "https://acme-consulting.example/book",
+  "synthetic_headers": [
+    {"key": "Server", "value": "nginx"}
+  ],
+  "must_detect": [
+    {"name": "Calendly", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Stripe"
+  ],
+  "notes": "Calendly identifies purely via assets.calendly.com/ script src."
+}

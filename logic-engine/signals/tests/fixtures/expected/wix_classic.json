@@ -1,0 +1,22 @@
+{
+  "fixture": "wix_classic.html",
+  "url": "https://sunrise-yoga.wixsite.com/home",
+  "synthetic_headers": [
+    {"key": "Server", "value": "Pepyaka/1.21.14"},
+    {"key": "X-Wix-Request-Id", "value": "1714000000.abc"},
+    {"key": "X-Wix-Renderer-Server", "value": "abc-renderer-1"}
+  ],
+  "must_detect": [
+    {"name": "Wix", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "WebsiteBuilder", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "React", "pack": "wappalyzer", "via": "implied"}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "HubSpot",
+    "Calendly"
+  ],
+  "notes": "Wix is detected via static.parastorage.com script + Wix.com Website Builder generator + X-Wix-* headers. Implies React."
+}

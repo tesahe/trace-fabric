@@ -1,0 +1,22 @@
+{
+  "fixture": "static_brochure.html",
+  "url": "https://maple-street-dental.example/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "Apache/2.4.41"}
+  ],
+  "must_detect": [],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Calendly",
+    "Stripe",
+    "MailChimp",
+    "jQuery",
+    "Bootstrap",
+    "React"
+  ],
+  "notes": "NEGATIVE CONTROL. Hand-rolled static brochure with no third-party tech. A meaningful matcher should produce zero detections."
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Everything Bagel &mdash; SaaS HQ</title>
+  <meta name="generator" content="WordPress 6.4.2">
+  <link rel="https://api.w.org/" href="https://saashq.example/wp-json/">
+
+  <!-- WordPress + theme/plugins -->
+  <link rel="stylesheet" href="https://saashq.example/wp-content/themes/astra/style.css?ver=4.5">
+  <script src="https://saashq.example/wp-includes/js/jquery/jquery-1.7.0.min.js" id="jquery-core-js"></script>
+  <script src="https://saashq.example/wp-content/plugins/contact-form-7/includes/js/index.js"></script>
+  <script src="https://saashq.example/wp-includes/js/wp-embed.min.js"></script>
+
+  <!-- Google Tag Manager + Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ABCDEF1234"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ABCDEF1234');</script>
+
+  <!-- HubSpot -->
+  <!-- Start of Async HubSpot Analytics Code -->
+  <script src="https://js.hs-scripts.com/56789.js" id="hs-script-loader" async defer></script>
+  <!-- End of Async HubSpot Analytics Code -->
+
+  <!-- Stripe -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Calendly inline embed -->
+  <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body class="home page-template-default">
+  <header>
+    <h1>Everything Bagel</h1>
+  </header>
+  <main>
+    <p>Demo page that loads roughly every common SaaS marketing tag at once.</p>
+    <form id="payment-form">
+      <input type="hidden" data-stripe="token">
+    </form>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/saashq/intro"></div>
+  </main>
+</body>
+</html>

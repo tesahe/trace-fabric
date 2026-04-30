@@ -1,0 +1,22 @@
+{
+  "fixture": "stripe_checkout.html",
+  "url": "https://acme-online.example/checkout",
+  "synthetic_headers": [
+    {"key": "Server", "value": "nginx"},
+    {"key": "Set-Cookie", "value": "__stripe_mid=abc; Path=/"},
+    {"key": "Set-Cookie", "value": "__stripe_sid=xyz; Path=/"}
+  ],
+  "must_detect": [
+    {"name": "Stripe", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Calendly",
+    "MailChimp"
+  ],
+  "notes": "Stripe Checkout via js.stripe.com script + data-stripe attr + __stripe_mid/__stripe_sid cookies. URL path /checkout legitimately surfaces 'Cart Functionality' too."
+}
