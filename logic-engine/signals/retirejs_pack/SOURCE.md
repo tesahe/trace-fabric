@@ -4,8 +4,10 @@
 
 - **Project:** [RetireJS/retire.js](https://github.com/RetireJS/retire.js)
 - **License:** Apache-2.0 (see `LICENSE` in this directory)
-- **Snapshot commit:** _to be filled in by Commit 3 (vendored data)_
-- **Snapshot date:** _to be filled in by Commit 3 (vendored data)_
+- **Snapshot commit:** `4e8af8ee6fa94c929f7de462fcbd05ffe28196b7`
+- **Snapshot date:** 2026-04-24 (upstream commit timestamp)
+- **Vendored on:** 2026-04-30
+- **File size:** ~596 KB (`data/jsrepository.json`), 70 library entries
 
 ## What we vendor
 
