@@ -17,6 +17,7 @@ docs_old/personal-docs
 commands/classification-latest.json
 commands/*
 /diagrams
+/docs/research
 
 # --- Python ---
 __pycache__/
