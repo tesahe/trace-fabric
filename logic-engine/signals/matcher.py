@@ -24,6 +24,7 @@ from typing import Iterable, Optional
 from bs4 import BeautifulSoup
 
 from . import blocklist as blocklist_mod
+from . import structured_data as structured_data_mod
 from .blocklist import BlocklistConfig, EMPTY_CONFIG
 from .detection import Detection, MatchSource, truncate_value
 from .loader import LoadedPattern, Technology, load_all_packs
@@ -393,6 +394,17 @@ class Matcher:
                 )
                 if det is not None:
                     raw_detections.append(det)
+
+        # Schema.org JSON-LD structured-data signals. Wrapped in try/except
+        # so a malformed JSON-LD block can never break a lead — the matcher
+        # contract is "every other source still runs even if one source
+        # blows up."
+        try:
+            raw_detections.extend(
+                structured_data_mod.extract_local_business_signals(raw_html)
+            )
+        except Exception:
+            logger.exception("matcher: structured_data extraction raised — skipping")
 
         # Final pass: implies/requires/excludes + dedup.
         resolved = resolve(raw_detections, self.catalog)
