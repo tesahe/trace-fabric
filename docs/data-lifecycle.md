@@ -7,7 +7,7 @@ How does a single lead's row in Postgres evolve from creation to terminal state,
 ## Diagram
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px"}, "flowchart": {"curve": "basis", "padding": 25, "nodeSpacing": 60, "rankSpacing": 80}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA"}, "flowchart": {"curve": "basis", "padding": 25, "nodeSpacing": 60, "rankSpacing": 80}}}%%
 flowchart LR
     START(["new lead<br/>(exactly one insert path runs)"])
 

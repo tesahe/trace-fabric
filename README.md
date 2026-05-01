@@ -36,7 +36,7 @@ Every decision — qualified, rejected, or excluded — is persisted as a struct
 ## Architecture
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px"}, "flowchart": {"curve": "basis", "padding": 20, "nodeSpacing": 80, "rankSpacing": 100}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA"}, "flowchart": {"curve": "basis", "padding": 20, "nodeSpacing": 80, "rankSpacing": 100}}}%%
 flowchart LR
     U(["Operator"]) --> Q["Niche+Location or URL"]
 

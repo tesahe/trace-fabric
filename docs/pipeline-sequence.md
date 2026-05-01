@@ -7,7 +7,7 @@ When one lead enters the system, what is the time-ordered sequence of calls betw
 ## Diagram
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px", "actorBkg": "#FFFFFF", "actorBorder": "#3A3A3A", "actorTextColor": "#1A1A1A", "noteBkgColor": "#FDF6EE", "noteBorderColor": "#C9A983", "noteTextColor": "#5A330F"}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA", "actorBkg": "#FFFFFF", "actorBorder": "#3A3A3A", "actorTextColor": "#1A1A1A", "actorLineColor": "#3A3A3A", "signalColor": "#3A3A3A", "signalTextColor": "#1A1A1A", "labelBoxBkgColor": "#F5F5F5", "labelBoxBorderColor": "#3A3A3A", "labelTextColor": "#1A1A1A", "loopTextColor": "#1A1A1A", "noteBkgColor": "#FDF6EE", "noteBorderColor": "#C9A983", "noteTextColor": "#5A330F", "activationBkgColor": "#EDEDED", "activationBorderColor": "#3A3A3A"}}}%%
 sequenceDiagram
     participant U as Operator
     participant S as scraper-engine (Rust)

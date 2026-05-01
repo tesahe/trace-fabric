@@ -25,7 +25,7 @@ The No-Drop mandate runs orthogonal to all of this: rejected leads still persist
 Tier 0 is not one check — it is a four-stage internal pipeline, each stage cheaper or more focused than the next. After Sprint 1, this is the actual order:
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "13px"}, "flowchart": {"curve": "basis", "padding": 25, "nodeSpacing": 55, "rankSpacing": 60}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "13px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA"}, "flowchart": {"curve": "basis", "padding": 25, "nodeSpacing": 55, "rankSpacing": 60}}}%%
 flowchart TB
     A["Compliance check<br/>(robots.txt in scraper-engine)"] --> B["HeuristicScanner<br/>(universal gates)"]
     B --> C["evaluate_lead<br/>(BeautifulSoup DOM checks)"]
