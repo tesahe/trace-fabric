@@ -1,0 +1,175 @@
+{
+  "1": {
+    "groups": [
+      3
+    ],
+    "name": "CMS",
+    "priority": 1
+  },
+  "10": {
+    "groups": [
+      8
+    ],
+    "name": "Analytics",
+    "priority": 9
+  },
+  "100": {
+    "groups": [
+      15
+    ],
+    "name": "Shopify apps",
+    "priority": 8
+  },
+  "104": {
+    "groups": [
+      14
+    ],
+    "name": "Ticket booking",
+    "priority": 9
+  },
+  "110": {
+    "groups": [
+      8
+    ],
+    "name": "Form builders",
+    "priority": 8
+  },
+  "111": {
+    "groups": [
+      6
+    ],
+    "name": "Fundraising & donations",
+    "priority": 9
+  },
+  "32": {
+    "groups": [
+      2
+    ],
+    "name": "Marketing automation",
+    "priority": 9
+  },
+  "41": {
+    "groups": [
+      1
+    ],
+    "name": "Payment processors",
+    "priority": 8
+  },
+  "42": {
+    "groups": [
+      8
+    ],
+    "name": "Tag managers",
+    "priority": 9
+  },
+  "51": {
+    "groups": [
+      9
+    ],
+    "name": "Page builders",
+    "priority": 1
+  },
+  "52": {
+    "groups": [
+      4,
+      16
+    ],
+    "name": "Live chat",
+    "priority": 9
+  },
+  "53": {
+    "groups": [
+      2,
+      16
+    ],
+    "name": "CRM",
+    "priority": 5
+  },
+  "54": {
+    "groups": [
+      2
+    ],
+    "name": "SEO",
+    "priority": 8
+  },
+  "58": {
+    "groups": [
+      6
+    ],
+    "name": "User onboarding",
+    "priority": 8
+  },
+  "6": {
+    "groups": [
+      1
+    ],
+    "name": "Ecommerce",
+    "priority": 1
+  },
+  "67": {
+    "groups": [
+      13
+    ],
+    "name": "Cookie compliance",
+    "priority": 9
+  },
+  "72": {
+    "groups": [
+      14
+    ],
+    "name": "Appointment scheduling",
+    "priority": 9
+  },
+  "73": {
+    "groups": [
+      8
+    ],
+    "name": "Surveys",
+    "priority": 9
+  },
+  "74": {
+    "groups": [
+      8
+    ],
+    "name": "A/B Testing",
+    "priority": 9
+  },
+  "75": {
+    "groups": [
+      4,
+      2
+    ],
+    "name": "Email",
+    "priority": 9
+  },
+  "90": {
+    "groups": [
+      2,
+      18
+    ],
+    "name": "Reviews",
+    "priority": 9
+  },
+  "93": {
+    "groups": [
+      14
+    ],
+    "name": "Reservations & delivery",
+    "priority": 9
+  },
+  "97": {
+    "groups": [
+      2,
+      8
+    ],
+    "name": "Customer data platform",
+    "priority": 9
+  },
+  "98": {
+    "groups": [
+      1
+    ],
+    "name": "Cart abandonment",
+    "priority": 9
+  }
+}

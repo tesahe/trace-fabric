@@ -1,0 +1,2903 @@
+{
+  "E-monsite": {
+    "cats": [
+      1
+    ],
+    "description": "E-monsite is a web-based platform that allows users to create and customise their own websites using a range of templates and features, without requiring coding or technical skills.",
+    "icon": "E-monsite.svg",
+    "implies": [
+      "Symfony",
+      "MySQL"
+    ],
+    "meta": {
+      "generator": "^e-monsite\\s\\(e-monsite\\.com\\)$"
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.e-monsite.com"
+  },
+  "E37": {
+    "cats": [
+      6
+    ],
+    "description": "E37 is an enterprise ecommerce platform designed to support large-scale online retail operations.",
+    "icon": "E37.svg",
+    "meta": {
+      "generator": "E37 Triton ([\\d.]+)\\;version:\\1"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.e37.se"
+  },
+  "EC-CUBE": {
+    "cats": [
+      6
+    ],
+    "cpe": "cpe:2.3:a:lockon:ec-cube:*:*:*:*:*:*:*:*",
+    "description": "EC-CUBE is an open source package used to build ecommerce sites.",
+    "icon": "EC-CUBE.svg",
+    "implies": [
+      "PHP"
+    ],
+    "oss": true,
+    "scriptSrc": [
+      "eccube\\.js",
+      "win_op\\.js"
+    ],
+    "website": "https://www.ec-cube.net"
+  },
+  "ECBB": {
+    "cats": [
+      10
+    ],
+    "description": "ECBB is a Japan-based platform providing data analytics and business intelligence solutions.",
+    "icon": "ECBB.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.ecbb\\.jp/"
+    ],
+    "website": "https://ecbb.jp"
+  },
+  "EKM": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "ekmpowershop": ""
+    },
+    "description": "EKM is an all-in-one online store builder, with the company based in the UK.",
+    "icon": "EKM.svg",
+    "js": {
+      "_ekmpinpoint": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.ekm.com"
+  },
+  "ERPNext": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:frappe:erpnext:*:*:*:*:*:*:*:*",
+    "description": "ERPNext is a free and open-source integrated Enterprise Resource Planning (ERP) software developed by Frappe Technologies.",
+    "icon": "ERPNext.svg",
+    "implies": [
+      "Frappe"
+    ],
+    "js": {
+      "erpnext.shopping_cart": "",
+      "erpnext.subscribe_to_newsletter": ""
+    },
+    "oss": true,
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "website": "https://erpnext.com"
+  },
+  "EZLynx": {
+    "cats": [
+      53
+    ],
+    "description": "EZLynx is a cloud-based software offering real-time comparative insurance rating, integrating with over 330 carriers for automated quoting and policy management​.",
+    "icon": "EZLynx.svg",
+    "meta": {
+      "author": "^EZLynx$"
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.ezlynx\\.com/"
+    ],
+    "website": "https://www.ezlynx.com"
+  },
+  "Eaglecart": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "eaglecart_timezone": ""
+    },
+    "description": "Eaglecart is a platform that consolidates online store operations, point-of-sale systems, and inventory management across multiple regions, currencies, and warehouse locations.",
+    "icon": "Eaglecart.svg",
+    "meta": {
+      "author": "^Eaglecart$",
+      "generator": "^Eaglecart$"
+    },
+    "pricing": [
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://eaglecart.com"
+  },
+  "EasiChat": {
+    "cats": [
+      52
+    ],
+    "description": "Easichat is an online customer service platform that uses AI to automate and manage customer interactions.",
+    "icon": "EasiChat.svg",
+    "js": {
+      "easiChat.widget": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.easichat\\.co\\.uk"
+    ],
+    "website": "https://easichat.co.uk"
+  },
+  "Easol": {
+    "cats": [
+      6
+    ],
+    "description": "Easol is a platform that enables businesses to create and manage their experience-based operations.",
+    "icon": "Easol.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.myeasol\\.net"
+    ],
+    "website": "https://easol.com"
+  },
+  "Easy Hide PayPal": {
+    "cats": [
+      100
+    ],
+    "description": "Easy Hide PayPal hides PayPal button from product page, cart and checkout but keep PayPal as payment option in checkout.",
+    "icon": "Easy Hide PayPal.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "easyhide\\.herculesapps\\.com/"
+    ],
+    "website": "https://apps.shopify.com/easyhide"
+  },
+  "Easy Orders": {
+    "cats": [
+      6
+    ],
+    "description": "Easy Orders is an ecommerce platform that offers a pricing plan where users can create their online store and pay a fee of 0.5 EGP per order.",
+    "dom": [
+      "img[src*='easyorders.fra1.digitaloceanspaces.com/'], link[href*='easyorders.fra1.digitaloceanspaces.com/']"
+    ],
+    "icon": "Easy Orders.svg",
+    "implies": [
+      "PostgreSQL",
+      "Go",
+      "Node.js"
+    ],
+    "pricing": [
+      "payg"
+    ],
+    "requires": [
+      "Next.js"
+    ],
+    "saas": true,
+    "website": "https://www.easy-orders.net",
+    "xhr": [
+      "api\\.easy-orders\\.net/"
+    ]
+  },
+  "Easy Redirects": {
+    "cats": [
+      100
+    ],
+    "description": "Easy Redirects is a Shopify app built by Eastside, and part of the best Shopify Apps collection.",
+    "icon": "Easy Redirects.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "easy-redirects\\..+/redirect-app\\.js"
+    ],
+    "website": "https://apps.shopify.com/easyredirects"
+  },
+  "Easy Rez": {
+    "cats": [
+      93
+    ],
+    "description": "Easy Rez is a hotel property management and booking system designed to streamline reservations, room management, and guest services.",
+    "icon": "EasyRez.svg",
+    "meta": {
+      "author": "^Easy-Rez$"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.easy-rez\\.com/"
+    ],
+    "website": "https://www.easy-rez.com"
+  },
+  "Easy Web Editor": {
+    "cats": [
+      51
+    ],
+    "description": "Easy Web Editor is a website builder platform that enables users to create and manage web pages through a visual interface without requiring advanced coding knowledge.",
+    "meta": {
+      "generator": "visualvision\\.com "
+    },
+    "pricing": [
+      "onetime"
+    ],
+    "saas": true,
+    "website": "https://easywebeditor.com"
+  },
+  "EasyBroker": {
+    "cats": [
+      53
+    ],
+    "description": "EasyBroker is a property management platform facilitating sharing of properties through WhatsApp and email.",
+    "icon": "EasyBroker.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.easybroker\\.com/"
+    ],
+    "website": "https://www.easybroker.com"
+  },
+  "EasyDigitalDownloads": {
+    "cats": [
+      6,
+      87
+    ],
+    "description": "Easy Digital Downloads is a WordPress ecommerce plugin that focuses purely on digital products.",
+    "icon": "EasyDigitalDownloads.svg",
+    "meta": {
+      "generator": "^Easy Digital Downloads v(.*)$\\;version:\\1"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "saas": true,
+    "website": "https://easydigitaldownloads.com"
+  },
+  "EasyGift": {
+    "cats": [
+      100
+    ],
+    "description": "EasyGift is a tool that automates the addition of free gifts or products to the cart based on custom rules, allowing for upsells, BOGO (Buy 1 Get 1) offers, and the creation of rules based on cart value or specific products, with the ability to schedule start times for offer activation.",
+    "icon": "EasyGift.svg",
+    "js": {
+      "EasyGift.nonTargetingRules": "",
+      "EasyGiftScriptLoaded": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "website": "https://apps.shopify.com/gifter-cart-auto-include"
+  },
+  "EasyLiao": {
+    "cats": [
+      52
+    ],
+    "description": "EasyLiao is a pre-sales customer agent system developed in China, designed to support businesses in handling customer inquiries and engagement before a sale.",
+    "icon": "EasyLiao.svg",
+    "js": {
+      "easyliaoIsPC": "",
+      "easyliao_design_init": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.easyliao\\.com"
+    ],
+    "website": "https://easyliao.com"
+  },
+  "EasyPolls": {
+    "cats": [
+      73
+    ],
+    "description": "EasyPolls is a tool that allows poll creation and sharing across websites, Facebook, Twitter, or via a direct link to the poll, enabling users to engage audiences across multiple platforms.",
+    "icon": "EasyPolls.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.easypolls\\.net"
+    ],
+    "website": "https://easypolls.net"
+  },
+  "EasyStore": {
+    "cats": [
+      6
+    ],
+    "description": "EasyStore is a multi sales channel ecommerce platform.",
+    "icon": "EasyStore.svg",
+    "js": {
+      "EasyStore": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.easystore\\.co/"
+    ],
+    "website": "https://www.easystore.co"
+  },
+  "EasyWeek": {
+    "cats": [
+      72
+    ],
+    "description": "EasyWeek is a software platform that enables appointment scheduling for businesses across various industries.",
+    "icon": "EasyWeek.svg",
+    "js": {
+      "EasyWeekWidget": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.easyweek\\.io/"
+    ],
+    "website": "https://easyweek.io"
+  },
+  "Easysize": {
+    "cats": [
+      6
+    ],
+    "description": "Easysize is a system that provides clothing size recommendations to enhance fit and reduce sizing errors.",
+    "icon": "Easysize.svg",
+    "js": {
+      "EasySize": "",
+      "EasySizeDebugEnable": "",
+      "EasySizeParametersDebug": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.easysize.me"
+  },
+  "EatStreet": {
+    "cats": [
+      93
+    ],
+    "cookies": {
+      "eatstreet-year-session": ""
+    },
+    "description": "EatStreet is a food booking platform that enables users to browse restaurants, place meal orders, and schedule deliveries or pickups through an online or mobile interface.",
+    "icon": "EatStreet.svg",
+    "saas": true,
+    "scriptSrc": [
+      "static\\.eatstreet\\.com"
+    ],
+    "website": "https://eatstreet.com"
+  },
+  "Eatself": {
+    "cats": [
+      93
+    ],
+    "description": "Eatself is an online platform that facilitates meal ordering and delivery services.",
+    "icon": "Eatself.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.eatself\\.com"
+    ],
+    "website": "https://www.eatself.com"
+  },
+  "Ebasnet": {
+    "cats": [
+      1
+    ],
+    "description": "Ebasnet is a web project creation and management platform in the cloud. It allows anyone to set up an online store or corporate website without prior IT knowledge.",
+    "icon": "Ebasnet.svg",
+    "implies": [
+      "PHP",
+      "MySQL",
+      "Varnish",
+      "Symfony"
+    ],
+    "meta": {
+      "author": "^Ebasnet Web Solutions$"
+    },
+    "pricing": [
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdnebasnet\\.com/"
+    ],
+    "website": "https://ebasnet.com"
+  },
+  "EcForce": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "_ec_force_session": ""
+    },
+    "description": "EcForce is an all-in-one ecommerce platform with all the functions necessary for ecommerce, from landing-page creation to order and customer data management analysis.",
+    "icon": "EcForce.svg",
+    "implies": [
+      "Ruby",
+      "Ruby on Rails",
+      "Nginx"
+    ],
+    "js": {
+      "EcForce.Models": "",
+      "EcForce.Models.Shop": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://ec-force.com"
+  },
+  "Ecal": {
+    "cats": [
+      32
+    ],
+    "description": "Ecal is a marketing software platform that enables the delivery of calendar-based tickets and events directly into users’ personal calendars.",
+    "icon": "Ecal.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.ecal\\.com/"
+    ],
+    "scripts": [
+      "\\.ecal\\.com"
+    ],
+    "website": "https://ecal.com"
+  },
+  "EcomArtists": {
+    "cats": [
+      6,
+      76
+    ],
+    "description": "EcomArtists is a provider of custom drawn products and gifts, tailored for personalisation, ideal for sharing with loved ones.",
+    "icon": "EcomArtists.svg",
+    "js": {
+      "ECOMARTISTS_UPLOAD": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "app\\.ecomartists\\.com/"
+    ],
+    "website": "https://ecomartists.com"
+  },
+  "EcomCart": {
+    "cats": [
+      6
+    ],
+    "description": "EcomCart is a platform that enables the creation and management of an online store for selling products and services.",
+    "icon": "EcomCart.svg",
+    "meta": {
+      "generator": "EcomCart\\.eu"
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://ecomcart.eu"
+  },
+  "EcomScout": {
+    "cats": [
+      10
+    ],
+    "description": "EcomScout is a platform providing AI-powered tools for analytics, attribution, merchandising, and forecasting.",
+    "icon": "EcomScout.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "api\\.ecomscout\\.io/"
+    ],
+    "website": "https://ecomscout.io"
+  },
+  "EcomX": {
+    "cats": [
+      32
+    ],
+    "description": "EcomX is a platform that automatically generates SEO-optimized product, collection, and blog content using AI.",
+    "dom": [
+      "link[href*='app.ecomx.ai/']"
+    ],
+    "icon": "EcomX.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requiresCategory": [
+      6
+    ],
+    "saas": true,
+    "website": "https://www.ecomx.ai"
+  },
+  "Ecommercen": {
+    "cats": [
+      6
+    ],
+    "description": "Ecommercen is an ecommerce solution designed to facilitate online sales, manage transactions, and streamline the customer shopping experience.",
+    "icon": "Ecommercen.svg",
+    "js": {
+      "EcomnTag.Tag": "",
+      "ecomnTag.dataLayer": ""
+    },
+    "saas": true,
+    "website": "https://www.ecommercen.com"
+  },
+  "Ecomtrack": {
+    "cats": [
+      6,
+      10
+    ],
+    "cookies": {
+      "ecomtrack": ""
+    },
+    "description": "Ecomtrack is a software program that enables businesses to monitor inventory and sales.",
+    "icon": "Ecomtrack.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "api\\.ecomtrack\\.io/"
+    ],
+    "website": "https://www.ecommercen.com"
+  },
+  "Ecomz": {
+    "cats": [
+      6
+    ],
+    "description": "Ecomz is a platform designed to create, manage, and grow online businesses through integrated ecommerce tools.",
+    "headers": {
+      "Access-Control-Allow-Headers": "ecomz_client_id",
+      "X-Ecomz-Application": ""
+    },
+    "icon": "Ecomz.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.myecomz\\.com/"
+    ],
+    "website": "https://www.ecomz.com"
+  },
+  "Econda": {
+    "cats": [
+      10
+    ],
+    "description": "Econda is a provider of web analytics solutions for online shops, offering detailed insights into customer behaviour, website performance, and sales optimisation.",
+    "icon": "Econda.svg",
+    "js": {
+      "econda": "",
+      "econdaActive": ""
+    },
+    "saas": true,
+    "website": "https://www.econda.de"
+  },
+  "Ecwid": {
+    "cats": [
+      6
+    ],
+    "description": "Ecwid is a shopping cart plugin that turns any existing website into an online store.",
+    "icon": "ecwid.svg",
+    "js": {
+      "Ecwid": "",
+      "EcwidCart": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "https://app\\.multiscreenstore\\.com/script\\.js",
+      "https://app\\.ecwid\\.com/script\\.js"
+    ],
+    "website": "https://www.ecwid.com/"
+  },
+  "Edlio": {
+    "cats": [
+      1
+    ],
+    "description": "Edlio is a platform that provides integrated K–12 teaching and communication solutions to support classroom management, student engagement, and school–home interaction.",
+    "icon": "Edlio.svg",
+    "js": {
+      "edlio.isEdgeToEdge": "",
+      "edlioCorpDataLayer": ""
+    },
+    "meta": {
+      "generator": "^Edlio CMS$"
+    },
+    "saas": true,
+    "website": "https://www.edlio.com"
+  },
+  "Edrone": {
+    "cats": [
+      53
+    ],
+    "description": "Edrone is a purpose-built ecommerce CRM that includes marketing automation and voice commerce features.",
+    "icon": "Edrone.svg",
+    "js": {
+      "_edrone": "",
+      "_edrone.version": "([\\d.]+)\\;version:\\1",
+      "_edrone_send_handler": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://edrone.me"
+  },
+  "Edugram": {
+    "cats": [
+      32,
+      71
+    ],
+    "description": "Edugram is an affiliate program and CPA network for monetizing educational traffic.",
+    "dom": [
+      "form[action*='edugram.com/']"
+    ],
+    "icon": "Edugram.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.edugram\\.com/"
+    ],
+    "website": "https://edugram.com"
+  },
+  "Efilli": {
+    "cats": [
+      67
+    ],
+    "description": "Efilli is a tool used to manage cookies on websites, providing users with data privacy control through GDPR compliance.",
+    "icon": "Efilli.svg",
+    "js": {
+      "EFILLI_GLOBAL_OPTIONS": "",
+      "Efilli": "",
+      "efilli.__cookieBlocker": "",
+      "efilliSdk": "",
+      "efilliSdkConfig": ""
+    },
+    "pricing": [
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://efilli.com"
+  },
+  "Eggflow": {
+    "cats": [
+      32
+    ],
+    "description": "Eggflow is a platform that offers marketing automation and customer engagement tools to help increase ecommerce revenue.",
+    "icon": "Eggflow.svg",
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.eggflow\\.com"
+    ],
+    "scripts": [
+      "cdn\\.eggflow\\.com"
+    ],
+    "website": "https://eggflow.com"
+  },
+  "Ektron CMS": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:ektron:ektron_content_management_system:*:*:*:*:*:*:*:*",
+    "description": "Ektron CMS is developed on the Microsoft .NET framework and is 100% ASP.NET. In 2015 Ektron merged with EPiServer.",
+    "icon": "Optimizely.svg",
+    "implies": [
+      "Microsoft ASP.NET"
+    ],
+    "js": {
+      "Ektron": ""
+    },
+    "scriptSrc": [
+      "/ektron\\.javascript\\.ashx"
+    ],
+    "website": "https://www.optimizely.com/ektron-cms"
+  },
+  "Elastic APM": {
+    "cats": [
+      10,
+      13,
+      78
+    ],
+    "description": "Elastic APM offers free and open application performance monitoring.",
+    "icon": "ElasticAPM.svg",
+    "implies": [
+      "Elasticsearch"
+    ],
+    "js": {
+      "elasticApm": ""
+    },
+    "website": "https://www.elastic.co/apm"
+  },
+  "Elastic Path": {
+    "cats": [
+      6
+    ],
+    "description": "Elastic Path is a headless ecommerce system that integrates with enterprise ERP systems as middleware, enabling template-less commerce experiences.",
+    "icon": "ElasticPath.svg",
+    "js": {
+      "Moltin": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.moltin\\.com/"
+    ],
+    "website": "https://www.elasticpath.com"
+  },
+  "Elcodi": {
+    "cats": [
+      6
+    ],
+    "headers": {
+      "X-Elcodi": ""
+    },
+    "icon": "Elcodi.png",
+    "implies": [
+      "PHP",
+      "Symfony"
+    ],
+    "website": "https://elcodi.io"
+  },
+  "Elcom": {
+    "cats": [
+      1
+    ],
+    "description": "The Elcom Platform is a web content management and intranet portal software written in Microsoft ASP.NET and SQL Server by Elcom Technology.",
+    "icon": "elcom.svg",
+    "implies": [
+      "Microsoft ASP.NET"
+    ],
+    "meta": {
+      "generator": "^elcomCMS"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "text": [
+      "Web CMS by Elcom"
+    ],
+    "website": "https://www.elcom.com.au/"
+  },
+  "Eleanor CMS": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:eleanor-cms:eleanor_cms:*:*:*:*:*:*:*:*",
+    "icon": "Eleanor CMS.png",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "Eleanor"
+    },
+    "website": "https://eleanor-cms.ru"
+  },
+  "Element": {
+    "cats": [
+      52
+    ],
+    "description": "Element is a Matrix-based end-to-end encrypted messenger and secure collaboration app.",
+    "icon": "elementio.svg",
+    "meta": {
+      "application-name": "^Element$"
+    },
+    "pricing": [
+      "payg",
+      "low"
+    ],
+    "website": "https://element.io"
+  },
+  "Elementor": {
+    "cats": [
+      51,
+      87
+    ],
+    "cookies": {
+      "elementor_pro_login": ""
+    },
+    "description": "Elementor is a website builder platform for professionals on WordPress.",
+    "dom": [
+      "link[href*='/wp-content/plugins/elementor/']"
+    ],
+    "icon": "Elementor.svg",
+    "js": {
+      "ElementorProFrontendConfig": "",
+      "ElementsKit_Helper.ajaxLoading": "",
+      "elementorFrontend.getElements": "",
+      "elementorFrontendConfig.version": "([\\d\\.]+)\\;version:\\1",
+      "elementorModules": "",
+      "elementorProFrontend": ""
+    },
+    "meta": {
+      "generator": "^Elementor\\s([\\d\\.]+)\\;version:\\1"
+    },
+    "pricing": [
+      "freemium",
+      "onetime",
+      "recurring"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/wp-content/plugins/elementor(?:-pro)?/.+frontend-modules\\.min\\.js(?:\\?ver=(\\d+(?:\\.\\d+)+))?\\;version:\\1"
+    ],
+    "website": "https://elementor.com"
+  },
+  "Elenore": {
+    "cats": [
+      53
+    ],
+    "description": "Elenore is an all-in-one business management software platform designed to streamline operations and support business growth.",
+    "icon": "Elenore.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.elenore\\.io"
+    ],
+    "website": "https://elenore.io"
+  },
+  "Elevar": {
+    "cats": [
+      10
+    ],
+    "description": "Elevar is an official Shopify Plus Partner data collection and marketing monitoring tool.",
+    "icon": "Elevar.svg",
+    "js": {
+      "ElevarGtmSuite": "",
+      "elevar_gtm_errors": "",
+      "webpackChunkelevar_gtm_suite_scripts": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.getelevar.com"
+  },
+  "Elevio": {
+    "cats": [
+      58
+    ],
+    "description": "Elevio is a self-service support platform for SaaS that delivers contextual knowledge to customers, support agents, and internal teams.",
+    "icon": "Elevio.svg",
+    "js": {
+      "_elev": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.elev\\.io/"
+    ],
+    "website": "https://elev.io"
+  },
+  "Elexio": {
+    "cats": [
+      1
+    ],
+    "description": "Elexio is a software solution designed to manage church databases and websites.",
+    "icon": "Elexio.svg",
+    "saas": true,
+    "scriptSrc": [
+      "//elexiocms\\.com/"
+    ],
+    "website": "https://www.elexio.com"
+  },
+  "Elgg": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:elgg:elgg:*:*:*:*:*:*:*:*",
+    "description": "Elgg is a social networking engine, delivering the building blocks for creating social networks and applications.",
+    "icon": "Elgg.svg",
+    "js": {
+      "elgg": ""
+    },
+    "oss": true,
+    "scriptSrc": [
+      "elgg(?:_dataTables)?(?:\\/Ajax)?(?:\\/Plugin)?(?:\\/require_config)?(?:\\/spinner)?(?:\\/dev)?(?:\\.\\w{0,10})?\\.js"
+    ],
+    "website": "https://elgg.org/"
+  },
+  "Elina PMS": {
+    "cats": [
+      93
+    ],
+    "description": "Elina PMS is a software suite that includes a channel manager, booking engine, and property management system for handling reservations, availability, and operations.",
+    "icon": "Elina.svg",
+    "js": {
+      "elinaGlobalConst": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.elinapms\\.com"
+    ],
+    "website": "https://www.elinapms.com"
+  },
+  "EliseAI": {
+    "cats": [
+      52,
+      53
+    ],
+    "description": "EliseAI is an AI-powered conversational platform for business automation.",
+    "dom": [
+      "div#meetelise-chat-launcher-container"
+    ],
+    "icon": "EliseAI.svg",
+    "js": {
+      "eliseAi": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.eliseai.com"
+  },
+  "Elloha": {
+    "cats": [
+      6
+    ],
+    "description": "Elloha is an all-in-one platform designed to manage and increase tourism-related revenue.",
+    "headers": {
+      "Access-Control-Allow-Headers": "\\.elloha\\.com"
+    },
+    "icon": "Elloha.svg",
+    "js": {
+      "IsEllohaPointOfSale": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.elloha\\.com"
+    ],
+    "website": "https://elloha.com"
+  },
+  "Ellucian CRM Recruit": {
+    "cats": [
+      53,
+      101
+    ],
+    "description": "Ellucian CRM Recruit is a comprehensive solution that supports your entire recruiting and admissions lifecycle.",
+    "dom": [
+      " a[href*='.elluciancrmrecruit.com/']"
+    ],
+    "icon": "Ellucian CRM Recruit.svg",
+    "js": {
+      "Ellucian.Recruit": "",
+      "ellucianAddressChooseLabel": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "website": "https://www.ellucian.com/solutions/ellucian-crm-recruit"
+  },
+  "Eloqua": {
+    "cats": [
+      32
+    ],
+    "cookies": {
+      "ELOQUA": ""
+    },
+    "description": "Eloqua is a Software-as-a-Service (SaaS) platform for marketing automation offered that aims to help B2B marketers and organisations manage marketing campaigns and sales lead generation.",
+    "icon": "Oracle.svg",
+    "js": {
+      "_elq": "",
+      "_elqQ": "",
+      "eloqContactData": "",
+      "eloquaActionSettings": "",
+      "elqCookieValue": "",
+      "elqCurESite": "",
+      "elqLoad": "",
+      "elqSiteID": "",
+      "elq_global": ""
+    },
+    "scriptSrc": [
+      "elqCfg\\.js"
+    ],
+    "website": "https://eloqua.com"
+  },
+  "Elromco": {
+    "cats": [
+      53
+    ],
+    "description": "Elromco is a software platform that provides moving companies with a CRM and management solution.",
+    "icon": "Elromco.svg",
+    "js": {
+      "ElromcoAPI": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "embed\\.elromco\\.com/"
+    ],
+    "website": "https://www.elromco.com"
+  },
+  "EmailJS": {
+    "cats": [
+      75
+    ],
+    "description": "EmailJS is a cloud-based email delivery service that allows you to send emails directly from your client-side JavaScript code without the need for a server-side implementation.",
+    "icon": "EmailJS.svg",
+    "js": {
+      "emailjs.sendForm": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "([\\d\\.]+)?(?:/dist)?/email\\.min\\.js\\;version:\\1"
+    ],
+    "website": "https://www.emailjs.com"
+  },
+  "Emaileri": {
+    "cats": [
+      75
+    ],
+    "description": "Emaileri is a platform designed for email marketing and newsletter communications.",
+    "dom": [
+      "iframe[src*='static.emaileri.fi']"
+    ],
+    "icon": "Emaileri.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "static\\.emaileri\\.fi"
+    ],
+    "website": "https://www.emaileri.com"
+  },
+  "Emanda": {
+    "cats": [
+      32
+    ],
+    "description": "Emanda is a platform offering SMS Marketing and Smart Email Marketing solutions.",
+    "icon": "Emanda.svg",
+    "js": {
+      "linkEmanda": "",
+      "srcEmaScript": "app\\.emanda\\.com\\.br/"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.emanda\\.com\\.br/"
+    ],
+    "website": "https://emanda.com.br"
+  },
+  "Emarsys": {
+    "cats": [
+      32,
+      97
+    ],
+    "description": "Emarsys is a cloud-based B2C marketing platform.",
+    "icon": "Emarsys.svg",
+    "js": {
+      "Scarab": "",
+      "ScarabQueue": ""
+    },
+    "scriptSrc": [
+      "(?:static|cdn)\\.scarabresearch\\.com"
+    ],
+    "website": "https://emarsys.com/"
+  },
+  "Ematic Solutions": {
+    "cats": [
+      32
+    ],
+    "description": "Ematic Solutions is part of Ematic Group and started to revolve around transforming email marketing into an ROI machine.",
+    "icon": "Ematic Solutions.svg",
+    "js": {
+      "EmaticsObject": "",
+      "ematicApikey": "",
+      "ematics": "",
+      "ematicsSubscribe": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.ematicsolutions.com"
+  },
+  "Emergent": {
+    "cats": [
+      1
+    ],
+    "description": "Emergent is an AI-powered, no-code platform that lets users build functional web apps from natural language prompts instead of writing code.",
+    "icon": "Emergent.png",
+    "scriptSrc": [
+      "assets\\.emergent\\.sh"
+    ],
+    "website": "https://app.emergent.sh/"
+  },
+  "Emojicom": {
+    "cats": [
+      73
+    ],
+    "description": "Emojicom is a tool for collecting feedback through emojis, enabling the capture of visitors' emotions.",
+    "icon": "Emojicom.svg",
+    "js": {
+      "$emojicom": "",
+      "EMOJICOM_BASE_PATH": "cdn\\.emojicom\\.io/",
+      "emojicom": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://emojicom.io"
+  },
+  "Emotive": {
+    "cats": [
+      32
+    ],
+    "description": "Emotive is a computer software company that provides SaaS, Mobile Marketing, NLP, machine learning, and B2B.",
+    "icon": "Emotive.svg",
+    "js": {
+      "emotivePopupInitializing": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "emotivecdn\\.io/"
+    ],
+    "website": "https://emotive.io"
+  },
+  "Empretienda": {
+    "cats": [
+      6
+    ],
+    "description": "Empretienda is a platform that allows you to create and manage your own online store.",
+    "headers": {
+      "set-cookie": "^EMPRETIENDA_SESSION"
+    },
+    "icon": "Empretienda.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.empretienda.com"
+  },
+  "Enabase": {
+    "cats": [
+      6
+    ],
+    "description": "Enabase is a unified platform for managing web, ecommerce, e-transformation, pre-accounting, and sales channels.",
+    "icon": "Enabase.svg",
+    "js": {
+      "Enabase.platform": ""
+    },
+    "meta": {
+      "generator": "^Enabase$",
+      "publisher": "^Enabase$"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.enabase.com/"
+  },
+  "Enagic": {
+    "cats": [
+      1
+    ],
+    "description": "Enagic is a content management system (CMS) business website builder designed to help companies create, manage, and organize their online presence through structured content and customizable templates.",
+    "icon": "Enagic.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "www\\.enagicwebsystem\\.com"
+    ],
+    "website": "https://www.enagicwebsystem.com"
+  },
+  "Enalyzer": {
+    "cats": [
+      73
+    ],
+    "description": "Enalyzer is an online survey creation platform.",
+    "icon": "Enalyzer.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "surveys\\.enalyzer\\.com/"
+    ],
+    "website": "https://www.enalyzer.com"
+  },
+  "Enecto": {
+    "cats": [
+      10
+    ],
+    "description": "Enecto is a tool for analyzing web visitor demographics to provide insights into audience composition and behavior.",
+    "icon": "Enecto.svg",
+    "saas": true,
+    "scriptSrc": [
+      "trk\\.enecto\\.com"
+    ],
+    "website": "https://www.enecto.com"
+  },
+  "Engaga": {
+    "cats": [
+      32
+    ],
+    "description": "Engaga is a platform that enhances website effectiveness with call-to-action popups and popup forms designed to convert visitors into customers and subscribers.",
+    "icon": "Engaga.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "spark\\.engaga\\.com"
+    ],
+    "website": "https://www.engaga.com"
+  },
+  "EngagementHQ": {
+    "cats": [
+      1
+    ],
+    "description": "Essential software for changemakers. Facilitate, centralize, and analyze two-way conversations between you and your community.",
+    "dom": [
+      "link[href*='ehq-production-']"
+    ],
+    "icon": "EngagementHQ.svg",
+    "website": "https://granicus.com/solution/govdelivery/engagementhq/"
+  },
+  "Engagio": {
+    "cats": [
+      10
+    ],
+    "icon": "Engagio.png",
+    "scriptSrc": [
+      "web-analytics\\.engagio\\.com/js/ei\\.js",
+      "web-analytics\\.engagio\\.com/api/"
+    ],
+    "website": "https://www.engagio.com/"
+  },
+  "Engati": {
+    "cats": [
+      52
+    ],
+    "description": "Engati is a chatbot platform that allows users to build bots without requiring programming skills.",
+    "icon": "Engati.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.engati\\.com/"
+    ],
+    "website": "https://www.engati.com"
+  },
+  "Enjin CMS": {
+    "cats": [
+      1
+    ],
+    "description": "Enjin CMS is a content management system which focused creation of websites for gaming guilds, clans, Minecraft servers, or fan communities.",
+    "icon": "Enjin.svg",
+    "js": {
+      "Enjin_Core_Storage_Cache": "",
+      "Enjin_UI": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.enjin\\.com/"
+    ],
+    "website": "https://www.enjin.com"
+  },
+  "Enjore": {
+    "cats": [
+      1
+    ],
+    "description": "Enjore is an online sports administration system designed to manage schedules, results, statistics, and news for all leagues and tournaments.",
+    "dom": [
+      "link[href*='cdn.enjore.com/']"
+    ],
+    "icon": "Enjore.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "PHP",
+      "AddToAny"
+    ],
+    "saas": true,
+    "website": "https://www.enjore.com"
+  },
+  "Enkod": {
+    "cats": [
+      32,
+      97
+    ],
+    "description": "Enkod is a CDP platform designed for marketing automation.",
+    "icon": "Enkod.svg",
+    "js": {
+      "enKodBox.token": ""
+    },
+    "saas": true,
+    "website": "https://enkod.io"
+  },
+  "Enlistly": {
+    "cats": [
+      100
+    ],
+    "description": "Enlistly tracks referral orders in realtime. Orders that are partially refunded, refunded, or cancelled update on the fly.",
+    "icon": "Enlistly.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "scriptSrc": [
+      "cdn\\.enlistly\\.com/"
+    ],
+    "website": "https://enlistly.com"
+  },
+  "Enonic": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "com-enonic-app-ga_disabled": ""
+    },
+    "description": "Enonic is a platform that helps you to create digital experiences by structuring and composing content.",
+    "icon": "Enonic.svg",
+    "meta": {
+      "author": "^Enonic$"
+    },
+    "pricing": [
+      "freemium",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.enonic.com"
+  },
+  "Enquisite": {
+    "cats": [
+      10
+    ],
+    "description": "Enquisite is a platform that provides web analytics and metrics not typically available through standard webmaster tools.",
+    "icon": "Enquisite.svg",
+    "saas": true,
+    "scriptSrc": [
+      "log\\.enquisite\\.com"
+    ],
+    "website": "https://enquisite.com"
+  },
+  "Ensi": {
+    "cats": [
+      6
+    ],
+    "description": "Ensi is an open source ecommerce platform based on service oriented architecture.",
+    "headers": {
+      "X-Ensi-Platform": ""
+    },
+    "icon": "Ensi.svg",
+    "meta": {
+      "generator": "Ensi Platform"
+    },
+    "oss": true,
+    "website": "https://ensi.tech"
+  },
+  "Ensighten": {
+    "cats": [
+      42
+    ],
+    "description": "Ensighten is a solution that enables secure management, implementation and control of website technologies.",
+    "icon": "ensighten.png",
+    "scriptSrc": [
+      "//nexus\\.ensighten\\.com/"
+    ],
+    "website": "https://success.ensighten.com/hc/en-us"
+  },
+  "Enterprise Bot": {
+    "cats": [
+      52
+    ],
+    "description": "Enterprise Bot specializes in developing and deploying complex conversational AI systems tailored for enterprise settings, leveraging natural language processing, machine learning, and automation to improve customer interactions and streamline operations.",
+    "icon": "Enterprise Bot.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.enterprisebot\\.co/"
+    ],
+    "website": "https://www.enterprisebot.ai"
+  },
+  "Entresoft": {
+    "cats": [
+      53
+    ],
+    "description": "Entresoft is a platform that offers CRM and pipeline management tools for business operations.",
+    "icon": "Entresoft.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.entresoft\\.com"
+    ],
+    "website": "https://entresoft.com"
+  },
+  "Envoke": {
+    "cats": [
+      75
+    ],
+    "description": "Envoke is a CASL-compliant email marketing software designed for communications professionals in business, education, and the public sector, with a focus on security and compliance.",
+    "icon": "Envoke.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.envoke\\.com/"
+    ],
+    "website": "https://envoke.com/"
+  },
+  "Envolve Tech": {
+    "cats": [
+      52
+    ],
+    "description": "Envolve Tech is a platform that provides virtual shopping assistants designed to guide customers through online purchases.",
+    "icon": "EnvolveTech.svg",
+    "js": {
+      "envolveChatInitialized": "",
+      "envolveJsonp": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.envolvetech\\.com"
+    ],
+    "website": "https://envolvetech.com"
+  },
+  "Envybox": {
+    "cats": [
+      5,
+      52
+    ],
+    "description": "Envybox is a multiservice for increasing sales.",
+    "icon": "Envybox.svg",
+    "js": {
+      "EnvyWidget": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.saas-support\\.com/"
+    ],
+    "website": "https://envybox.io"
+  },
+  "Enzuzo": {
+    "cats": [
+      67
+    ],
+    "description": "Enzuzo is a data privacy management solution that helps organizations manage consent, comply with privacy regulations, and maintain control over personal data across digital platforms.",
+    "headers": {
+      "X-Enzuzo-City": "",
+      "X-Enzuzo-Country": ""
+    },
+    "icon": "Enzuzo.svg",
+    "js": {
+      "__ENZUZO_STARTED__": "",
+      "enzuzoGtmConsentObj": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.enzuzo\\.com"
+    ],
+    "website": "https://www.enzuzo.com"
+  },
+  "EraofEcom Cartroids": {
+    "cats": [
+      100
+    ],
+    "description": "EraofEcom Cartroids makes it easy for you to create highly targeted upsells, cross-sells and bundle offers.",
+    "icon": "EraofEcom.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "js": {
+      "cartroids.appBase": "cartroids\\.eraofecom\\.org"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://eraofecom.org/collections/tech/products/cartroids"
+  },
+  "EraofEcom MTL": {
+    "cats": [
+      100
+    ],
+    "description": "EraofEcom MTL is a Shopify pop up app that enables you to catch your website visitors.",
+    "icon": "EraofEcom.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "mtl\\.eraofecom\\.org"
+    ],
+    "website": "https://eraofecom.org/collections/tech/products/milk-the-leads"
+  },
+  "EraofEcom WinAds": {
+    "cats": [
+      100
+    ],
+    "description": "EraofEcom WinAds is an all-in-one Facebook pixel app for Shopify.",
+    "dom": [
+      "link[href*='winads.eraofecom.org']"
+    ],
+    "icon": "EraofEcom.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "js": {
+      "win_ads.baseURL": "winads\\.eraofecom\\.org"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://eraofecom.org/collections/tech/products/win-ads-manager"
+  },
+  "Errorception": {
+    "cats": [
+      10
+    ],
+    "description": "Errorception is a error reporting service for client-side in-browser JavaScript errors.",
+    "icon": "Errorception.svg",
+    "js": {
+      "_errs": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://errorception.com"
+  },
+  "Erxes": {
+    "cats": [
+      53
+    ],
+    "description": "Erxes is a platform that provides tools for marketing, sales, and customer service management.",
+    "icon": "Erxes.svg",
+    "js": {
+      "Erxes.showMessenger": "",
+      "erxesEnv": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      ".app\\.erxes\\.io"
+    ],
+    "website": "https://erxes.io"
+  },
+  "EspoCRM": {
+    "cats": [
+      53
+    ],
+    "cpe": "cpe:2.3:a:espocrm:espocrm:*:*:*:*:*:*:*:*",
+    "description": "EspoCRM is an open-source CRM software solution designed for businesses of all sizes.",
+    "dom": [
+      "meta[content*='EspoCRM'], link[href*='/espo/']"
+    ],
+    "icon": "EspoCRM.svg",
+    "implies": [
+      "Handlebars",
+      "Backbone.js"
+    ],
+    "js": {
+      "Espo": ""
+    },
+    "oss": true,
+    "pricing": [
+      "freemium"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "espo(?:\\.min)?\\.js"
+    ],
+    "website": "https://www.espocrm.com"
+  },
+  "Essent SiteBuilder Pro": {
+    "cats": [
+      1,
+      6
+    ],
+    "description": "Essent SiteBuilder Pro is a fully-integrated web-based website design system, content management and ecommerce system.",
+    "dom": [
+      "a[href*='www.essent.com'][target='_blank']"
+    ],
+    "icon": "Essent.png",
+    "meta": {
+      "GENERATOR": "^Essent® SiteBuilder Pro$"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.essent.com/SiteBuilderPro.html"
+  },
+  "Estate Track": {
+    "cats": [
+      32
+    ],
+    "description": "Estate Track is an all-in-one website platform for estate agents that facilitates automated marketing and lead generation.",
+    "icon": "EstateTrack.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.estate-track\\.co\\.uk"
+    ],
+    "website": "https://estatetrack.co.uk"
+  },
+  "Estore Compare": {
+    "cats": [
+      74
+    ],
+    "description": "Estore Compare is a website optimisation software that offers A/B testing, CVR and LTV measuring tools.",
+    "icon": "EstoreCompare.svg",
+    "scriptSrc": [
+      "cdn\\d+\\.estore\\.jp/"
+    ],
+    "website": "https://estore.co.jp/estorecompare/"
+  },
+  "Estore Shopserve": {
+    "cats": [
+      6
+    ],
+    "description": "Estore Shopserve is an all-in-one payment processing and ecommerce solution.",
+    "icon": "EstoreShopserve.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cart\\d+\\.shopserve\\.jp/"
+    ],
+    "website": "https://estore.co.jp/shopserve"
+  },
+  "Etail Systems": {
+    "cats": [
+      6
+    ],
+    "description": "Etail Systems is an all-in-one centralized platform to manage all of your ecommerce operations.",
+    "icon": "EtailSystems.svg",
+    "js": {
+      "EtailAlert": "",
+      "EtailEncodePersText": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.etailsystems.com"
+  },
+  "Etch": {
+    "cats": [
+      87,
+      51
+    ],
+    "description": "Etch is a developer-focused visual development environment for WordPress that combines WYSIWYG editing with IDE-level control and full block editor compatibility.",
+    "dom": [
+      "link[href*='/wp-content/plugins/etch/']"
+    ],
+    "icon": "Etch.svg",
+    "pricing": [
+      "poa"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "website": "https://etchwp.com"
+  },
+  "Etermio": {
+    "cats": [
+      72
+    ],
+    "description": "Etermio is an automated system for online appointment scheduling.",
+    "icon": "Etermio.svg",
+    "js": {
+      "$eTermio": "",
+      "eTermio_autoOpenWindow": "",
+      "etermio_handler": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.etermio.com"
+  },
+  "Eticex": {
+    "cats": [
+      6
+    ],
+    "description": "Eticex is as an ecommerce infrastructure provider that offers ecommerce packages and customisable high-performance ecommerce solutions.",
+    "icon": "Eticex.svg",
+    "implies": [
+      "MySQL",
+      "React",
+      "PHP"
+    ],
+    "pricing": [
+      "recurring",
+      "mid"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.eticex\\.com/"
+    ],
+    "website": "https://www.eticex.com"
+  },
+  "Etix": {
+    "cats": [
+      104
+    ],
+    "description": "Etix is an international web-based ticketing service provider for the entertainment, travel, and sports industries.",
+    "dom": [
+      "a[href*='.etix.com/ticket/'][target='_blank']"
+    ],
+    "icon": "Etix.svg",
+    "js": {
+      "Etix.javaContext": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "website": "https://hello.etix.com"
+  },
+  "Etracker": {
+    "cats": [
+      10,
+      74
+    ],
+    "description": "Etracker is a web optimisation solution.",
+    "icon": "Etracker.svg",
+    "js": {
+      "_etracker": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.etracker\\.com"
+    ],
+    "website": "https://www.etracker.com"
+  },
+  "Eveho": {
+    "cats": [
+      6
+    ],
+    "description": "Eveho is a platform that enables the creation of digital dealerships by providing tools to set up and manage online vehicle sales.",
+    "icon": "Eveho.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.eveho\\.io"
+    ],
+    "website": "https://eveho.io"
+  },
+  "EventOn": {
+    "cats": [
+      72,
+      87
+    ],
+    "description": "EventON is event calendar for WordPress.",
+    "dom": [
+      "link#eventon_dynamic_styles-css, link[href*='/css/eventon_styles\\.css']"
+    ],
+    "icon": "eventon.svg",
+    "website": "https://www.myeventon.com"
+  },
+  "Eventlink": {
+    "cats": [
+      72
+    ],
+    "description": "Eventlink is a platform for managing events, offering tools for registration, communication, and collaboration in a unified interface.",
+    "dom": [
+      "link[href*='.eventlink.com/'], iframe[src*='.eventlink.com/']"
+    ],
+    "icon": "Eventlink.svg",
+    "js": {
+      "eventlink.organizationID": ""
+    },
+    "saas": true,
+    "website": "https://eventlink.com"
+  },
+  "EverWeb": {
+    "cats": [
+      51
+    ],
+    "description": "EverWeb is a website builder that allows users to create websites without any coding required.",
+    "icon": "EverWeb.svg",
+    "meta": {
+      "generator": "EverWeb ([\\d.]+)\\;version:\\1"
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.everwebapp.com"
+  },
+  "Everflow": {
+    "cats": [
+      10
+    ],
+    "description": "Everflow is a partner marketing analytics platform.",
+    "icon": "Everflow.svg",
+    "pricing": [
+      "high",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "everflow\\.js"
+    ],
+    "website": "https://www.everflow.io"
+  },
+  "Everviz": {
+    "cats": [
+      10
+    ],
+    "description": "Everviz is an online tool for creating interactive charts and maps, enabling data visualization with customizable features.",
+    "icon": "Everviz.svg",
+    "js": {
+      "everviz.beforePrint": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.everviz\\.com/"
+    ],
+    "website": "https://www.everviz.com"
+  },
+  "EveryAction": {
+    "cats": [
+      111
+    ],
+    "description": "EveryAction provides fundraising software, donor management software, and CRM software to nonprofit organisations.",
+    "dom": [
+      "a[href*='secure.everyaction.com/'], div[data-form-url*='secure.everyaction.com/']"
+    ],
+    "icon": "EveryAction.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.everyaction\\.com/"
+    ],
+    "website": "https://www.everyaction.com"
+  },
+  "Eveve": {
+    "cats": [
+      5,
+      72
+    ],
+    "description": "Eveve is a restaurant table booking widget.",
+    "dom": [
+      "iframe[src*='.eveve.com']"
+    ],
+    "html": [
+      "<iframe[^>]*[\\w]+\\.eveve\\.com"
+    ],
+    "icon": "Eveve.svg",
+    "implies": [
+      "PHP"
+    ],
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.eveve.com"
+  },
+  "Evidence": {
+    "cats": [
+      32
+    ],
+    "description": "Evidence is a real-time social proof tool designed to increase website conversions by displaying recent customer activity and engagement.",
+    "icon": "Evidence.svg",
+    "js": {
+      "EvidenceLoaded": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "code\\.evidence\\.io/"
+    ],
+    "website": "https://evidence.io"
+  },
+  "Evidon": {
+    "cats": [
+      67
+    ],
+    "description": "Evidon is a transparency company that helps organizations educate consumers on how and why data is collected, as well as provide consumers with the ability to give and withdraw consent to their data being used.",
+    "dom": [
+      "a[href*='info.evidon.com/pub_info/']"
+    ],
+    "icon": "Evidon.png",
+    "js": {
+      "EB.EvidonConsent": "",
+      "evidon": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.evidon\\.com/"
+    ],
+    "website": "https://www.evidon.com"
+  },
+  "Eviivo": {
+    "cats": [
+      93
+    ],
+    "cookies": {
+      "eviivo_lang": ""
+    },
+    "description": "Eviivo is an online booking system that enables hosts and hoteliers to manage reservations and availability.",
+    "icon": "Eviivo.svg",
+    "js": {
+      "eviivo.announcement": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://eviivo.com"
+  },
+  "Evolok": {
+    "cats": [
+      32
+    ],
+    "description": "Evolok is an engagement and monetization platform for digital media.",
+    "icon": "Evolok.svg",
+    "js": {
+      "evo_client": "",
+      "evo_endpoint": ""
+    },
+    "saas": true,
+    "website": "https://www.evolok.com"
+  },
+  "Evolve Media": {
+    "cats": [
+      1
+    ],
+    "description": "Evolve Media is a publishing platform that offers contextual environments for partners to connect and engage with millions of loyal readers through passionate writing and artful storytelling.",
+    "icon": "EvolveMedia.svg",
+    "js": {
+      "EvolveGtagId": "",
+      "EvolveMediaMainSettings": ""
+    },
+    "saas": true,
+    "website": "https://www.evolvemediallc.com"
+  },
+  "Evvnt": {
+    "cats": [
+      72,
+      104
+    ],
+    "description": "Evvnt is a digital events marketing and management platform.",
+    "dom": [
+      "script[data-source*='evvnt']"
+    ],
+    "icon": "Evvnt.svg",
+    "js": {
+      "evvnt_require": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://evvnt.com"
+  },
+  "ExactMetrics": {
+    "cats": [
+      87,
+      10
+    ],
+    "description": "ExactMetrics (formerly Google Analytics Dashboard for WP) plugin helps you properly setup all the powerful Google Analytics tracking features without writing any code or hiring a developer.",
+    "icon": "ExactMetrics.svg",
+    "js": {
+      "ExactMetrics": "",
+      "exactmetrics_frontend": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "WordPress"
+    ],
+    "scriptSrc": [
+      "/wp-content/plugins/google-analytics-dashboard-for-wp/.+\\.js(?:\\?ver=(\\d+(?:\\.\\d+)+))?\\;version:\\1"
+    ],
+    "website": "https://www.exactmetrics.com"
+  },
+  "ExactVisitor": {
+    "cats": [
+      10
+    ],
+    "description": "ExactVisitor is a tool that identifies and provides insights about individuals visiting a website.",
+    "icon": "ExactVisitor.svg",
+    "saas": true,
+    "scripts": [
+      "track\\.exactvisitor\\.com"
+    ],
+    "website": "https://exactvisitor.com"
+  },
+  "Excentos": {
+    "cats": [
+      6
+    ],
+    "description": "Excentos is a guided selling solution designed to assist customers in identifying and selecting specific products.",
+    "icon": "Excentos.svg",
+    "js": {
+      "_excentosPAQ": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "service\\.excentos\\.com"
+    ],
+    "website": "https://www.excentos.com"
+  },
+  "Exemptify": {
+    "cats": [
+      106,
+      100
+    ],
+    "description": "Exemptify allows you to conduct proper EU B2B transactions by validating EU VAT IDs.",
+    "icon": "Exemptify.png",
+    "implies": [
+      "Shopify"
+    ],
+    "js": {
+      "ExemptifyTriggerUpdate": "",
+      "m4u_ex_vat_postfix_txt": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.modules4u\\.biz/shopify/exemptify"
+    ],
+    "website": "https://modules4u.biz/exemptify"
+  },
+  "ExitIntel": {
+    "cats": [
+      32
+    ],
+    "description": "ExitIntel is a full service conversion optimisation agency that focuses on ecommerce companies.",
+    "icon": "ExitIntel.svg",
+    "js": {
+      "exitintel.VERSION": "(.+)$\\;version:\\1",
+      "exitintelAccount": "",
+      "exitintelConfig": ""
+    },
+    "pricing": [
+      "high",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:get.)?exitintel\\.com"
+    ],
+    "website": "https://exitintelligence.com"
+  },
+  "Exitshop": {
+    "cats": [
+      6
+    ],
+    "description": "Exitshop is an ecommerce solution designed for managing and operating online stores.",
+    "icon": "Exitshop.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "www\\.exitshop\\.cz"
+    ],
+    "website": "https://www.exitshop.cz"
+  },
+  "Exponea": {
+    "cats": [
+      97
+    ],
+    "description": "Exponea is a cloud-based marketing analysis platform suitable for large and midsize organisations in a variety of industries.",
+    "icon": "Exponea.svg",
+    "js": {
+      "exponea.version": "^v([\\d.]+)$\\;version:\\1"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:\\.exponea\\.com)?/js/exponea\\.min\\.js"
+    ],
+    "website": "https://go.exponea.com"
+  },
+  "ExpressionEngine": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "exp_csrf_token": "",
+      "exp_last_activity": "",
+      "exp_tracker": ""
+    },
+    "cpe": "cpe:2.3:a:ellislab:expressionengine:*:*:*:*:*:*:*:*",
+    "description": "ExpressionEngine is a free and open-source CMS.",
+    "icon": "ExpressionEngine.svg",
+    "implies": [
+      "PHP"
+    ],
+    "oss": true,
+    "website": "https://expressionengine.com/"
+  },
+  "ExtraWatch": {
+    "cats": [
+      10
+    ],
+    "description": "ExtraWatch is a tool that tracks clicks and helps optimize landing pages by providing actionable insights into user interactions.",
+    "icon": "ExtraWatch.svg",
+    "js": {
+      "extraWatchAjaxLink": "",
+      "extrawatch_createRequestObject": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.extrawatch.com"
+  },
+  "EyouCMS": {
+    "cats": [
+      1
+    ],
+    "description": "Eyou CMS is a stable, open-source enterprise content management system built on the TP5.0 framework.",
+    "icon": "EyouCMS.svg",
+    "meta": {
+      "generator": "^eyoucms$"
+    },
+    "pricing": [
+      "onetime"
+    ],
+    "website": "https://www.eyoucms.com"
+  },
+  "EzTix": {
+    "cats": [
+      104
+    ],
+    "description": "EzTix is an event ticketing system.",
+    "dom": [
+      "script#eztixKioskLinkId"
+    ],
+    "icon": "EzTix.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "kiosk\\.eztix\\.co/"
+    ],
+    "website": "https://www.eztix.com"
+  },
+  "Ezoic": {
+    "cats": [
+      10,
+      36
+    ],
+    "description": "Ezoic is a website optimisation platform for digital publishers and website owners powered by machine learning.",
+    "icon": "Ezoic.svg",
+    "js": {
+      "EzoicA": "",
+      "EzoicBanger": "",
+      "ezoicTestActive": ""
+    },
+    "pricing": [
+      "freemium",
+      "recurring",
+      "poa",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.ezo(?:js|ic|dn)\\.(?:com|net)"
+    ],
+    "website": "https://www.ezoic.com"
+  },
+  "e-Shop Commerce": {
+    "cats": [
+      6
+    ],
+    "description": "e-Shop is a all-in-one Software-as-a-Service (SaaS) that allows Israeli customers to set up an online store and sell their products.",
+    "icon": "eShop eCommerce.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/template_inc/eshopstoresframework"
+    ],
+    "website": "https://www.e-shop.co.il"
+  },
+  "e-goi": {
+    "cats": [
+      32,
+      75
+    ],
+    "description": "e-goi is a multichannel marketing automation software for ecommerce.",
+    "icon": "e-goi.svg",
+    "js": {
+      "Egoimmerce": "",
+      "_egoiaq": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.e-goi\\.com/egoimmerce\\.js"
+    ],
+    "website": "https://www.e-goi.com"
+  },
+  "e107": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "e107_tz": ""
+    },
+    "cpe": "cpe:2.3:a:e107:e107:*:*:*:*:*:*:*:*",
+    "headers": {
+      "X-Powered-By": "e107"
+    },
+    "icon": "e107.svg",
+    "implies": [
+      "PHP"
+    ],
+    "scriptSrc": [
+      "[^a-z\\d]e107\\.js"
+    ],
+    "website": "https://e107.org"
+  },
+  "eCShop": {
+    "cats": [
+      6
+    ],
+    "description": "eCShop is a Brazilian ecommerce platform designed for building and managing online shops.",
+    "headers": {
+      "Powered": "^eCShop$"
+    },
+    "icon": "eCShop.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.ecshop\\.com\\.br"
+    ],
+    "website": "https://www.ecshop.com.br"
+  },
+  "eCaupo": {
+    "cats": [
+      6
+    ],
+    "description": "eCaupo is no delivery portal, but your own shop.",
+    "icon": "eCaupo.png",
+    "pricing": [
+      "low",
+      "recurring",
+      "payg"
+    ],
+    "scriptSrc": [
+      "\\.ecaupo\\.(?:at|com)/"
+    ],
+    "website": "https://www.ecaupo.com"
+  },
+  "eClass": {
+    "cats": [
+      1
+    ],
+    "description": "eClass is an online learning platform.",
+    "icon": "eClass.svg",
+    "js": {
+      "fe_eclass": "\\;confidence:50",
+      "fe_eclass_guest": "\\;confidence:50"
+    },
+    "website": "https://www.eclass.com.hk"
+  },
+  "eComchain": {
+    "cats": [
+      6
+    ],
+    "description": "eComchain is a cloud-based ecommerce platform offering B2B and B2C solutions with integrated enterprise resource planning (ERP).",
+    "icon": "eComchain.svg",
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.ecomchain\\.com"
+    ],
+    "website": "https://ecomchain.com"
+  },
+  "eDirectory": {
+    "cats": [
+      1
+    ],
+    "description": "eDirectory is an online directory software platform that enables the creation, management, and monetization of searchable, category-based listings for businesses, services, or professionals.",
+    "icon": "eDirectory.svg",
+    "js": {
+      "eDirectory.Search": ""
+    },
+    "pricing": [
+      "onetime",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.edirectory\\.com"
+    ],
+    "website": "https://www.edirectory.com"
+  },
+  "eDokan": {
+    "cats": [
+      6
+    ],
+    "description": "eDokan is hosted ecommerce platform with drag-drop template builder and zero programming knowledge.",
+    "dom": [
+      "img[src*='cdn.edokan.co']"
+    ],
+    "icon": "eDokan.svg",
+    "implies": [
+      "Node.js",
+      "Angular",
+      "MongoDB"
+    ],
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://edokan.co"
+  },
+  "eGain Conversation": {
+    "cats": [
+      52
+    ],
+    "description": "eGain Conversation is a customer engagement platform that centralises and manages customer interactions across multiple channels, including chat, email, social media, and messaging apps.",
+    "icon": "eGain.svg",
+    "js": {
+      "egainDockChat": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.analytics-egain\\.com/"
+    ],
+    "website": "https://www.egain.com"
+  },
+  "eKonsilio": {
+    "cats": [
+      52
+    ],
+    "description": "eKonsilio is a conversational management platform that enables organizations to design, deploy, and manage automated and human-assisted conversations across digital communication channels.",
+    "icon": "eKonsilio.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "script\\.ekonsilio\\.com"
+    ],
+    "website": "https://www.ekonsilio.com"
+  },
+  "ePages": {
+    "cats": [
+      6
+    ],
+    "description": "ePages is a provider of cloud-based online shop solutions.",
+    "headers": {
+      "X-epages-RequestId": ""
+    },
+    "icon": "ePages.svg",
+    "js": {
+      "epages": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.epages.com/"
+  },
+  "ePublishing": {
+    "cats": [
+      54,
+      96
+    ],
+    "description": "ePublishing is a media tech stack that enhances revenue, productivity, and engagement through AI-powered solutions, SEO dominance, and audience integration.",
+    "icon": "ePublishing.svg",
+    "js": {
+      "Ellington.Admin": "",
+      "EllingtonMap": "",
+      "EllingtonPlateLoader.cache": ""
+    },
+    "saas": true,
+    "website": "https://www.epublishing.com"
+  },
+  "eShopCRM": {
+    "cats": [
+      53
+    ],
+    "description": "eShopCRM is an ecommerce CRM for Shopify.",
+    "icon": "eShopCRM.svg",
+    "implies": [
+      "Shopify"
+    ],
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "eshopcrm\\.com/"
+    ],
+    "website": "https://eshopcrm.com"
+  },
+  "eSputnik": {
+    "cats": [
+      32,
+      97
+    ],
+    "description": "eSputnik is a marketing automation service for ecommerce.",
+    "icon": "eSputnik.svg",
+    "js": {
+      "esSdk": "^es$"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?://|\\.)esputnik\\.com/"
+    ],
+    "website": "https://esputnik.com"
+  },
+  "eSyndiCat": {
+    "cats": [
+      1
+    ],
+    "headers": {
+      "X-Drectory-Script": "^eSyndiCat"
+    },
+    "icon": "eSyndiCat.png",
+    "implies": [
+      "PHP"
+    ],
+    "js": {
+      "esyndicat": ""
+    },
+    "meta": {
+      "generator": "^eSyndiCat "
+    },
+    "website": "https://esyndicat.com"
+  },
+  "eTrigue": {
+    "cats": [
+      32
+    ],
+    "description": "eTrigue is a demand generation and sales acceleration software that helps businesses identify, engage, and convert prospects through automated marketing and lead nurturing.",
+    "icon": "eTrigue.svg",
+    "saas": true,
+    "scripts": [
+      "trk\\.etrigue\\.com"
+    ],
+    "website": "https://www.etrigue.com"
+  },
+  "eWAY Payments": {
+    "cats": [
+      41
+    ],
+    "description": "eWAY is a global omnichannel payment provider. The company processes secure credit card payments for merchants. eWay works through eCommerce.",
+    "html": [
+      "<img [^>]*src=\"[^/]*//[^/]*eway\\.com"
+    ],
+    "icon": "eway.svg",
+    "js": {
+      "eWAY.eventHandler": "",
+      "eWAYUtils": "",
+      "ewayVars": ""
+    },
+    "scriptSrc": [
+      "secure\\.ewaypayments\\.com"
+    ],
+    "scripts": [
+      "api\\.ewaypayments\\.com"
+    ],
+    "website": "https://www.eway.com.au/"
+  },
+  "eZ Publish": {
+    "cats": [
+      1,
+      6
+    ],
+    "cookies": {
+      "eZSESSID": ""
+    },
+    "cpe": "cpe:2.3:a:ez:ez_publish:*:*:*:*:*:*:*:*",
+    "headers": {
+      "X-Powered-By": "^eZ Publish"
+    },
+    "icon": "eZ.svg",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "eZ Publish"
+    },
+    "website": "https://github.com/ezsystems/ezpublish-legacy"
+  },
+  "eZCater": {
+    "cats": [
+      6
+    ],
+    "description": "ezCater is a platform that enables businesses to order and manage office catering services from local and national restaurants.",
+    "icon": "ezCater.svg",
+    "saas": true,
+    "scripts": [
+      "www\\.ezcater\\.com"
+    ],
+    "website": "https://www.ezcater.com"
+  },
+  "ebisumart": {
+    "cats": [
+      6
+    ],
+    "description": "ebisumart is a cloud-based storefront system for developing and renewing high-quality ecommerce websites.",
+    "icon": "ebisumart.svg",
+    "js": {
+      "Ebisu.FontChanger": "",
+      "Ebisu.FontChanger.map.L": "",
+      "ebisu_conv": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "website": "https://www.ebisumart.com"
+  },
+  "ecbeing": {
+    "cats": [
+      6
+    ],
+    "description": "Ecbeing is a platform designed for building ecommerce sites, tailored for medium-sized and large companies.",
+    "dom": [
+      "div[class^='ecbn-']"
+    ],
+    "icon": "Ecbeing.svg",
+    "js": {
+      "ecUtil": "",
+      "ecblib": ""
+    },
+    "pricing": [
+      "poa",
+      "high"
+    ],
+    "saas": true,
+    "scripts": [
+      "www\\.ecbeing\\.net",
+      "ecbn-selection-widget\\.js"
+    ],
+    "website": "https://www.ecbeing.net"
+  },
+  "emBlue": {
+    "cats": [
+      32,
+      75
+    ],
+    "description": "emBlue is an email and marketing automation platform.",
+    "icon": "emBlue.svg",
+    "js": {
+      "emblueOnSiteApp": ""
+    },
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.embluemail\\.com/(?:library/([\\d.]+))?\\;version:\\1"
+    ],
+    "website": "https://www.embluemail.com/en"
+  },
+  "enduro.js": {
+    "cats": [
+      1
+    ],
+    "headers": {
+      "X-Powered-By": "^enduro\\.js"
+    },
+    "icon": "enduro.js.svg",
+    "implies": [
+      "Node.js"
+    ],
+    "website": "https://endurojs.com"
+  },
+  "eola": {
+    "cats": [
+      72
+    ],
+    "cookies": {
+      "_eola_session_eola": ""
+    },
+    "description": "eola is a booking platform that enables users to manage reservations, schedules, and availability for services or events through a centralized online system.",
+    "dom": [
+      "link[href*='backend.eola.co/'][rel*='stylesheet']"
+    ],
+    "icon": "eola.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://eola.co"
+  },
+  "eucookie.eu": {
+    "cats": [
+      67
+    ],
+    "icon": "eucookie.svg",
+    "scriptSrc": [
+      "eucookie\\.eu/public/gdpr-cookie-consent\\.js"
+    ],
+    "website": "https://www.eucookie.eu/"
+  },
+  "ewiz commerce": {
+    "cats": [
+      6
+    ],
+    "description": "ewiz commerce is a B2B solution that integrates advanced eCommerce technology and AI to help manufacturers, distributors, and wholesalers streamline operations and improve ROI.",
+    "icon": "ewizcommerce.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.ewizsaas\\.com"
+    ],
+    "website": "https://www.ewizcommerce.com"
+  },
+  "experiencedCMS": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:experiencedcms:experiencedcms:*:*:*:*:*:*:*:*",
+    "icon": "experiencedCMS_Logo.png",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "^experiencedCMS$"
+    },
+    "website": "https://experiencedcms.berkearas.de"
+  },
+  "ezyVet": {
+    "cats": [
+      72
+    ],
+    "description": "ezyVet is a cloud-based veterinary practice management platform designed to support clinical workflows, patient records, scheduling, and operational processes.",
+    "icon": "ezyVet.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.ezyvet\\.com/"
+    ],
+    "website": "https://www.ezyvet.com"
+  }
+}

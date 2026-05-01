@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Checkout &mdash; Acme Online</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>Complete your purchase</h1>
+  <form id="payment-form" action="/charge" method="POST">
+    <label>Card details</label>
+    <div id="card-element"><!-- Stripe.js mounts here --></div>
+    <input type="hidden" name="token" data-stripe="token">
+    <input type="hidden" name="amount" data-stripe="amount" value="4900">
+    <button type="submit">Pay $49</button>
+  </form>
+  <script>
+    var stripe = Stripe('pk_live_xxxxxxxxxxxxxxxxxxxxxxxx');
+    var elements = stripe.elements();
+    var card = elements.create('card');
+    card.mount('#card-element');
+  </script>
+</body>
+</html>

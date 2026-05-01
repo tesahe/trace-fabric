@@ -1,0 +1,21 @@
+{
+  "fixture": "shopify_store.html",
+  "url": "https://demo-shop.myshopify.com/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "cloudflare"},
+    {"key": "x-shopid", "value": "1234567"},
+    {"key": "x-shopify-stage", "value": "production"},
+    {"key": "Set-Cookie", "value": "_shopify_y=abc; Path=/; Secure"}
+  ],
+  "must_detect": [
+    {"name": "Shopify", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "WooCommerce"
+  ],
+  "notes": "Shopify CDN script + meta tags + x-shopify-* headers + _shopify_y cookie. Cloudflare server header is intentional noise (FP guard)."
+}

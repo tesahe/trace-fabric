@@ -1,0 +1,22 @@
+{
+  "fixture": "hubspot_landing.html",
+  "url": "https://acme.example/demo",
+  "synthetic_headers": [
+    {"key": "Server", "value": "HubSpot"},
+    {"key": "x-hs-hub-id", "value": "12345"},
+    {"key": "x-powered-by", "value": "HubSpot"}
+  ],
+  "must_detect": [
+    {"name": "HubSpot", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "HubSpot CMS Hub", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "HubSpot Analytics", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "Calendly"
+  ],
+  "notes": "HubSpot CMS Hub identifies via x-hs-hub-id + generator=HubSpot, implies HubSpot. HubSpot Analytics distinct via js.hs-analytics.net."
+}

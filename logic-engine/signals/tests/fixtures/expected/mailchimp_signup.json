@@ -1,0 +1,20 @@
+{
+  "fixture": "mailchimp_signup.html",
+  "url": "https://example.com/subscribe",
+  "synthetic_headers": [
+    {"key": "Server", "value": "Apache"}
+  ],
+  "must_detect": [
+    {"name": "MailChimp", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Stripe",
+    "Calendly"
+  ],
+  "notes": "MailChimp embedded form via mc-validate.js + chimpstatic.com/mcjs-connected + the canonical 'Begin MailChimp Signup Form' HTML comment."
+}

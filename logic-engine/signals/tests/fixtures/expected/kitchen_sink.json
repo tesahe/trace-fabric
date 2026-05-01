@@ -1,0 +1,30 @@
+{
+  "fixture": "kitchen_sink.html",
+  "url": "https://saashq.example/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "nginx"},
+    {"key": "X-Powered-By", "value": "PHP/8.1.27"},
+    {"key": "X-Pingback", "value": "https://saashq.example/xmlrpc.php"},
+    {"key": "x-hs-hub-id", "value": "56789"},
+    {"key": "Set-Cookie", "value": "__stripe_mid=abc; Path=/"},
+    {"key": "cf-ray", "value": "85a1b2c3d4-IAD"}
+  ],
+  "must_detect": [
+    {"name": "WordPress", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Contact Form 7", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Google Tag Manager", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "HubSpot", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "HubSpot CMS Hub", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Stripe", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Calendly", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "PHP", "pack": "wappalyzer", "via": "implied"},
+    {"name": "MySQL", "pack": "wappalyzer", "via": "implied"},
+    {"name": "jquery", "pack": "retirejs", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "Shopify",
+    "Squarespace",
+    "Wix"
+  ],
+  "notes": "Multi-tech kitchen-sink. Verifies the matcher dedups + resolves ensemble cleanly. Includes a deliberately outdated jquery 1.7.0 to validate the retirejs pack also fires alongside wappalyzer. Google Analytics may appear at downgraded confidence (60) due to blocklist rule; not asserted in must_detect because the blocklist downgrade rule will cap it."
+}

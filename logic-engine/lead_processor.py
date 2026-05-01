@@ -4,8 +4,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 from campaigns import load_runtime_config
 from database import AsyncSessionLocal, ScoredLeadModel
-from deterministic_evaluator import evaluate_lead
 from gatekeeper import HeuristicScanner, get_ruleset_for_campaign
+from lead_evaluation import build_lead_evaluation
 from tier1_router import Tier1Gatekeeper, protected_tier1_call
 from tier2_orchestrator import LLMOrchestrator
 
@@ -17,6 +17,21 @@ tier2 = (
     if runtime_config.llm_enabled
     else None
 )
+
+
+# Tier 0 signature matcher (signals_v2). Instantiated once at module import
+# only when the feature flag is on — pattern compilation is the expensive
+# bit (~3000 techs, ~15000 patterns), so the cost is absorbed at startup,
+# never in the hot path. With the flag OFF this is None and
+# ``signals.matcher`` is never imported at all, preserving zero-cost
+# fallback for production.
+if runtime_config.signals_v2_enabled:
+    from signals.matcher import Matcher  # noqa: E402  (import-on-flag)
+
+    _MATCHER: "Matcher | None" = Matcher()
+    print(f"[Tier 0] signals_v2 ENABLED — matcher loaded ({len(_MATCHER._techs_list)} techs)")
+else:
+    _MATCHER = None
 
 # Thread pool for CPU-bound ML inference
 # 4 threads = 4 concurrent XGBoost predictions
@@ -181,11 +196,12 @@ async def process_incoming_lead(lead) -> None:
                 session.add(rejected_record)
         return
 
-    evaluation = evaluate_lead(
-        lead_data=lead_payload,
+    evaluation = build_lead_evaluation(
+        lead_payload,
         campaign_type=runtime_config.campaign_type,
         target_industry=lead.target_industry,
         heuristic_flags=heuristic_flags,
+        matcher=_MATCHER,
     )
 
     if runtime_config.llm_enabled:

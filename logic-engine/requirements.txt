@@ -10,6 +10,7 @@ python-dotenv
 greenlet
 beautifulsoup4
 lxml
+google-re2>=1.1  # optional fast regex backend for signals matcher; falls back to stdlib re
 google-genai
 instructor
 aiolimiter

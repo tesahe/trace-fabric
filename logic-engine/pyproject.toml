@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+# Run pytest from inside logic-engine/ — this repo's directory name has a
+# hyphen so it is not a valid Python package; we put logic-engine/ on
+# sys.path via tests/conftest.py instead of relying on package import.
+testpaths = ["signals/tests", "tests"]
+python_files = ["test_*.py"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]

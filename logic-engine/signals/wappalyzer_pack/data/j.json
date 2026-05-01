@@ -1,0 +1,800 @@
+{
+  "J2Store": {
+    "cats": [
+      6
+    ],
+    "cpe": "cpe:2.3:a:j2store:j2store:*:*:*:*:*:joomla\\!:*:*",
+    "description": "J2Store is a Joomla shopping cart and ecommerce extension.",
+    "icon": "j2store.svg",
+    "implies": [
+      "Joomla"
+    ],
+    "js": {
+      "j2storeURL": ""
+    },
+    "pricing": [
+      "onetime",
+      "freemium",
+      "low"
+    ],
+    "website": "https://www.j2store.org"
+  },
+  "JET Enterprise": {
+    "cats": [
+      6
+    ],
+    "headers": {
+      "powered": "jet-enterprise"
+    },
+    "icon": "JET Enterprise.svg",
+    "website": "https://www.jetecommerce.com.br/"
+  },
+  "JShop": {
+    "cats": [
+      6
+    ],
+    "description": "JShop is the ecommerce database solution marketed by Whorl Ltd. worldwide.",
+    "icon": "JShop.svg",
+    "js": {
+      "jss_1stepDeliveryType": "",
+      "jss_1stepFillShipping": ""
+    },
+    "website": "https://www.whorl.co.uk"
+  },
+  "JTL Shop": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "JTLSHOP": ""
+    },
+    "description": "JTL Shop is an ecommerce product created by JTL Software company.",
+    "dom": [
+      "input[name*='JTLSHOP']"
+    ],
+    "html": [
+      "(?:<input[^>]+name=\"JTLSHOP|<a href=\"jtl\\.php)"
+    ],
+    "icon": "JTL Shop.svg",
+    "js": {
+      "JtlHelpers": ""
+    },
+    "website": "https://www.jtl-software.de/online-shopsystem"
+  },
+  "JUST": {
+    "cats": [
+      41
+    ],
+    "description": "JUST is a one-click payment solution for online business and online shoppers.",
+    "icon": "JUST.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "checkout-button-.+/just-pay-button\\.js"
+    ],
+    "website": "https://www.getjusto.com"
+  },
+  "Jabmo": {
+    "cats": [
+      32
+    ],
+    "description": "Jabmo is a software platform that automates lead generation by tracking and analyzing website visitor activity.",
+    "icon": "Jabmo.svg",
+    "saas": true,
+    "scripts": [
+      "/jabmo\\.com"
+    ],
+    "website": "https://jabmo.com"
+  },
+  "Jacklist": {
+    "cats": [
+      51
+    ],
+    "description": "Jacklist is a website builder system developed in Japan.",
+    "icon": "Jacklist.svg",
+    "js": {
+      "homepage_api_url": "api\\.jacklist\\.jp"
+    },
+    "saas": true,
+    "scriptSrc": [
+      "api\\.jacklist\\.jp/"
+    ],
+    "website": "https://jacklist.ltd"
+  },
+  "Jadu": {
+    "cats": [
+      1
+    ],
+    "description": "The Jadu Digital Platform provides the foundation of accessible, responsive and award-winning Websites, Forms, CRM and Portal solutions.",
+    "dom": [
+      "a[href*='www.jadu.net']"
+    ],
+    "headers": {
+      "Node": "jadu-web-1"
+    },
+    "icon": "jadu.png",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "website": "https://www.jadu.net/"
+  },
+  "Jadu Central Content": {
+    "cats": [
+      1
+    ],
+    "description": "Jadu Central Content is a low-code publishing tool for creating, publishing, and managing website content and digital assets.",
+    "icon": "JaduCentralContent.svg",
+    "meta": {
+      "Author-Template": "^Jadu CSS design$",
+      "generator": "www\\.jadu\\.net"
+    },
+    "saas": true,
+    "website": "https://www.jadu.net/cms"
+  },
+  "Jahia DX": {
+    "cats": [
+      1,
+      47
+    ],
+    "dom": [
+      "script#staticAssetAggregatedJavascrip"
+    ],
+    "html": [
+      "<script id=\"staticAssetAggregatedJavascrip"
+    ],
+    "icon": "JahiaDX.svg",
+    "website": "https://www.jahia.com/dx"
+  },
+  "Jalios": {
+    "cats": [
+      1
+    ],
+    "description": "Jalios provides digital workplace solutions, including collaborative intranets, enterprise social networks, and document management systems, to enhance organizational communication and productivity.",
+    "icon": "Jalios.svg",
+    "meta": {
+      "generator": "Jalios"
+    },
+    "pricing": [
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "website": "https://www.jalios.com"
+  },
+  "JamFeed": {
+    "cats": [
+      1
+    ],
+    "description": "JamFeed is a web-based platform that allows users to create automated music websites.",
+    "icon": "JamFeed.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.jamfeed\\.com"
+    ],
+    "website": "https://www.jamfeed.com"
+  },
+  "Jameda": {
+    "cats": [
+      72
+    ],
+    "description": "Jameda is an online appointment scheduling system for doctors, enabling patients to book medical consultations.",
+    "icon": "Jameda.svg",
+    "pricing": [
+      "freemium",
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn1\\.jameda-elements\\.de/"
+    ],
+    "website": "https://www.jameda.de"
+  },
+  "Jarvis Analytics": {
+    "cats": [
+      10
+    ],
+    "description": "Jarvis Analytics is a dental analytics platform that collects, processes, and visualizes dental data to support clinical decision-making and operational insights.",
+    "icon": "JarvisAnalytics.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "schedule\\.jarvisanalytics\\.com"
+    ],
+    "website": "https://www.jarvisanalytics.com"
+  },
+  "Jenny": {
+    "cats": [
+      52
+    ],
+    "description": "Jenny is a customer service chatbot platform.",
+    "icon": "Jenny.svg",
+    "js": {
+      "webpackJsonpget-jenny": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.getjenny\\.com/"
+    ],
+    "website": "https://www.getjenny.com"
+  },
+  "Jetshop": {
+    "cats": [
+      6
+    ],
+    "html": [
+      "<(?:div|aside) id=\"jetshop-branding\">"
+    ],
+    "icon": "Jetshop.png",
+    "js": {
+      "JetshopData": ""
+    },
+    "website": "https://jetshop.se"
+  },
+  "Jibres": {
+    "cats": [
+      6,
+      55
+    ],
+    "cookies": {
+      "jibres": ""
+    },
+    "description": "Jibres is an ecommerce solution with an online store builder and Point-of-Sale (PoS) software.",
+    "headers": {
+      "X-Powered-By": "Jibres"
+    },
+    "icon": "Jibres.svg",
+    "js": {
+      "jibres": ""
+    },
+    "meta": {
+      "generator": "Jibres"
+    },
+    "scriptSrc": [
+      "/jibres\\.js"
+    ],
+    "website": "https://jibres.com"
+  },
+  "Jilt App": {
+    "cats": [
+      100,
+      98
+    ],
+    "description": "Jilt App helps ecommerce store owners track and recover abandoned orders. Works seamlessly with Shopify and WooCommerce.",
+    "icon": "Jilt.svg",
+    "js": {
+      "jiltStorefrontParams.platform": "^shopify$"
+    },
+    "requires": [
+      "Shopify"
+    ],
+    "website": "https://community.shopify.com/c/shopify-apps/jilt-is-over-what-app-to-use-for-abandoned-carts-now/td-p/1575095"
+  },
+  "Jilt plugin": {
+    "cats": [
+      87,
+      98
+    ],
+    "description": "Jilt plugin helps ecommerce store owners track and recover abandoned orders. Works seamlessly with Shopify and WooCommerce.",
+    "icon": "Jilt.svg",
+    "requires": [
+      "WordPress"
+    ],
+    "scriptSrc": [
+      "\\.jilt\\.com/.+/jilt\\.js(?:\\?ver=(\\d+(?:\\.\\d+)+))?\\;version:\\1"
+    ],
+    "website": "https://wordpress.org/plugins/jilt-for-woocommerce"
+  },
+  "Jimdo": {
+    "cats": [
+      1
+    ],
+    "description": "Jimdo is a website-builder and all-in-one hosting solution, designed to enable users to build their own websites.",
+    "headers": {
+      "X-Jimdo-Instance": "",
+      "X-Jimdo-Wid": ""
+    },
+    "icon": "Jimdo.svg",
+    "js": {
+      "jimdoDolphinData": ""
+    },
+    "pricing": [
+      "low",
+      "freemium",
+      "recurring"
+    ],
+    "saas": true,
+    "url": [
+      "\\.jimdo(?:site)?\\.com/"
+    ],
+    "website": "https://www.jimdo.com"
+  },
+  "Jirafe": {
+    "cats": [
+      10,
+      32
+    ],
+    "icon": "Jirafe.png",
+    "js": {
+      "jirafe": ""
+    },
+    "scriptSrc": [
+      "/jirafe\\.js"
+    ],
+    "website": "https://docs.jirafe.com"
+  },
+  "Jitsi": {
+    "cats": [
+      52
+    ],
+    "cpe": "cpe:2.3:a:jitsi:jitsi:*:*:*:*:*:*:*:*",
+    "description": "Jitsi is a free and open-source multiplatform voice (VoIP), videoconferencing and instant messaging applications for the web platform.",
+    "icon": "Jitsi.svg",
+    "oss": true,
+    "scriptSrc": [
+      "lib-jitsi-meet.*\\.js"
+    ],
+    "website": "https://jitsi.org"
+  },
+  "JivoChat": {
+    "cats": [
+      52
+    ],
+    "cpe": "cpe:2.3:a:jivochat:jivochat:*:*:*:*:*:*:*:*",
+    "description": "JivoChat is a live chat solution for websites offering customizable web and mobile chat widgets.",
+    "icon": "JivoChat.svg",
+    "js": {
+      "jivo_api": "",
+      "jivo_version": "([\\d.]+)\\;version:\\1"
+    },
+    "pricing": [
+      "freemium",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.jivosite\\.com"
+    ],
+    "website": "https://www.jivosite.com"
+  },
+  "Join It": {
+    "cats": [
+      53
+    ],
+    "description": "Join It is a membership management platform that helps nonprofits, clubs, and growing organizations manage members, track payments, and streamline administrative tasks.",
+    "icon": "JoinIt.svg",
+    "saas": true,
+    "scripts": [
+      "app\\.joinit\\.com"
+    ],
+    "website": "https://joinit.com"
+  },
+  "Joinchat": {
+    "cats": [
+      52
+    ],
+    "description": "Joinchat is a tool that enables businesses to convert customer conversations into sales or leads through integrated communication features.",
+    "icon": "Joinchat.svg",
+    "js": {
+      "joinchat_obj": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/js/joinchat\\.min\\.js"
+    ],
+    "website": "https://join.chat"
+  },
+  "Jonas Club Software": {
+    "cats": [
+      53
+    ],
+    "description": "Jonas Club Software is a provider of club management solutions, facilitating relationship building with members, revenue growth, and cost reduction.",
+    "icon": "Jonas.svg",
+    "js": {
+      "jonasPrivacyPolicy": "",
+      "jonasPrivacyPolicyClassName": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://jonasclub.com"
+  },
+  "JoomShopping": {
+    "cats": [
+      6
+    ],
+    "description": "JoomShopping is an open-source ecommerce plugin for Joomla.",
+    "icon": "JoomShopping.png",
+    "implies": [
+      "Joomla"
+    ],
+    "js": {
+      "joomshoppingVideoHtml5": ""
+    },
+    "oss": true,
+    "pricing": [
+      "onetime"
+    ],
+    "scriptSrc": [
+      "/components/com_jshopping/"
+    ],
+    "website": "https://www.webdesigner-profi.de/joomla-webdesign/joomla-shop"
+  },
+  "Joomla": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "joomla_[a-z0-9]+": ""
+    },
+    "cpe": "cpe:2.3:a:joomla:joomla\\!:*:*:*:*:*:*:*:*",
+    "description": "Joomla is a free and open-source content management system for publishing web content.",
+    "dom": [
+      "div[id*='wrapper_r'], link[href*='feed/com_'], link[href*='components/com_'], table[class*='pill']"
+    ],
+    "headers": {
+      "X-Content-Encoded-By": "Joomla! ([\\d.]+)\\;version:\\1"
+    },
+    "html": [
+      "(?:<div[^>]+id=\"wrapper_r\"|<(?:link|script)[^>]+(?:feed|components)/com_|<table[^>]+class=\"pill)\\;confidence:50"
+    ],
+    "icon": "Joomla.svg",
+    "implies": [
+      "PHP"
+    ],
+    "js": {
+      "Joomla": "",
+      "jcomments": ""
+    },
+    "meta": {
+      "generator": "Joomla!(?: ([\\d.]+))?\\;version:\\1"
+    },
+    "oss": true,
+    "scriptSrc": [
+      "(?:^|/)(feed/com_|components/com_)"
+    ],
+    "url": [
+      "option=com_"
+    ],
+    "website": "https://www.joomla.org/"
+  },
+  "Joonbot": {
+    "cats": [
+      52
+    ],
+    "description": "Joonbot is a chatbot builder that enables users to create automated conversational flows without programming knowledge.",
+    "icon": "Joonbot.svg",
+    "js": {
+      "JOONBOT_WIDGET_ID": "",
+      "joonbot.hide": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://joonbot.com"
+  },
+  "Jotform": {
+    "cats": [
+      110
+    ],
+    "description": "Jotform is an online form builder that enables the creation of robust forms.",
+    "icon": "Jotform.svg",
+    "js": {
+      "JOTFORM_ENV": "",
+      "JotForm.FBCollectInformation": "",
+      "JotFormActions": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.jotform\\.com/"
+    ],
+    "website": "https://www.jotform.com"
+  },
+  "Jottful": {
+    "cats": [
+      51
+    ],
+    "description": "Jottful is a platform that enables small businesses to create and manage professional websites.",
+    "icon": "Jottful.svg",
+    "meta": {
+      "web_author": "^Jottful"
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://jottful.com"
+  },
+  "JouwWeb": {
+    "cats": [
+      1,
+      51
+    ],
+    "description": "JouwWeb is an online website builder that allows internet users to create own website.",
+    "icon": "JouwWeb.svg",
+    "js": {
+      "JOUWWEB": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:cdn)?\\.(?:jwwb|jouwweb)\\.nl/"
+    ],
+    "website": "https://www.jouwweb.nl"
+  },
+  "Judge.me": {
+    "cats": [
+      90
+    ],
+    "description": "Judge.me is a reviews app that helps you collect and display product reviews and site reviews with photos, videos and Q&A.",
+    "icon": "Judge.svg",
+    "js": {
+      "judgeme": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.judge\\.me"
+    ],
+    "website": "https://judge.me"
+  },
+  "Jumpseller": {
+    "cats": [
+      6
+    ],
+    "description": "Jumpseller is a cloud ecommerce solution for small businesses.",
+    "icon": "Jumpseller.svg",
+    "js": {
+      "Jumpseller": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "assets\\.jumpseller\\.\\w+/",
+      "jumpseller-apps\\.herokuapp\\.\\w+/"
+    ],
+    "website": "https://jumpseller.com"
+  },
+  "June": {
+    "cats": [
+      10,
+      97
+    ],
+    "cookies": {
+      "_june_session": ""
+    },
+    "description": "June is a product analytics for subscription businesses. It automatically generates graphs of the metrics users should track by connecting their segment account.",
+    "icon": "June.svg",
+    "pricing": [
+      "mid",
+      "freemium",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.june\\.so/analytics\\.js/"
+    ],
+    "website": "https://june.so",
+    "xhr": [
+      "a\\.june\\.so"
+    ]
+  },
+  "Junip": {
+    "cats": [
+      90
+    ],
+    "description": "Junip provider of a ecommerce brand review platform designed to share customers' story, send review requests and display review content.",
+    "icon": "Junip.svg",
+    "js": {
+      "junipLoaded": "\\;confidence:50",
+      "webpackChunkjunip_scripts": "\\;confidence:50"
+    },
+    "pricing": [
+      "freemium",
+      "recurring",
+      "payg"
+    ],
+    "requiresCategory": [
+      6
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.juniphq\\.com/"
+    ],
+    "website": "https://junip.co"
+  },
+  "Juo": {
+    "cats": [
+      74
+    ],
+    "description": "Juo is a centralised experimentation platform for innovative marketing and product teams.",
+    "icon": "Juo.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.juo\\.io/"
+    ],
+    "website": "https://get.juo.io"
+  },
+  "Juphy": {
+    "cats": [
+      100
+    ],
+    "description": "Juphy is an AI sales assistant designed for Shopify stores, enabling businesses to increase sales through automated customer engagement and support.",
+    "icon": "Juphy.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.juphy\\.com/"
+    ],
+    "website": "https://juphy.com"
+  },
+  "Juspay": {
+    "cats": [
+      41
+    ],
+    "description": "Juspay is a developer of an online platform designed to be used for mobile-based payments.",
+    "icon": "juspay.svg",
+    "js": {
+      "Juspay": ""
+    },
+    "website": "https://juspay.in"
+  },
+  "Justia": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "SESSJUSTIA": ""
+    },
+    "description": "Justia is a lawyer-based content management system (CMS).",
+    "icon": "Justia.svg",
+    "js": {
+      "jmetadata": ""
+    },
+    "saas": true,
+    "website": "https://www.justia.com"
+  },
+  "Justo": {
+    "cats": [
+      6
+    ],
+    "description": "Justo is a subscription-based software that allows anyone to set up an online store and sell their products with delivery options.",
+    "icon": "Justo.svg",
+    "pricing": [
+      "high",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.getjusto\\.com/"
+    ],
+    "website": "https://www.getjusto.com"
+  },
+  "Justuno": {
+    "cats": [
+      76,
+      98
+    ],
+    "description": "Justuno is a visitor conversion optimisation platform.",
+    "icon": "Justuno.svg",
+    "js": {
+      "JustunoApp": ""
+    },
+    "pricing": [
+      "recurring",
+      "low"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "my\\.jst\\.ai",
+      "cdn\\.justuno\\.com"
+    ],
+    "website": "https://www.justuno.com"
+  },
+  "Justuno App": {
+    "cats": [
+      100
+    ],
+    "description": "Justuno is a premium conversion marketing and analytics platform that provides retailers with powerful tools to increase conversions.",
+    "icon": "Justuno.svg",
+    "implies": [
+      "Justuno"
+    ],
+    "pricing": [
+      "freemium",
+      "recurring",
+      "low"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "//scripttags\\.justuno\\.com/shopify_justuno"
+    ],
+    "website": "https://apps.shopify.com/justuno-pop-ups-email-conversion"
+  },
+  "Juvo Leads": {
+    "cats": [
+      10,
+      52
+    ],
+    "description": "Juvo Leads is a platform that integrates hosted chat, call tracking, and form tracking into a unified reporting system.",
+    "icon": "JuvoLeads.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "payg"
+    ],
+    "saas": true,
+    "scripts": [
+      "cdn\\.juvoleads\\.com"
+    ],
+    "website": "https://juvoleads.com"
+  },
+  "jQuery Payment": {
+    "cats": [
+      41
+    ],
+    "description": "jQuery Payment is a general-purpose library for building credit card forms, validating input fields, and formatting card numbers.",
+    "icon": "jQuery.svg",
+    "oss": true,
+    "requires": [
+      "jQuery"
+    ],
+    "scriptSrc": [
+      "/jquery-payment/jquery\\.payment\\.min\\.js"
+    ],
+    "website": "https://plugins.jquery.com/payment"
+  }
+}

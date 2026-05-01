@@ -1,0 +1,19 @@
+{
+  "fixture": "squarespace_modern.html",
+  "url": "https://modern-studio.example/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "Squarespace"},
+    {"key": "Content-Type", "value": "text/html; charset=utf-8"}
+  ],
+  "must_detect": [
+    {"name": "Squarespace", "pack": "wappalyzer", "min_confidence": 80},
+    {"name": "Squarespace Commerce", "pack": "wappalyzer", "min_confidence": 80}
+  ],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Wix",
+    "HubSpot"
+  ],
+  "notes": "Squarespace identifies primarily via Server: Squarespace response header; Commerce via the universal/scripts-compressed/commerce-* script bundle."
+}

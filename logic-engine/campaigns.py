@@ -26,6 +26,19 @@ def normalize_campaign_type(raw_value: str | None) -> str:
 class RuntimeConfig:
     campaign_type: str
     llm_enabled: bool
+    # When True, ``lead_processor`` instantiates the Tier 0 signature matcher
+    # at module import and merges the detections into
+    # ``heuristic_flags["technologies"]`` after the deterministic evaluator
+    # runs. Default False so production behavior is unchanged until we opt in.
+    # Set ``TRACEFAB_SIGNALS_V2=1`` to enable.
+    signals_v2_enabled: bool = False
+
+
+def _env_truthy(value: str | None) -> bool:
+    """Coerce common env-var truthy values ('1', 'true', 'yes', 'on')."""
+    if value is None:
+        return False
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def load_runtime_config() -> RuntimeConfig:
@@ -34,4 +47,8 @@ def load_runtime_config() -> RuntimeConfig:
     return RuntimeConfig(
         campaign_type=campaign_type,
         llm_enabled=os.getenv("ENABLE_LLM_PIPELINE", "false").lower() == "true",
+        # Read once at startup — module-level Matcher instantiation in
+        # lead_processor depends on this value, so flipping the env var at
+        # runtime won't take effect until the process restarts.
+        signals_v2_enabled=_env_truthy(os.getenv("TRACEFAB_SIGNALS_V2")),
     )

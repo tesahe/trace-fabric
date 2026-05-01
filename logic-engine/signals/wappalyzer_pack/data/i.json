@@ -1,0 +1,1908 @@
+{
+  "IBM Coremetrics": {
+    "cats": [
+      10
+    ],
+    "icon": "IBM.svg",
+    "scriptSrc": [
+      "cmdatatagutils\\.js"
+    ],
+    "website": "https://ibm.com/software/marketing-solutions/coremetrics"
+  },
+  "ICE": {
+    "cats": [
+      53
+    ],
+    "description": "ICE is integrated customer engagement software designed to streamline communication, support, and interaction across multiple channels for businesses.",
+    "icon": "Enterice.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "www\\.enterice\\.com/"
+    ],
+    "website": "https://www.enterice.com/web/"
+  },
+  "IFC Markets": {
+    "cats": [
+      6
+    ],
+    "description": "IFC Markets is a provider of Forex and CFD trading.",
+    "icon": "IFCMarkets.svg",
+    "js": {
+      "ifc_chartcontainer_id": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "www\\.ifcmarkets\\.com/"
+    ],
+    "website": "https://www.ifcmarkets.com"
+  },
+  "INBOX": {
+    "cats": [
+      75
+    ],
+    "description": "INBOX is an email marketing system designed to create, manage, and track email campaigns for communication, promotions, or newsletters.",
+    "dom": [
+      "form[action*='app.useinbox.com/']"
+    ],
+    "icon": "UseInbox.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "payg",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.useinbox\\.com/"
+    ],
+    "website": "https://useinbox.com"
+  },
+  "INFOnline": {
+    "cats": [
+      10
+    ],
+    "icon": "INFOnline.png",
+    "js": {
+      "iam_data": "",
+      "szmvars": ""
+    },
+    "scriptSrc": [
+      "^https?://(?:[^/]+\\.)?i(?:oam|v)wbox\\.de/"
+    ],
+    "website": "https://www.infonline.de"
+  },
+  "ISAY": {
+    "cats": [
+      1
+    ],
+    "description": "ISAY (Internet Pages Management) is a CMS service provided by the Turkish Ministry of Interior for governorships, district governorships and various official websites.",
+    "dom": [
+      "div.topbar-img img[src*='/Areas/WebPart/Contents/FHeader/img/ataturk.svg']"
+    ],
+    "icon": "ISAY.svg",
+    "requires": [
+      "Microsoft ASP.NET"
+    ],
+    "website": "https://www.icisleri.gov.tr/internet-sayfalari-yonetimi-isay"
+  },
+  "Iamport": {
+    "cats": [
+      41
+    ],
+    "description": "Iamport is an information technology company based in South Korea.",
+    "icon": "Iamport.svg",
+    "js": {
+      "IMP.request_pay": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.iamport\\.kr/js/iamport\\.payment-([\\d\\.]+)\\.js\\;version:\\1"
+    ],
+    "website": "https://www.iamport.kr"
+  },
+  "Ibexa DXP": {
+    "cats": [
+      1
+    ],
+    "description": "Ibexa DXP is an open-source enterprise PHP content management system (CMS) and Digital Experience Platform (DXP) developed by the company Ibexa (known previously as eZ Systems).",
+    "headers": {
+      "x-powered-by": "^Ibexa\\sExperience\\sv([\\d\\.]+)$\\;version:\\1"
+    },
+    "icon": "Ibexa.svg",
+    "implies": [
+      "PHP",
+      "Symfony"
+    ],
+    "meta": {
+      "generator": "^eZ Platform"
+    },
+    "pricing": [
+      "high",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.ibexa.co"
+  },
+  "Icegram": {
+    "cats": [
+      32,
+      87
+    ],
+    "description": "Icegram is a WordPress plugin designed to grow subscribers and increase conversions.",
+    "icon": "Icegram.svg",
+    "js": {
+      "Icegram": "",
+      "icegram_data": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "/wp-content/plugins/icegram/.*main\\.min\\.js\\?ver=([\\d\\.]+)\\;version:\\1"
+    ],
+    "website": "https://www.icegram.com"
+  },
+  "Iconosquare": {
+    "cats": [
+      10
+    ],
+    "description": "Iconosquare is an all-in-one social media management platform that facilitates the lives of SMMs with multiple profiles to manage.",
+    "dom": [
+      "iframe[src*='iconosquare.com/']"
+    ],
+    "icon": "Iconosquare.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "payg",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.iconosquare\\.com"
+    ],
+    "website": "https://www.iconosquare.com"
+  },
+  "Icordis CMS": {
+    "cats": [
+      1
+    ],
+    "description": "Icordis CMS is a proprietary content management system developed by LCP nv for managing custom business and institutional websites.",
+    "icon": "Icordis CMS.svg",
+    "meta": {
+      "generator": "^Icordis CMS by LCP"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "website": "https://www.lcp.be"
+  },
+  "Ideasoft": {
+    "cats": [
+      6
+    ],
+    "description": "Ideasoft is a Turkish software company providing web-based software solutions, software design, ecommerce solutions, and other services.",
+    "icon": "Ideasoft.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.myideasoft\\.com/([\\d.]+)\\;version:\\1",
+      "\\.ideasoft\\.dev/"
+    ],
+    "website": "https://www.ideasoft.com.tr"
+  },
+  "Identixweb iCart": {
+    "cats": [
+      6
+    ],
+    "description": "Identixweb iCart is a Shopify upsell app designed to boost pre-purchase sales and conversions directly in the cart without disrupting the shopping experience.",
+    "icon": "IdentixwebiCart.svg",
+    "js": {
+      "webpackChunk_identixweb_order_delivery_date": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdnicart\\.identixweb\\.com"
+    ],
+    "website": "https://www.identixweb.com/shopify-app/icart/"
+  },
+  "Ideta": {
+    "cats": [
+      52
+    ],
+    "description": "Ideta is a platform that provides chatbots and callbots to streamline company operations through AI and automation.",
+    "icon": "Ideta.svg",
+    "js": {
+      "webpackChunkideta_platoon": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "ideta-prod\\.appspot\\.com"
+    ],
+    "website": "https://www.ideta.io"
+  },
+  "IdoSell Shop": {
+    "cats": [
+      6
+    ],
+    "description": "IdoSell Shop is a fully functional ecommerce software platform.",
+    "dom": [
+      "div[id*='idosell_logo'] > a[href*='www.idosell.com']"
+    ],
+    "icon": "idosellshop.png",
+    "js": {
+      "IAI_Ajax": ""
+    },
+    "website": "https://www.idosell.com"
+  },
+  "Ifdo": {
+    "cats": [
+      32,
+      86
+    ],
+    "description": "Ifdo is a marketing and segmentation tool ",
+    "icon": "Ifdo.svg",
+    "js": {
+      "_NBIFDOBODYINNERHTML": "",
+      "_NBIFDOHEADCSSFILE": "",
+      "_NBIFDOHEADINNERHTML": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "payg",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://ifdo.co.kr/"
+  },
+  "Ikas": {
+    "cats": [
+      6
+    ],
+    "description": "Ikas is a new generation ecommerce platform designed for small businesses.",
+    "headers": {
+      "server": "^ikas$",
+      "x-powered-by": "^ikas$"
+    },
+    "icon": "Ikas.svg",
+    "implies": [
+      "Next.js",
+      "GraphQL",
+      "MongoDB"
+    ],
+    "js": {
+      "IkasEvents.subscribe": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://ikas.com"
+  },
+  "Ikeono": {
+    "cats": [
+      52
+    ],
+    "description": "Ikeono is an all-in-one communication tool that provides business text messaging solutions for independent retailers.",
+    "icon": "Ikeono.svg",
+    "js": {
+      "ikeono": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.ikeono\\.com"
+    ],
+    "website": "https://www.ikeono.com"
+  },
+  "Iluria": {
+    "cats": [
+      6,
+      63
+    ],
+    "description": "Iluria is a hosted ecommerce platform from Brazil.",
+    "icon": "Iluria.svg",
+    "js": {
+      "Iluria": "",
+      "iluriaShowPagination": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "template-assets\\.iluria\\.com/commons/"
+    ],
+    "website": "https://www.iluria.com.br"
+  },
+  "ImBox": {
+    "cats": [
+      52
+    ],
+    "description": "Imbox is a live chat platform that includes co-browsing features.",
+    "icon": "Imbox.svg",
+    "js": {
+      "__IMBOX_GLOBAL__": "",
+      "__IMBOX_INITIALIZED__": "",
+      "_imbox": "",
+      "imboxBuilt": "",
+      "imboxManager": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://imbox.se"
+  },
+  "Imber": {
+    "cats": [
+      52
+    ],
+    "description": "Imber is an all-in-one marketing automation platform built for customer support (live chat), sales, and marketing.",
+    "icon": "Imber.png",
+    "js": {
+      "$imber.getVisitor": "",
+      "IMBER_ID": "",
+      "IMBER_SOCKET": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://imber.live"
+  },
+  "Immerss": {
+    "cats": [
+      6
+    ],
+    "description": "Immerss is a platform that offers 1-to-1 Digital Clienteling, allowing customers to connect with businesses in real time via dynamic video, chat, and messaging for a personalized shopping experience.",
+    "icon": "Immerss.svg",
+    "js": {
+      "Immerss.service_id": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.immerss\\.live/"
+    ],
+    "website": "https://www.immerss.live"
+  },
+  "Importify": {
+    "cats": [
+      6
+    ],
+    "description": "Importify is a dropshipping app that sources products from hundreds of suppliers, facilitating their integration into your online store for sale.",
+    "icon": "Importify.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.importify\\.net/"
+    ],
+    "website": "https://www.importify.com/"
+  },
+  "Impresee": {
+    "cats": [
+      6
+    ],
+    "description": "Impresee is a tool that enhances ecommerce by providing an actionable search bar to improve product discovery and user navigation.",
+    "icon": "Impresee.svg",
+    "js": {
+      "impreseeBarColor": "",
+      "impreseeBarFontColor": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.impresee\\.com"
+    ],
+    "website": "https://impresee.com"
+  },
+  "ImpressCMS": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "ICMSSession": "",
+      "ImpressCMS": ""
+    },
+    "cpe": "cpe:2.3:a:impresscms:impresscms:*:*:*:*:*:*:*:*",
+    "description": "ImpressCMS is an open-source content management system (CMS) designed for creating and managing dynamic websites.",
+    "icon": "ImpressCMS.svg",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "ImpressCMS"
+    },
+    "oss": true,
+    "scriptSrc": [
+      "include/linkexternal\\.js"
+    ],
+    "website": "https://www.impresscms.org"
+  },
+  "ImpressPages": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:impresspages:impresspages_cms:*:*:*:*:*:*:*:*",
+    "description": "ImpressPages is an open-source content management system (CMS) that enables users to create and manage websites easily, featuring a user-friendly interface and customizable templates.",
+    "icon": "ImpressPages.svg",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "ImpressPages(?: CMS)?( [\\d.]*)?\\;version:\\1"
+    },
+    "oss": true,
+    "website": "https://impresspages.org"
+  },
+  "Impressure": {
+    "cats": [
+      73
+    ],
+    "description": "Impressure is a platform for creating and publishing offer paths, dynamic forms, and surveys through a user-friendly interface.",
+    "icon": "Impressure.svg",
+    "js": {
+      "Impressure.commands": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "events\\.impressure\\.io"
+    ],
+    "website": "https://impressure.io"
+  },
+  "Imweb": {
+    "cats": [
+      6
+    ],
+    "description": "Imweb is a ecommerce website builder software.",
+    "icon": "Imweb.svg",
+    "js": {
+      "IMWEB_TEMPLATE": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "vendor-cdn\\.imweb\\.me/"
+    ],
+    "website": "https://imweb.me"
+  },
+  "In Cart Upsell & Cross-Sell": {
+    "cats": [
+      100
+    ],
+    "description": "In Cart Upsell & Cross-Sell is a Shopify app built by InCart Upsell, provides targeted upsells and cross-sells directly in your cart and product page.",
+    "icon": "In Cart Upsell & Cross-Sell.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.incartupsell\\.com/"
+    ],
+    "website": "https://incartupsell.com"
+  },
+  "InEvent": {
+    "cats": [
+      104
+    ],
+    "description": "InEvent is event management software designed to streamline planning, organization, and execution of virtual, hybrid, and in-person events.",
+    "icon": "InEvent.svg",
+    "meta": {
+      "apiURL": "inevent\\.com",
+      "namespace": "^InEvent$"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://inevent.com"
+  },
+  "InMoment": {
+    "cats": [
+      10,
+      73
+    ],
+    "description": "InMoment provides SaaS based customer survey and enterprise feedback management solutions.",
+    "headers": {
+      "Content-Security-Policy": "\\.inmoment\\.com",
+      "Content-Security-Policy-Report-Only": "\\.inmoment\\.com"
+    },
+    "icon": "InMoment.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.inmoment\\.com(?:\\.\\w+)?/"
+    ],
+    "website": "https://inmoment.com"
+  },
+  "InSyncai": {
+    "cats": [
+      52
+    ],
+    "description": "InSyncai offers a conversational platform for enterprises to design and build chatbots having applications in customer support and services.",
+    "dom": [
+      "iframe[src*='insync_iframe_webchat_js_prod'], iframe#insync-iframe"
+    ],
+    "icon": "InSyncai.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.insyncai.com"
+  },
+  "Inblog": {
+    "cats": [
+      1
+    ],
+    "description": "Inblog is a content management system designed for SEO, featuring CTAs and analytics for revenue optimization.",
+    "dom": [
+      "link[href*='inblog.ai/_next/static']"
+    ],
+    "icon": "Inblog.svg",
+    "implies": [
+      "Next.js",
+      "Supabase",
+      "shadcn/ui",
+      "Tailwind CSS"
+    ],
+    "meta": {
+      "generator": "inblog"
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "freemium"
+    ],
+    "saas": true,
+    "website": "https://inblog.ai"
+  },
+  "Indexhibit": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:indexhibit:indexhibit:*:*:*:*:*:*:*:*",
+    "dom": [
+      "link[href*='ndxz-studio']"
+    ],
+    "html": [
+      "<(?:link|a href) [^>]+ndxz-studio"
+    ],
+    "implies": [
+      "PHP",
+      "Apache HTTP Server",
+      "Exhibit"
+    ],
+    "meta": {
+      "generator": "Indexhibit"
+    },
+    "website": "https://www.indexhibit.org"
+  },
+  "Indexic": {
+    "cats": [
+      104
+    ],
+    "description": "Indexic is a booking management platform designed for tours, activities, and rental operations.",
+    "icon": "Indexic.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.web\\.indexic\\.net"
+    ],
+    "website": "https://www.indexic.net"
+  },
+  "Indico": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "MAKACSESSION": ""
+    },
+    "description": "Indico is an open-source event management system designed for organizing scientific conferences and workshops.",
+    "html": [
+      "Powered by\\s+(?:CERN )?<a href=\"http://(?:cdsware\\.cern\\.ch/indico/|indico-software\\.org|cern\\.ch/indico)\">(?:CDS )?Indico( [\\d\\.]+)?\\;version:\\1"
+    ],
+    "icon": "Indico.svg",
+    "oss": true,
+    "website": "https://getindico.io"
+  },
+  "Influence": {
+    "cats": [
+      32
+    ],
+    "description": "Influence is a conversion optimisation tool for ecommerce that leverages real-time social proof.",
+    "icon": "Influence.svg",
+    "js": {
+      "Influence": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.useinfluence\\.co/"
+    ],
+    "website": "https://useinfluence.co"
+  },
+  "Influenster": {
+    "cats": [
+      90
+    ],
+    "description": "Influenster is a product reviews widget that displays feedback and ratings from shoppers on websites.",
+    "icon": "Influenster.svg",
+    "js": {
+      "showInfluensterWidget": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "widget\\.influenster\\.com"
+    ],
+    "website": "https://www.influenster.com"
+  },
+  "Influx CMS": {
+    "cats": [
+      1,
+      32
+    ],
+    "description": "Influx CMS is a medical marketing platform specialising in custom web design and marketing for doctors, surgeons, and medical spas.",
+    "dom": [
+      "a[href*='www.influxmarketing.com'] > svg[class*='influx-footer-logo']"
+    ],
+    "icon": "InfluxCMS.svg",
+    "meta": {
+      "generator": "^Influx CMS$"
+    },
+    "requires": [
+      "React",
+      "Gatsby"
+    ],
+    "saas": true,
+    "website": "https://www.influxmarketing.com"
+  },
+  "Infor": {
+    "cats": [
+      53
+    ],
+    "description": "Infor is a resource planning solution designed to streamline operations, manage workflows, and support data-driven decision-making across various business functions.",
+    "dom": [
+      "iframe[src*='.cloud.infor.com/']"
+    ],
+    "icon": "Infor.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.cloud\\.infor\\.com"
+    ],
+    "website": "https://www.infor.com"
+  },
+  "InforUMobile": {
+    "cats": [
+      52
+    ],
+    "description": "InforUMobile is a multi-channel system that enables digital communication with customers, offering various channels for interacting and engaging with users, developed by the Shamir Systems Group.",
+    "dom": [
+      "iframe[src*='bot.frontcld.com/bot/chat']"
+    ],
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.inforu.co.il"
+  },
+  "Informa Markets": {
+    "cats": [
+      32
+    ],
+    "description": "Informa Markets is a platform that facilitates trade, innovation, and growth across various industries and specialist markets.",
+    "icon": "InformaMarkets.svg",
+    "saas": true,
+    "scripts": [
+      "connect\\.informamarkets\\.com"
+    ],
+    "website": "https://www.informamarkets.com"
+  },
+  "Informizely": {
+    "cats": [
+      73
+    ],
+    "description": "Informizely is a customer feedback platform used to run surveys on websites and applications to understand user behavior and generate actionable insights.",
+    "dom": [
+      "script[id*='_informizely_script_tag']"
+    ],
+    "icon": "Informizely.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.informizely.com"
+  },
+  "Infoset": {
+    "cats": [
+      52,
+      53
+    ],
+    "description": "Infoset is an advanced communication and support solutions.",
+    "icon": "Infoset.svg",
+    "js": {
+      "InfosetChat": "",
+      "InfosetRoot": ""
+    },
+    "pricing": [
+      "recurring",
+      "low"
+    ],
+    "saas": true,
+    "website": "https://infoset.app"
+  },
+  "Infront": {
+    "cats": [
+      1
+    ],
+    "description": "Infront is a sports marketing company that specializes in the management, marketing, and distribution of sports media rights and events, providing services to sports federations, leagues, clubs, and media partners worldwide.",
+    "dom": [
+      "#corebine-app"
+    ],
+    "icon": "Infront.svg",
+    "js": {
+      "corebine": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "website": "https://www.infront.sport"
+  },
+  "InkSoft": {
+    "cats": [
+      6
+    ],
+    "description": "InkSoft is a comprehensive platform offering online designer tools and ecommerce solutions tailored for printing companies.",
+    "icon": "InkSoft.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.inksoft\\.com/"
+    ],
+    "website": "https://www.inksoft.com"
+  },
+  "InnoShop": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "innoshop_session": ""
+    },
+    "description": "InnoShop is an open-source ecommerce platform providing flexible tools for building and managing online stores.",
+    "icon": "InnoShop.svg",
+    "js": {
+      "inno.addCart": ""
+    },
+    "oss": true,
+    "scriptSrc": [
+      "\\.innoshop\\.cn"
+    ],
+    "website": "https://www.innoshop.com"
+  },
+  "Innovorder": {
+    "cats": [
+      6
+    ],
+    "description": "Innovorder is a point-of-sale solution for restaurateurs that uses AI to support order management and in-store operations.",
+    "dom": [
+      "link[href*='static.innovorder.fr/']"
+    ],
+    "icon": "Innovorder.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.innovorder.com"
+  },
+  "Inputflow": {
+    "cats": [
+      110
+    ],
+    "description": "Inputflow is a tool for creating multi-step forms in Webflow with full customization options.",
+    "icon": "Inputflow.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Webflow"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "script\\.inputflow\\.io"
+    ],
+    "website": "https://inputflow.com"
+  },
+  "Insider": {
+    "cats": [
+      97
+    ],
+    "description": "Insider is the first integrated Growth Management Platform helping digital marketers drive growth across the funnel, from Acquisition to Activation, Retention, and Revenue from a unified platform powered by Artificial Intelligence and Machine Learning.",
+    "icon": "Insider.svg",
+    "js": {
+      "Insider": "\\;confidence:20"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "api\\.useinsider\\.\\w+/"
+    ],
+    "website": "https://useinsider.com"
+  },
+  "Insightly CRM": {
+    "cats": [
+      53
+    ],
+    "description": "Insightly CRM is a cloud-based customer relationship management software, helps businesses manage leads, contacts, and opportunities, track customer interactions, create custom reports, automate workflows, and integrate with third-party applications, improving customer engagement and streamlining business processes.",
+    "dom": [
+      "form[action*='.insightly.com/']"
+    ],
+    "icon": "Insightly.svg",
+    "pricing": [
+      "recurring",
+      "low",
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.insightly\\.services/"
+    ],
+    "website": "https://www.insightly.com/crm/"
+  },
+  "Insignal": {
+    "cats": [
+      10
+    ],
+    "description": "Insignal is a cloud-based application that tracks website traffic, heatmap, timeline, feedback, session recordings, and survey solutions.",
+    "icon": "Insignal.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.insignal\\.co/"
+    ],
+    "website": "https://insignal.co/"
+  },
+  "Inspectlet": {
+    "cats": [
+      10
+    ],
+    "html": [
+      "<!-- (?:Begin|End) Inspectlet Embed Code -->"
+    ],
+    "icon": "Inspectlet.svg",
+    "js": {
+      "__insp": "",
+      "__inspld": ""
+    },
+    "scriptSrc": [
+      "cdn\\.inspectlet\\.com"
+    ],
+    "website": "https://www.inspectlet.com/"
+  },
+  "Instabot": {
+    "cats": [
+      5,
+      10,
+      32,
+      52,
+      58
+    ],
+    "description": "Instabot is a conversion chatbot that understands your users, and curates information, answers questions, captures contacts, and books meetings instantly.",
+    "icon": "Instabot.svg",
+    "js": {
+      "Instabot": ""
+    },
+    "scriptSrc": [
+      "/rokoInstabot\\.js"
+    ],
+    "website": "https://instabot.io/"
+  },
+  "Instafeed": {
+    "cats": [
+      100
+    ],
+    "description": "Instafeed is an official Instagram app.",
+    "icon": "Instafeed.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "instafeed\\.nfcube\\.com/"
+    ],
+    "website": "https://apps.shopify.com/instafeed"
+  },
+  "Instamojo": {
+    "cats": [
+      41
+    ],
+    "description": "Instamojo is a Bangalore-based company that provides a platform for selling digital goods and collecting payment online.",
+    "icon": "instamojo.svg",
+    "js": {
+      "INITIAL_STATE.seller.avatar": "\\.instamojo\\.com/",
+      "Instamojo": ""
+    },
+    "website": "https://www.instamojo.com/"
+  },
+  "Instana": {
+    "cats": [
+      10,
+      13,
+      78
+    ],
+    "description": "Instana is a Kubernetes-native APM tool which is built for new-stack including Microservices and lately Serverless but also supports the existing VM based stacks  including several supported technologies.",
+    "icon": "Instana.svg",
+    "js": {
+      "ineum": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "eum\\.instana\\.io"
+    ],
+    "website": "https://www.instana.com"
+  },
+  "Instant": {
+    "cats": [
+      51,
+      100
+    ],
+    "description": "Instant is a no-code, visual page builder for Shopify, allowing users to create custom landing pages and sections through a drag-and-drop interface without requiring any coding skills.",
+    "dom": [
+      "div[class='__instant'][data-instant-version]"
+    ],
+    "icon": "Instant.svg",
+    "js": {
+      "Instant.initialized": "",
+      "Instant.initializedVersion": "([\\d\\.]+)\\;version:\\1",
+      "__instantInitSliders": ""
+    },
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "requires": [
+      "Shopify"
+    ],
+    "saas": true,
+    "website": "https://instant.so"
+  },
+  "InstantCMS": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "InstantCMS[logdate]": ""
+    },
+    "cpe": "cpe:2.3:a:instantcms:instantcms:*:*:*:*:*:*:*:*",
+    "icon": "InstantCMS.png",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "generator": "InstantCMS"
+    },
+    "website": "https://www.instantcms.ru"
+  },
+  "Instapage": {
+    "cats": [
+      51,
+      74,
+      10
+    ],
+    "description": "Instapage is a cloud-based landing page platform designed for marketing teams and agencies.",
+    "icon": "Instapage.svg",
+    "implies": [
+      "Lua",
+      "Node.js"
+    ],
+    "js": {
+      "_instapageSnowplow": "",
+      "instapageSp": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.instapagemetrics\\.com",
+      "heatmap-events-collector\\.instapage\\.com"
+    ],
+    "website": "https://instapage.com"
+  },
+  "Intaker": {
+    "cats": [
+      52
+    ],
+    "description": "Intaker is a service that enables law firms to send and receive text messages with clients, including automated follow-up messages.",
+    "dom": {
+      "link[href*='chat-api.intaker.com/api/']": {
+        "attributes": {
+          "href": "api/v([\\d]+)\\;version:\\1"
+        }
+      }
+    },
+    "icon": "Intaker.svg",
+    "js": {
+      "Intaker": ""
+    },
+    "saas": true,
+    "website": "https://intaker.com"
+  },
+  "Integrately": {
+    "cats": [
+      32
+    ],
+    "description": "Integrately is a click automation software that enables connection of multiple applications.",
+    "dom": [
+      "input[value*='app.integrately.com']"
+    ],
+    "icon": "Integrately.svg",
+    "pricing": [
+      "freemium",
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "app\\.integrately\\.com"
+    ],
+    "website": "https://integrately.com"
+  },
+  "Intelligems": {
+    "cats": [
+      74
+    ],
+    "description": "Intelligems is a tool that facilitates profit optimization for ecommerce businesses by allowing easy testing of prices, discounts, and shipping rates with the aim of maximizing margins.",
+    "icon": "Intelligems.svg",
+    "js": {
+      "webpackChunk_intelligems_shopify_plugin": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.intelligems\\.io/[\\w]+\\.js"
+    ],
+    "website": "https://intelligems.io"
+  },
+  "Intellimize": {
+    "cats": [
+      74,
+      76
+    ],
+    "description": "Intellimize is a platform that utilizes machine learning to optimize website experiences and increase conversions in real-time.",
+    "icon": "Intellimize.svg",
+    "js": {
+      "intellimize": ""
+    },
+    "pricing": [
+      "high",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.intellimize\\.co/"
+    ],
+    "website": "https://www.intellimize.com"
+  },
+  "InterRed": {
+    "cats": [
+      1
+    ],
+    "description": "InterRed is a software platform that provides integrated, future-proof publishing solutions for digital and print media management.",
+    "dom": [
+      "div[id*='footer__interred'] > a[href*='www.interred.de']"
+    ],
+    "icon": "InterRed.svg",
+    "meta": {
+      "generator": "^InterRed"
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.interred.de"
+  },
+  "Interago": {
+    "cats": [
+      32
+    ],
+    "description": "Interago is a Brazilian platform that aggregates modern digital tools to support and streamline online business operations.",
+    "icon": "Interago.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scripts": [
+      "www\\.interago\\.com\\.br"
+    ],
+    "website": "https://www.interago.com.br"
+  },
+  "Interakt": {
+    "cats": [
+      52
+    ],
+    "description": "Interakt is a messaging platform tailored for business communication, offering features such as secure messaging, file sharing, and customer support functionalities.",
+    "icon": "Interakt.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "app\\.interakt\\.ai/"
+    ],
+    "website": "https://www.interakt.shop"
+  },
+  "Intercom": {
+    "cats": [
+      52,
+      53
+    ],
+    "description": "Intercom is an American software company that produces a messaging platform which allows businesses to communicate with prospective and existing customers within their app, on their website, through social media, or via email.",
+    "dom": [
+      "link[href^='https://widget.intercom.io']",
+      "div.live-chat-loader-placeholder",
+      "iframe#intercom-frame"
+    ],
+    "icon": "Intercom.svg",
+    "js": {
+      "Intercom": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:api\\.intercom\\.io/api|static\\.intercomcdn\\.com/intercom\\.v1)"
+    ],
+    "website": "https://www.intercom.com"
+  },
+  "Intershop": {
+    "cats": [
+      6
+    ],
+    "description": "Intershop is an ecommerce platform, tailored to the needs of complex business processes and major organisations.",
+    "html": [
+      "<ish-root"
+    ],
+    "icon": "Intershop.svg",
+    "pricing": [
+      "onetime",
+      "high"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:is-bin|INTERSHOP)"
+    ],
+    "website": "https://intershop.com"
+  },
+  "Intiaro": {
+    "cats": [
+      6
+    ],
+    "description": "Intiaro is a provider of home decor and furniture products designed to support the creation of stylish living spaces.",
+    "icon": "Intiaro.svg",
+    "saas": true,
+    "scriptSrc": [
+      "libs\\.intiaro\\.com"
+    ],
+    "website": "https://en.intiaro.com"
+  },
+  "Intice": {
+    "cats": [
+      32
+    ],
+    "description": "Intice is a lead conversion tool designed for the automotive industry, streamlining customer engagement and improving the conversion process from inquiries to sales.",
+    "icon": "Intice.svg",
+    "js": {
+      "intice": "",
+      "inticeAllEvents": "",
+      "inticeIMP": "",
+      "inticeLeadmakerAnalytics": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "tools\\.inticeinc\\.com"
+    ],
+    "website": "https://intice.com"
+  },
+  "Inventrue": {
+    "cats": [
+      6
+    ],
+    "description": "Inventrue creates websites for RV, Motorsports and Trailer Dealerships.",
+    "icon": "Inventrue.svg",
+    "meta": {
+      "author": "^Inventrue, LLC.$"
+    },
+    "pricing": [
+      "onetime",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.inventrue.com"
+  },
+  "Inveon": {
+    "cats": [
+      6
+    ],
+    "cookies": {
+      "INV.Customer": "\\;confidence:50",
+      "inveonSessionId": ""
+    },
+    "description": "Inveon is a technology company that has been delivering ecommerce infrastructure software and mcommerce applications.",
+    "icon": "Inveon.svg",
+    "js": {
+      "InvApp": "\\;confidence:50",
+      "invTagManagerParams": ""
+    },
+    "scriptSrc": [
+      "Scripts/_app/Inv(?:\\w+)\\.js\\?v=(.+)$\\;version:\\1"
+    ],
+    "website": "https://www.inveon.com"
+  },
+  "Invision Community": {
+    "cats": [
+      1
+    ],
+    "description": "Invision Community is a scalable and customizable platform designed to build and grow online communities.",
+    "icon": "InvisionCommunity.svg",
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.invisioncic\\.com/"
+    ],
+    "website": "https://invisioncommunity.com"
+  },
+  "Invitario": {
+    "cats": [
+      104
+    ],
+    "description": "Invitario is an event marketing platform that provides a digital invitation and guest management for business events.",
+    "icon": "Invitario.svg",
+    "js": {
+      "InvitarioWidget": ""
+    },
+    "pricing": [
+      "poa",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://invitario.com"
+  },
+  "Invoca": {
+    "cats": [
+      32,
+      10
+    ],
+    "description": "Invoca is an AI-powered call tracking and conversational analytics company.",
+    "icon": "Invoca.svg",
+    "js": {
+      "Invoca.PNAPI.version": "([\\d\\.]+)\\;version:\\1",
+      "InvocaTagId": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.dialogtech\\.com/"
+    ],
+    "website": "https://www.invoca.com"
+  },
+  "Irroba": {
+    "cats": [
+      6
+    ],
+    "html": [
+      "<a[^>]*href=\"https://www\\.irroba\\.com\\.br"
+    ],
+    "icon": "irroba.svg",
+    "meta": {
+      "copyright": "^IRROBA E-COMMERCE$",
+      "generator": "^IRROBA E-COMMERCE$",
+      "webmaster": "^IRROBA E-COMMERCE$"
+    },
+    "website": "https://www.irroba.com.br/"
+  },
+  "It'seeze": {
+    "cats": [
+      1
+    ],
+    "description": "It’seeze is a website design platform with a custom CMS for seamless site updates and management.",
+    "dom": [
+      "footer > div[id*='itseezeFooter']"
+    ],
+    "icon": "Itseeze.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://itseeze.com/"
+  },
+  "Italiaonline": {
+    "cats": [
+      51
+    ],
+    "description": "Italiaonline is a web platform that provides tools and services for building and managing websites.",
+    "icon": "Italiaonline.svg",
+    "saas": true,
+    "scripts": [
+      "\\.italiaonline\\.it"
+    ],
+    "website": "https://www.italiaonline.it"
+  },
+  "Iterable": {
+    "cats": [
+      32
+    ],
+    "description": "Iterable is a cross-channel marketing platform that powers unified customer experiences.",
+    "icon": "Iterable.svg",
+    "js": {
+      "iterableAnalytics": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "js\\.iterable\\.com"
+    ],
+    "website": "https://iterable.com"
+  },
+  "Iteras": {
+    "cats": [
+      53
+    ],
+    "description": "Iteras is a subscriber management system that organizes user accounts, tracks subscription activity, and supports controlled access to digital services.",
+    "icon": "Iteras.svg",
+    "js": {
+      "Iteras.cookieDomain": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "app\\.iteras\\.dk"
+    ],
+    "website": "https://www.iteras.com"
+  },
+  "Iterate": {
+    "cats": [
+      73
+    ],
+    "description": "Iterate is a customer insights manager (CIM) system, facilitating website and email surveys to harness customer insights across your entire business.",
+    "icon": "Iterate.svg",
+    "js": {
+      "Iterate": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.iteratehq\\.com/"
+    ],
+    "website": "https://iteratehq.com"
+  },
+  "Itoris": {
+    "cats": [
+      6
+    ],
+    "description": "Itoris is a developer specializing in widgets for ecommerce platforms, creating tools that enhance online store functionality.",
+    "icon": "Itoris.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.itoris\\.com"
+    ],
+    "scripts": [
+      "\\.itoris\\.com"
+    ],
+    "website": "https://www.itoris.com"
+  },
+  "Izooto": {
+    "cats": [
+      32,
+      5
+    ],
+    "description": "iZooto is a user engagement and retention tool that leverages web push notifications to help business to drive repeat traffic, leads and sales.",
+    "icon": "Izooto.svg",
+    "js": {
+      "Izooto": "",
+      "_izooto": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.izooto\\.\\w+"
+    ],
+    "website": "https://www.izooto.com"
+  },
+  "i-motor": {
+    "cats": [
+      1
+    ],
+    "description": "i-motor is a platform that enhances automotive dealer websites by providing innovative, connected solutions to improve the online experience.",
+    "dom": [
+      "link[href*='.i-motor.com.au/']"
+    ],
+    "icon": "i-motor.svg",
+    "saas": true,
+    "website": "https://www.i-motor.com.au"
+  },
+  "iAdvize": {
+    "cats": [
+      52
+    ],
+    "description": "iAdvize is a conversational marketing platform that connects customers in need of advice with experts who are available 24/7 via messaging.",
+    "dom": [
+      "link[href*='.iadvize.com']"
+    ],
+    "icon": "iAdvize.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.iadvize\\.com/"
+    ],
+    "website": "https://www.iadvize.com"
+  },
+  "iClose": {
+    "cats": [
+      72
+    ],
+    "description": "iClose is an appointment scheduling tool that helps businesses streamline lead generation and meeting coordination without additional advertising expenses.",
+    "icon": "iClosed.svg",
+    "pricing": [
+      "low",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "\\.iclosed\\.io/"
+    ],
+    "website": "https://iclosed.io"
+  },
+  "iEXExchanger": {
+    "cats": [
+      1
+    ],
+    "cookies": {
+      "iexexchanger_session": ""
+    },
+    "icon": "iEXExchanger.png",
+    "implies": [
+      "PHP",
+      "Apache HTTP Server",
+      "Angular"
+    ],
+    "meta": {
+      "generator": "iEXExchanger"
+    },
+    "website": "https://exchanger.iexbase.com"
+  },
+  "iEntry": {
+    "cats": [
+      75
+    ],
+    "description": "iEntry is a full-service email marketing platform offering campaign management, list building, analytics, and targeted messaging for businesses.",
+    "icon": "iEntry.svg",
+    "saas": true,
+    "scriptSrc": [
+      "www\\.ientry\\.com"
+    ],
+    "website": "https://www.ientry.com"
+  },
+  "iMagaza": {
+    "cats": [
+      6
+    ],
+    "description": "iMagaza is an ecommerce website system from Turkey.",
+    "icon": "iMagaza.svg",
+    "pricing": [
+      "mid",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "connect\\.imagaza\\.net/"
+    ],
+    "website": "https://imagaza.net"
+  },
+  "iPresta": {
+    "cats": [
+      6
+    ],
+    "icon": "iPresta.svg",
+    "implies": [
+      "PHP",
+      "PrestaShop"
+    ],
+    "meta": {
+      "designer": "iPresta"
+    },
+    "website": "https://ipresta.ir"
+  },
+  "iRaiser": {
+    "cats": [
+      111
+    ],
+    "description": "iRaiser is a platform that provides charities with tailored solutions to optimize and manage fundraising activities.",
+    "icon": "iRaiser.svg",
+    "js": {
+      "iRaiser.PaymentStartDate": "",
+      "iraiser_counter": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "\\.iraiser\\.eu"
+    ],
+    "website": "https://www.iraiser.com"
+  },
+  "iSET": {
+    "cats": [
+      6
+    ],
+    "description": "iSET is an ecommerce platform providing tools to start, grow, and scale online stores.",
+    "icon": "iSET.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scripts": [
+      "cdn\\.iset\\.io/"
+    ],
+    "website": "https://www.iset.com.br"
+  },
+  "iScripts": {
+    "cats": [
+      1
+    ],
+    "description": "iScripts is a multi product CMS system based on PHP.",
+    "icon": "iScripts.svg",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "copyright": "^Copyright \\(C\\) www\\.iScripts\\.com,? \\d{4}\\. All rights reserved\\.$"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.iscripts.com"
+  },
+  "iSina Chat": {
+    "cats": [
+      52
+    ],
+    "description": "iSina Chat is a live chat service that provides online support and FAQ for customers.",
+    "icon": "iSina Chat.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "chat\\.isina\\.agency/"
+    ],
+    "website": "https://isina.agency"
+  },
+  "iTCHYROBOT": {
+    "cats": [
+      1
+    ],
+    "description": "iTCHYROBOT is a platform that develops school websites and provides marketing strategies to support communication, branding, and digital engagement for educational institutions.",
+    "icon": "iTCHYROBOT.svg",
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "/wp-content/themes/itchyrobot_parent/js/"
+    ],
+    "website": "https://www.itchyrobot.co.uk"
+  },
+  "iWiki": {
+    "cats": [
+      1
+    ],
+    "description": "iWiki is a Dutch-based content management system provider, formerly known as Kirra.",
+    "icon": "iWink.svg",
+    "js": {
+      "Kirra": "",
+      "KirraActiveMenuItems": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "\\.kirra\\.nl"
+    ],
+    "website": "https://www.iwink.nl"
+  },
+  "icomm": {
+    "cats": [
+      32
+    ],
+    "description": "icomm is a platform that helps companies manage their marketing automation strategy using AI-powered tools.",
+    "headers": {
+      "Content-Security-Policy": "\\.icommarketing\\.com",
+      "Server": "^ICOMMKT$"
+    },
+    "icon": "icomm.svg",
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://icommkt.com"
+  },
+  "icomm - Notifications Hub": {
+    "cats": [
+      32
+    ],
+    "description": "Notifications Hub is an omnichannel marketing automation platform powered by AI.0",
+    "excludes": [
+      "TITANPush"
+    ],
+    "icon": "icomm.svg",
+    "implies": [
+      "icomm"
+    ],
+    "js": {
+      "wpnObject.origin": "2"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://icommkt.com"
+  },
+  "iiQ Check": {
+    "cats": [
+      90
+    ],
+    "description": "iiQ Check is a system designed to optimize hotel guest communication and manage review distribution.",
+    "icon": "iiQCheck.svg",
+    "saas": true,
+    "scriptSrc": [
+      "app\\.iiq-check\\.de"
+    ],
+    "website": "https://www.iiq-check.de"
+  },
+  "immediaCMS": {
+    "cats": [
+      1
+    ],
+    "description": "immediaCMS is a content management system that enables users to create, edit, and organize digital content through a centralized platform for website and media management.",
+    "icon": "immediaCMS.svg",
+    "js": {
+      "simpleCmsMetadata": ""
+    },
+    "saas": true,
+    "website": "https://immediac.com/content-management-system"
+  },
+  "imperia CMS": {
+    "cats": [
+      1
+    ],
+    "description": "imperia CMS is a headless content management for large editorial.",
+    "dom": [
+      "source[srcset*='.de/imperia/md/images/']"
+    ],
+    "icon": "imperiaCMS.svg",
+    "implies": [
+      "Perl"
+    ],
+    "meta": {
+      "generator": "^IMPERIA\\s([\\d\\.\\_]+)\\;version:\\1",
+      "x-imperia-live-info": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.pirobase-imperia.com/de/solutions/imperia-cms"
+  },
+  "inSales": {
+    "cats": [
+      6
+    ],
+    "description": "inSales is a SaaS ecommerce platform with multichannel integration.",
+    "icon": "inSales.svg",
+    "js": {
+      "InSales": "",
+      "InSalesUI": "",
+      "insalesGeocodeResults": ""
+    },
+    "meta": {
+      "insales-redefined-api-method": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "website": "https://www.insales.com"
+  },
+  "inSided": {
+    "cats": [
+      97
+    ],
+    "description": "inSided is the only Customer Success Community Platform built to help SaaS companies improve customer success and retention.",
+    "icon": "inSided.svg",
+    "js": {
+      "inSidedData": "",
+      "insided": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://www.insided.com"
+  },
+  "ip-label": {
+    "cats": [
+      10
+    ],
+    "icon": "iplabel.svg",
+    "js": {
+      "clobs": ""
+    },
+    "scriptSrc": [
+      "clobs\\.js"
+    ],
+    "website": "https://www.ip-label.com"
+  },
+  "iubenda": {
+    "cats": [
+      67
+    ],
+    "description": "iubenda is a compliance software used by businesses for their websites and apps.",
+    "icon": "iubenda.svg",
+    "js": {
+      "_iub": "",
+      "addIubendaCs": ""
+    },
+    "pricing": [
+      "low",
+      "recurring",
+      "freemium"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "iubenda\\.com/"
+    ],
+    "website": "https://www.iubenda.com"
+  },
+  "iugu": {
+    "cats": [
+      41
+    ],
+    "description": "iugu is a financial management platform that enables businesses to handle payments, billing, and invoicing through a unified system.",
+    "icon": "iugu.svg",
+    "js": {
+      "Iugu.CreditCard": ""
+    },
+    "saas": true,
+    "scriptSrc": [
+      "js\\.iugu\\.com"
+    ],
+    "website": "https://www.iugu.com"
+  },
+  "iyzico": {
+    "cats": [
+      41
+    ],
+    "description": "iyzico is a payment receipt system management platform that offers ePayment solutions.",
+    "icon": "iyzico.svg",
+    "js": {
+      "iyz.ideaSoft": "",
+      "iyz.position": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "website": "https://www.iyzico.com"
+  }
+}

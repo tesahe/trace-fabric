@@ -1,0 +1,22 @@
+{
+  "fixture": "parked_domain.html",
+  "url": "http://example.com/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "nginx"}
+  ],
+  "must_detect": [],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Calendly",
+    "Stripe",
+    "MailChimp",
+    "jQuery",
+    "Bootstrap",
+    "React"
+  ],
+  "notes": "NEGATIVE CONTROL. Parked-domain placeholder page. A meaningful matcher should produce zero detections here."
+}

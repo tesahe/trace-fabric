@@ -1,0 +1,26 @@
+{
+  "fixture": "cloudflare_only.html",
+  "url": "https://acme.example/",
+  "synthetic_headers": [
+    {"key": "Server", "value": "cloudflare"},
+    {"key": "cf-ray", "value": "85a1b2c3d4-IAD"},
+    {"key": "cf-cache-status", "value": "DYNAMIC"}
+  ],
+  "must_detect": [],
+  "must_not_detect": [
+    "WordPress",
+    "Shopify",
+    "Squarespace",
+    "Wix",
+    "HubSpot",
+    "Calendly",
+    "Stripe",
+    "MailChimp",
+    "jQuery",
+    "Bootstrap",
+    "React",
+    "Google Analytics",
+    "Google Tag Manager"
+  ],
+  "notes": "NEGATIVE CONTROL. A static brochure page proxied via Cloudflare. The matcher should detect ~nothing here. The Cloudflare entry in the wappalyzer pack is empty after the pattern-drop filter so even cf-ray headers don't surface a Cloudflare detection — the absence is a feature, not a bug."
+}

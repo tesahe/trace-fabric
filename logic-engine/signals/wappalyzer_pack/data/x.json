@@ -1,0 +1,296 @@
+{
+  "X-Cart": {
+    "cats": [
+      6
+    ],
+    "description": " X-Cart is an open source PHP shopping cart ecommerce software platform.",
+    "icon": "X-Cart.svg",
+    "implies": [
+      "PHP"
+    ],
+    "js": {
+      "xcart_web_dir": "",
+      "xliteConfig": ""
+    },
+    "meta": {
+      "generator": "X-Cart(?: (\\d+))?\\;version:\\1"
+    },
+    "oss": true,
+    "website": "https://kb.x-cart.com"
+  },
+  "X.ai": {
+    "cats": [
+      72
+    ],
+    "description": "X.ai is a scheduling tool that organizes meeting times and improves lead conversion by adding embedded booking buttons to websites or within live chat applications.",
+    "icon": "X.ai.svg",
+    "js": {
+      "xdotaiAction": "",
+      "xdotaiButton": ""
+    },
+    "pricing": [
+      "low",
+      "recurring"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "(?:cdn)?x\\.ai/.*/xdotai-embed\\.js"
+    ],
+    "website": "https://x.ai"
+  },
+  "XOOPS": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:xoops:xoops:*:*:*:*:*:*:*:*",
+    "icon": "XOOPS.png",
+    "implies": [
+      "PHP"
+    ],
+    "js": {
+      "xoops": ""
+    },
+    "meta": {
+      "generator": "XOOPS"
+    },
+    "website": "https://xoops.org"
+  },
+  "Xanario": {
+    "cats": [
+      6
+    ],
+    "description": "Xanario is an ecommerce platform that offers a comprehensive system for online shop solutions, including CMS, CRM, shop management, blog integration, POS system, and warehouse management.",
+    "icon": "Xanario.svg",
+    "meta": {
+      "generator": "xanario shopsoftware"
+    },
+    "website": "https://xanario.de"
+  },
+  "Xenioo": {
+    "cats": [
+      52
+    ],
+    "description": "Xenioo is an omnichannel chatbot platform designed to create, manage, and deploy conversational agents across multiple messaging channels.",
+    "icon": "Xenioo.svg",
+    "js": {
+      "Xenioo": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "static\\.xenioo\\.com"
+    ],
+    "website": "https://www.xenioo.com"
+  },
+  "Xeno Chat": {
+    "cats": [
+      52
+    ],
+    "description": "Xeno Chat is a messaging app that enables live responses to support customer attraction, conversion, and retention.",
+    "icon": "Xeno.svg",
+    "js": {
+      "_xeno._Utils": "",
+      "_xenoLoader": ""
+    },
+    "pricing": [
+      "mid",
+      "recurring",
+      "poa"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "cdn\\.xeno\\.app"
+    ],
+    "website": "https://xenoapp.com"
+  },
+  "Xiuno BBS": {
+    "cats": [
+      1,
+      2
+    ],
+    "cpe": "cpe:2.3:a:xiuno:xiunobbs:*:*:*:*:*:*:*:*",
+    "description": "Xiunobbs is an open-source, lightweight forum software designed for easy community management and customization.",
+    "icon": "Xiuno BBS.svg",
+    "implies": [
+      "PHP"
+    ],
+    "meta": {
+      "author": "XiunoBBS\\s([\\d\\.]+)\\;version:\\1"
+    },
+    "oss": true,
+    "website": "https://xiunobbs.cn"
+  },
+  "Xonic": {
+    "cats": [
+      6
+    ],
+    "html": [
+      "Powered by <a href=\"http://www\\.xonic-solutions\\.de/index\\.php\" target=\"_blank\">xonic-solutions Shopsoftware</a>"
+    ],
+    "icon": "xonic.png",
+    "meta": {
+      "keywords": "xonic-solutions"
+    },
+    "scriptSrc": [
+      "core/jslib/jquery\\.xonic\\.js\\.php"
+    ],
+    "website": "https://www.xonic-solutions.de"
+  },
+  "XpressEngine": {
+    "cats": [
+      1
+    ],
+    "cpe": "cpe:2.3:a:xpressengine:xpressengine:*:*:*:*:*:*:*:*",
+    "description": "XpressEngine (XE) is an open-source content management system (CMS) designed for building and managing websites, blogs, and online communities.",
+    "icon": "XpressEngine.svg",
+    "meta": {
+      "generator": "XpressEngine"
+    },
+    "oss": true,
+    "website": "https://www.xpressengine.com/"
+  },
+  "Xpresslane": {
+    "cats": [
+      41
+    ],
+    "description": "Xpresslane is a checkout platform for ecommerce that focuses on increasing conversion during the checkout process.",
+    "dom": {
+      "link[href*='/assets/xpresslane.css']": {
+        "attributes": {
+          "href": "cdn\\.shopify\\.com/.+/assets/xpresslane\\.css"
+        }
+      }
+    },
+    "icon": "Xpresslane.svg",
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "apps\\.xpresslane\\.in/"
+    ],
+    "website": "https://www.xpresslane.in"
+  },
+  "Xretail": {
+    "cats": [
+      6
+    ],
+    "description": "Xretail is a subscription based product that enables the omni-channel ecommerce approach to its customers.",
+    "icon": "Xretail.svg",
+    "meta": {
+      "author": "^Xretail team$"
+    },
+    "pricing": [
+      "poa"
+    ],
+    "saas": true,
+    "website": "https://xretail.com"
+  },
+  "Xsolla": {
+    "cats": [
+      41
+    ],
+    "description": "Xsolla is a video game business system offering payment solutions and store management.",
+    "icon": "Xsolla.svg",
+    "saas": true,
+    "scriptSrc": [
+      "\\.xsolla\\.(com|net)"
+    ],
+    "website": "https://xsolla.com"
+  },
+  "Xtime": {
+    "cats": [
+      72
+    ],
+    "description": "Xtime is a company that provides automotive service scheduling and management solutions primarily for car dealerships and automotive service centers.",
+    "dom": [
+      "a[data-modified-by='xtime']",
+      "iframe[src*='xtime.net.au']",
+      "iframe[src*='x-time']"
+    ],
+    "headers": {
+      "Access-Control-Allow-Origin": "\\.xtime\\.net"
+    },
+    "icon": "Xtime.svg",
+    "js": {
+      "xtime": ""
+    },
+    "pricing": [
+      "poa"
+    ],
+    "scriptSrc": [
+      "\\.xtime\\.com/scheduling"
+    ],
+    "website": "https://xtime.com",
+    "xhr": [
+      "xtime\\.net\\.au"
+    ]
+  },
+  "Xtremepush": {
+    "cats": [
+      32
+    ],
+    "description": "Xtremepush is a customer engagement, personalisation and data platform. It's purpose-built for multichannel and mobile marketing.",
+    "icon": "Xtremepush.svg",
+    "js": {
+      "xtremepush": ""
+    },
+    "website": "https://xtremepush.com"
+  },
+  "Xverify": {
+    "cats": [
+      75
+    ],
+    "description": "Xverify is an intelligent email verification system that helps marketers eliminate hard bounces, reduce spam complaints, and minimize fraud to improve inbox deliverability.",
+    "icon": "Xverify.svg",
+    "js": {
+      "user_xverify_my_domain": ""
+    },
+    "pricing": [
+      "payg"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "www\\.xverify\\.com"
+    ],
+    "website": "https://www.xverify.com"
+  },
+  "Xzero Analytics": {
+    "cats": [
+      10
+    ],
+    "description": "Xzero Analytics is a tool for monitoring user journeys, analysing visitor sessions, gathering heatmaps, and more, enabling the observation and evolution of site traffic.",
+    "icon": "XZeroAnalytics.png",
+    "js": {
+      "xzero-analytics": ""
+    },
+    "pricing": [
+      "low",
+      "freemium"
+    ],
+    "saas": true,
+    "scriptSrc": [
+      "analytics\\.xzero\\.co\\.uk"
+    ],
+    "website": "https://analytics.xzero.co.uk"
+  },
+  "xtCommerce": {
+    "cats": [
+      6
+    ],
+    "description": "xtCommerce is an ecommerce platform offering a complete solution for online shop management, including SEO, mobile optimization, and integrated payment systems.",
+    "html": [
+      "<div class=\"copyright\">[^<]+<a[^>]+>xt:Commerce"
+    ],
+    "icon": "xtCommerce.svg",
+    "js": {
+      "XT.version.version": "([\\d.]+)\\;version:\\1"
+    },
+    "meta": {
+      "generator": "xt:Commerce"
+    },
+    "website": "https://www.xt-commerce.com"
+  }
+}
