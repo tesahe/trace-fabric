@@ -1,0 +1,74 @@
+{
+  "Boulevard": {
+    "cats": [72],
+    "description": "Boulevard is a high-end salon and spa management + booking platform.",
+    "website": "https://www.joinblvd.com",
+    "saas": true,
+    "pricing": ["high", "recurring"],
+    "icon": "Boulevard.svg",
+    "scriptSrc": [
+      "(?:cdn|widgets|dashboard)\\.boulevard\\.io/.+\\.js",
+      "(?:cdn|widgets|dashboard)\\.joinblvd\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?(?:boulevard\\.io|joinblvd\\.com)",
+      "<a[^>]+href=\"https?://(?:dashboard|book)\\.boulevard\\.io/[^\"]*\"",
+      "<div[^>]+id=\"blvd-widget[^\"]*\""
+    ],
+    "url": "(?:dashboard|book)\\.boulevard\\.io/",
+    "notes": "Boulevard hosted-booking at dashboard.boulevard.io / book.boulevard.io; embed widget loader served from cdn.boulevard.io. joinblvd.com is the marketing alias."
+  },
+  "Phorest": {
+    "cats": [72],
+    "description": "Phorest is a salon-management software with online booking and client management.",
+    "website": "https://www.phorest.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Phorest.svg",
+    "scriptSrc": [
+      "(?:cdn|booking|widgets)\\.phorest\\.com/.+\\.js",
+      "(?:cdn|booking|widgets)\\.phorest\\.me/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?phorest\\.(?:com|me)",
+      "<a[^>]+href=\"https?://(?:[a-z0-9-]+\\.)?phorest\\.me/[^\"]*\""
+    ],
+    "url": "(?:[a-z0-9-]+\\.)?phorest\\.me/",
+    "notes": "Phorest online-booking subdomain is phorest.me; widget loader on cdn.phorest.com (vendor support docs)."
+  },
+  "Rosy Salon Software": {
+    "cats": [72],
+    "description": "Rosy Salon Software is a salon-and-spa booking and POS platform.",
+    "website": "https://www.rosysalonsoftware.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Rosy.svg",
+    "scriptSrc": [
+      "(?:www|cdn|book)\\.rosysalonsoftware\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?rosysalonsoftware\\.com",
+      "<a[^>]+href=\"https?://book\\.rosysalonsoftware\\.com/[^\"]*\""
+    ],
+    "url": "book\\.rosysalonsoftware\\.com/",
+    "notes": "Rosy hosted booking at book.rosysalonsoftware.com; embed widget served from same domain."
+  },
+  "Mangomint": {
+    "cats": [72],
+    "description": "Mangomint is a modern salon and spa management platform.",
+    "website": "https://www.mangomint.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "Mangomint.svg",
+    "scriptSrc": [
+      "(?:cdn|app|widgets)\\.mangomint\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?mangomint\\.com",
+      "<a[^>]+href=\"https?://(?:app|book)\\.mangomint\\.com/[^\"]*\"",
+      "<div[^>]+(?:id|class)=\"mangomint-(?:widget|booking)[^\"]*\""
+    ],
+    "url": "(?:app|book)\\.mangomint\\.com/",
+    "notes": "Mangomint hosted booking lives at app.mangomint.com / book.mangomint.com; embed widget loader from cdn.mangomint.com (vendor docs)."
+  }
+}

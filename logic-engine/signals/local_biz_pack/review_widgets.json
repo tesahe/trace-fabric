@@ -1,0 +1,73 @@
+{
+  "BirdEye": {
+    "cats": [90],
+    "description": "BirdEye is a reputation-management and review-aggregation widget for SMBs.",
+    "website": "https://birdeye.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "BirdEye.svg",
+    "scriptSrc": [
+      "(?:cdn|widgets|reviews)\\.birdeye\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?birdeye\\.com",
+      "<div[^>]+(?:id|class)=\"birdeye-(?:reviews|widget)[^\"]*\"",
+      "<a[^>]+href=\"https?://reviews\\.birdeye\\.com/[^\"]*\""
+    ],
+    "url": "reviews\\.birdeye\\.com/",
+    "notes": "BirdEye review widget loaded from cdn.birdeye.com per vendor embed docs; reviews.birdeye.com is the public reviews page."
+  },
+  "Podium": {
+    "cats": [90],
+    "description": "Podium is a messaging + reviews platform for SMBs; ships a webchat widget commonly embedded site-wide.",
+    "website": "https://www.podium.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "Podium.svg",
+    "scriptSrc": [
+      "connect\\.podium\\.com/.+\\.js",
+      "(?:cdn|widgets)\\.podium\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?podium\\.com",
+      "<div[^>]+(?:id|class)=\"podium-webchat[^\"]*\""
+    ],
+    "url": "review\\.podium\\.com/",
+    "notes": "Podium webchat widget loader at connect.podium.com (vendor embed snippet); review collection links live under review.podium.com."
+  },
+  "NiceJob": {
+    "cats": [90],
+    "description": "NiceJob is a review-collection and reputation widget for service businesses.",
+    "website": "https://nicejob.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "NiceJob.svg",
+    "scriptSrc": [
+      "widget\\.nicejobcdn\\.com/.+\\.js",
+      "cdn\\.nicejob\\.co/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?nicejob\\.(?:com|co)",
+      "<div[^>]+(?:id|class)=\"nicejob-(?:widget|reviews)[^\"]*\""
+    ],
+    "url": "(?:get|reviews)\\.nicejob\\.com/",
+    "notes": "NiceJob widget loader at widget.nicejobcdn.com (per vendor embed code); review-collection landing pages at get.nicejob.com / reviews.nicejob.com."
+  },
+  "Trustpilot": {
+    "cats": [90],
+    "description": "Trustpilot review TrustBox widget; common embed on B2C sites.",
+    "website": "https://business.trustpilot.com",
+    "saas": true,
+    "pricing": ["freemium", "mid", "recurring"],
+    "icon": "Trustpilot.svg",
+    "scriptSrc": [
+      "widget\\.trustpilot\\.com/bootstrap/v5/tp\\.widget\\.bootstrap\\.min\\.js"
+    ],
+    "html": [
+      "<div[^>]+class=\"[^\"]*trustpilot-widget[^\"]*\"",
+      "<a[^>]+href=\"https?://www\\.trustpilot\\.com/(?:review|evaluate)/[^\"]*\""
+    ],
+    "url": "www\\.trustpilot\\.com/(?:review|evaluate)/",
+    "notes": "Trustpilot TrustBox embed snippet (per vendor docs) is widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js + a div.trustpilot-widget container."
+  }
+}

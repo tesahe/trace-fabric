@@ -1,0 +1,146 @@
+{
+  "Booksy": {
+    "cats": [72],
+    "description": "Booksy is an appointment booking and customer-management platform widely used by salons, barbershops, and personal-care providers.",
+    "website": "https://booksy.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Booksy.svg",
+    "scriptSrc": [
+      "booksy\\.com/widget",
+      "(?:cdn|static)\\.booksy\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?booksy\\.com[^>]+>",
+      "<a[^>]+href=\"https?://(?:[a-z0-9-]+\\.)?booksy\\.com/(?:book|business)/[^\"]*\""
+    ],
+    "url": "(?:[a-z0-9-]+\\.)?booksy\\.com/(?:book|business)/",
+    "notes": "Confirmed via vendor embed docs (https://booksy.com) and field review of salon sites; widget loader is on widget/cdn/static subdomains. Booking-link iframes use *.booksy.com hostnames."
+  },
+  "Mindbody": {
+    "cats": [72],
+    "description": "Mindbody runs the booking and back-office for fitness studios, salons, spas, and wellness businesses.",
+    "website": "https://www.mindbodyonline.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "Mindbody.svg",
+    "scriptSrc": [
+      "(?:widgets|brandedweb|cdn-widgets)\\.mindbodyonline\\.com",
+      "static\\.mindbodyonline\\.com/.+\\.js"
+    ],
+    "html": [
+      "<healcode-widget[^>]*>",
+      "data-widget-(?:type|partner)=\"(?:mindbody|healcode)\"",
+      "<iframe[^>]+(?:widgets|clients)\\.mindbodyonline\\.com"
+    ],
+    "url": "clients\\.mindbodyonline\\.com/(?:classic|asp)",
+    "notes": "Mindbody embed is the healcode-widget custom element + widgets.mindbodyonline.com loader (vendor-published embed snippet). clients.mindbodyonline.com is the canonical hosted-booking subdomain."
+  },
+  "Vagaro": {
+    "cats": [72],
+    "description": "Vagaro is a booking and POS platform for salons, spas, and fitness businesses.",
+    "website": "https://www.vagaro.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Vagaro.svg",
+    "scriptSrc": [
+      "(?:www\\.|widgets\\.)?vagaro\\.com/.+/widget",
+      "cdn\\.vagaro\\.com"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?vagaro\\.com",
+      "<a[^>]+href=\"https?://(?:www\\.)?vagaro\\.com/(?:book|us)/[^\"]*\""
+    ],
+    "url": "(?:www\\.)?vagaro\\.com/(?:book|us)/",
+    "notes": "Vagaro embed widget loaded from www.vagaro.com/<slug>/widget per vendor embed doc; hosted-booking subdomain is www.vagaro.com/book."
+  },
+  "Schedulicity": {
+    "cats": [72],
+    "description": "Schedulicity is a self-service appointment booking platform for solo providers and small teams.",
+    "website": "https://www.schedulicity.com",
+    "saas": true,
+    "pricing": ["low", "mid", "recurring"],
+    "icon": "Schedulicity.svg",
+    "scriptSrc": [
+      "(?:www\\.)?schedulicity\\.com/(?:assets|widgets)/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?schedulicity\\.com",
+      "<a[^>]+href=\"https?://(?:www\\.)?schedulicity\\.com/scheduling/[^\"]*\""
+    ],
+    "url": "(?:www\\.)?schedulicity\\.com/scheduling/",
+    "notes": "Schedulicity hosted-booking URLs follow /scheduling/<slug>; widget JS lives under /assets/ and /widgets/."
+  },
+  "Setmore": {
+    "cats": [72],
+    "description": "Setmore is a free-tier appointment booking widget popular with very small businesses.",
+    "website": "https://www.setmore.com",
+    "saas": true,
+    "pricing": ["freemium", "low", "recurring"],
+    "icon": "Setmore.svg",
+    "scriptSrc": [
+      "(?:storage\\.googleapis\\.com/setmore[\\w/.-]+|(?:[a-z0-9-]+\\.)?setmore\\.com/.+\\.js)",
+      "my\\.setmore\\.com/(?:js|widget|webapp)"
+    ],
+    "html": [
+      "<iframe[^>]+my\\.setmore\\.com",
+      "<a[^>]+href=\"https?://(?:my|booking)\\.setmore\\.com/[^\"]*\"",
+      "data-(?:res-id|setmore-widget)=\""
+    ],
+    "url": "(?:my|booking)\\.setmore\\.com/",
+    "notes": "Setmore embed loader served from my.setmore.com plus a Google Cloud Storage bucket for the widget bundle (per vendor embed snippet)."
+  },
+  "10to8": {
+    "cats": [72],
+    "description": "10to8 (now Sign In Scheduling) is an appointment scheduling platform for service businesses.",
+    "website": "https://10to8.com",
+    "saas": true,
+    "pricing": ["freemium", "mid", "recurring"],
+    "icon": "10to8.svg",
+    "scriptSrc": [
+      "(?:[a-z0-9-]+\\.)?10to8\\.com/.+\\.js",
+      "10to8static-eu\\.s3\\.amazonaws\\.com"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?10to8\\.com",
+      "<a[^>]+href=\"https?://(?:[a-z0-9-]+\\.)?10to8\\.com/(?:book|booking)/[^\"]*\""
+    ],
+    "url": "(?:[a-z0-9-]+\\.)?10to8\\.com/(?:book|booking)/",
+    "notes": "10to8 hosted-booking URLs live under booking.10to8.com / 10to8.com/book; static asset bucket on s3 confirmed via embed page-source."
+  },
+  "Square Appointments": {
+    "cats": [72],
+    "description": "Square Appointments is Square's free booking tool, often embedded by service providers via squareup.com/appointments.",
+    "website": "https://squareup.com/us/en/appointments",
+    "saas": true,
+    "pricing": ["freemium", "low", "recurring"],
+    "icon": "Square Appointments.svg",
+    "scriptSrc": [
+      "squareup\\.com/appointments/buyer/widget"
+    ],
+    "html": [
+      "<a[^>]+href=\"https?://(?:[a-z0-9-]+\\.)?squareup\\.com/appointments/book/[^\"]*\"",
+      "<iframe[^>]+squareup\\.com/appointments"
+    ],
+    "url": "(?:[a-z0-9-]+\\.)?squareup\\.com/appointments/book/",
+    "notes": "Square Appointments hosted-booking URL is squareup.com/appointments/book/<merchant>; the embed widget is /appointments/buyer/widget. Scoped narrowly so generic Square POS sites don't trip this signature."
+  },
+  "Acuity Scheduling": {
+    "cats": [72],
+    "description": "Acuity Scheduling (Squarespace) is an appointment booking platform with extensive embed customization.",
+    "website": "https://acuityscheduling.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Acuity Scheduling.svg",
+    "scriptSrc": [
+      "embed\\.acuityscheduling\\.com/(?:js|embed)",
+      "app\\.acuityscheduling\\.com/(?:js|static)"
+    ],
+    "html": [
+      "<iframe[^>]+(?:embed|app)\\.acuityscheduling\\.com",
+      "<a[^>]+href=\"https?://app\\.acuityscheduling\\.com/schedule\\.php"
+    ],
+    "url": "app\\.acuityscheduling\\.com/schedule\\.php",
+    "notes": "Acuity hosted-booking URL is app.acuityscheduling.com/schedule.php?owner=N; embed loader is embed.acuityscheduling.com (per vendor embed docs)."
+  }
+}

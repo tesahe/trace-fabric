@@ -1,0 +1,94 @@
+{
+  "ServiceTitan": {
+    "cats": [53],
+    "description": "ServiceTitan is the dominant field-service-management platform for HVAC, plumbing, and electrical contractors.",
+    "website": "https://www.servicetitan.com",
+    "saas": true,
+    "pricing": ["high", "recurring"],
+    "icon": "ServiceTitan.svg",
+    "scriptSrc": [
+      "(?:cdn|widgets|leadform|forms)\\.servicetitan\\.com/.+\\.js",
+      "leadform\\.cdn\\.servicetitan\\.com"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?servicetitan\\.com",
+      "<div[^>]+(?:id|class)=\"st-(?:lead|form|widget)[^\"]*\"",
+      "<a[^>]+href=\"https?://(?:[a-z0-9-]+\\.)?go\\.servicetitan\\.com/[^\"]*\""
+    ],
+    "url": "(?:[a-z0-9-]+\\.)?go\\.servicetitan\\.com/",
+    "notes": "ServiceTitan lead-form widget loader served from leadform.cdn.servicetitan.com (vendor embed code); booking-handoff via go.servicetitan.com."
+  },
+  "Housecall Pro": {
+    "cats": [53],
+    "description": "Housecall Pro is a field-service-management and online-booking platform for home-services pros.",
+    "website": "https://www.housecallpro.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Housecall Pro.svg",
+    "scriptSrc": [
+      "(?:cdn|book|widgets)\\.housecallpro\\.com/.+\\.js",
+      "online-booking\\.housecallpro\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?housecallpro\\.com",
+      "<div[^>]+(?:id|class)=\"hcp-(?:booking|widget|button)[^\"]*\"",
+      "<a[^>]+href=\"https?://book\\.housecallpro\\.com/[^\"]*\""
+    ],
+    "url": "(?:book|online-booking)\\.housecallpro\\.com/",
+    "notes": "Housecall Pro online-booking widget loader at book.housecallpro.com / online-booking.housecallpro.com (vendor embed docs)."
+  },
+  "Jobber": {
+    "cats": [53],
+    "description": "Jobber is a CRM and operations platform for home-services businesses with an online-booking widget.",
+    "website": "https://getjobber.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Jobber.svg",
+    "scriptSrc": [
+      "(?:d3ki9tyy5l5ruj\\.cloudfront\\.net|cdn\\.getjobber\\.com)/.+\\.js",
+      "clienthub\\.getjobber\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?getjobber\\.com",
+      "<div[^>]+(?:id|class)=\"jobber-(?:work-request|booking)[^\"]*\"",
+      "<a[^>]+href=\"https?://clienthub\\.getjobber\\.com/[^\"]*\""
+    ],
+    "url": "clienthub\\.getjobber\\.com/",
+    "notes": "Jobber online work-request widget from cdn.getjobber.com (and the d3ki9tyy5l5ruj cloudfront bucket per page-source samples); client portal at clienthub.getjobber.com."
+  },
+  "FieldEdge": {
+    "cats": [53],
+    "description": "FieldEdge is a field-service-management platform geared toward HVAC and plumbing companies.",
+    "website": "https://fieldedge.com",
+    "saas": true,
+    "pricing": ["high", "recurring"],
+    "icon": "FieldEdge.svg",
+    "scriptSrc": [
+      "(?:cdn|widgets|app)\\.fieldedge\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?fieldedge\\.com",
+      "<a[^>]+href=\"https?://(?:app|book)\\.fieldedge\\.com/[^\"]*\""
+    ],
+    "url": "(?:app|book)\\.fieldedge\\.com/",
+    "notes": "FieldEdge customer booking portal at app.fieldedge.com / book.fieldedge.com; widget loader from cdn.fieldedge.com."
+  },
+  "Workiz": {
+    "cats": [53],
+    "description": "Workiz is a field-service-management platform with online-booking widgets for service businesses.",
+    "website": "https://www.workiz.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Workiz.svg",
+    "scriptSrc": [
+      "(?:cdn|widgets|app)\\.workiz\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?workiz\\.com",
+      "<a[^>]+href=\"https?://(?:app|book)\\.workiz\\.com/[^\"]*\"",
+      "<div[^>]+(?:id|class)=\"workiz-(?:widget|booking)[^\"]*\""
+    ],
+    "url": "(?:app|book)\\.workiz\\.com/",
+    "notes": "Workiz online-booking page at book.workiz.com; embed widget loader served from cdn.workiz.com (vendor embed docs)."
+  }
+}
