@@ -36,7 +36,7 @@ Every decision — qualified, rejected, or excluded — is persisted as a struct
 ## Architecture
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px"}, "flowchart": {"curve": "basis", "padding": 20, "nodeSpacing": 80, "rankSpacing": 100}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA"}, "flowchart": {"curve": "basis", "padding": 20, "nodeSpacing": 80, "rankSpacing": 100}}}%%
 flowchart LR
     U(["Operator"]) --> Q["Niche+Location or URL"]
 
@@ -79,14 +79,19 @@ flowchart LR
 
 Read the below links for additional information.
 
-- [System Overview](docs/OVERVIEW.md)
+**Architecture**
+
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data Model](docs/DATA_MODEL.md)
 - [Evaluation Strategy](docs/EVALUATION_STRATEGY.md)
-- [Frontend](docs/FRONTEND.md)
-- [Roadmap](docs/ROADMAP.md)
 - [Decisions (ADR log)](docs/DECISIONS.md)
-- [Demo Guide](docs/DEMO.md)
+- [Roadmap](docs/ROADMAP.md)
+
+**Diagrams**
+
+- [Evaluation Cascade](docs/evaluation-cascade.md)
+- [Pipeline Sequence](docs/pipeline-sequence.md)
+- [Data Lifecycle](docs/data-lifecycle.md)
 
 ## Project Status
 
@@ -134,12 +139,6 @@ Versions reflect what's pinned in this repo today.
    npm install
    npm run dev
    ```
-
-A walkthrough of the demo flow lives in [docs/DEMO.md](docs/DEMO.md).
-
-### Feature flags
-
-* **`TRACEFAB_SIGNALS_V2`** — opt-in for the Tier 0 technology-fingerprint matcher (Wappalyzer + RetireJS + local-business signature packs). Default **off** so production behavior is unchanged. Enable per-process with `export TRACEFAB_SIGNALS_V2=1` before launching the logic-engine. When on, the matcher loads ~3000 signatures once at startup and writes detections into the existing `heuristic_flags["technologies"]` JSON column on each scored lead. Errors in the matcher are swallowed and logged so a bad signature never fails a lead.
 
 ## Roadmap
 

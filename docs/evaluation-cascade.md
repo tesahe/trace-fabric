@@ -7,7 +7,7 @@ Why is the evaluation system staged as Tier 0 → Tier 1 → Tier 2 instead of o
 ## Diagram
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontSize": "14px"}, "flowchart": {"curve": "basis", "padding": 35, "nodeSpacing": 70, "rankSpacing": 90}}}%%
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "background": "#FFFFFF", "primaryColor": "#FFFFFF", "primaryTextColor": "#1A1A1A", "primaryBorderColor": "#3A3A3A", "lineColor": "#3A3A3A", "secondaryColor": "#F5F5F5", "tertiaryColor": "#FAFAFA"}, "flowchart": {"curve": "basis", "padding": 35, "nodeSpacing": 70, "rankSpacing": 90}}}%%
 flowchart TB
     U(["Operator"]) --> Q["Niche+Location or URL"]
 
@@ -111,6 +111,6 @@ A future student-model training pipeline can weight these differently or filter 
 
 ## Related diagrams
 
-- [System Context](../../README.md#architecture) — the recruiter-friendly zoom-out of the same system.
+- [System Context](../README.md#architecture) — the recruiter-friendly zoom-out of the same system.
 - [Pipeline Sequence](./pipeline-sequence.md) — time-ordered behavior view of the same cascade.
 - [Data Lifecycle](./data-lifecycle.md) — how a single lead's row evolves across tier writes and updates.
