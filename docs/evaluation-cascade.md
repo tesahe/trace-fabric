@@ -111,6 +111,6 @@ A future student-model training pipeline can weight these differently or filter 
 
 ## Related diagrams
 
-- [System Context](../../README.md#architecture) — the recruiter-friendly zoom-out of the same system.
+- [System Context](../README.md#architecture) — the recruiter-friendly zoom-out of the same system.
 - [Pipeline Sequence](./pipeline-sequence.md) — time-ordered behavior view of the same cascade.
 - [Data Lifecycle](./data-lifecycle.md) — how a single lead's row evolves across tier writes and updates.
