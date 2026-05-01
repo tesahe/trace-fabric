@@ -27,6 +27,22 @@
   <!-- Calendly inline embed -->
   <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
   <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+  <!-- Toast Online Ordering (Sprint 2 local-biz pack coverage) -->
+  <script src="https://cdn.toasttab.com/online-ordering/widget.js" async></script>
+
+  <!-- Schema.org JSON-LD (Sprint 2 structured_data coverage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Everything Bagel HQ",
+    "telephone": "+1-415-555-1212",
+    "address": {"@type":"PostalAddress","streetAddress":"1 Bagel Way","addressLocality":"San Francisco","addressRegion":"CA"},
+    "openingHours": "Mo-Fr 08:00-18:00",
+    "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.6","reviewCount":"212"}
+  }
+  </script>
 </head>
 <body class="home page-template-default">
   <header>

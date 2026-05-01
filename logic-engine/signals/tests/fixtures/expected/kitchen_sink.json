@@ -19,7 +19,11 @@
     {"name": "Calendly", "pack": "wappalyzer", "min_confidence": 80},
     {"name": "PHP", "pack": "wappalyzer", "via": "implied"},
     {"name": "MySQL", "pack": "wappalyzer", "via": "implied"},
-    {"name": "jquery", "pack": "retirejs", "min_confidence": 80}
+    {"name": "jquery", "pack": "retirejs", "min_confidence": 80},
+    {"name": "Toast Online Ordering", "pack": "local_biz", "min_confidence": 80},
+    {"name": "Schema.org: Restaurant", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_telephone", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_aggregateRating", "pack": "structured_data", "min_confidence": 80}
   ],
   "must_not_detect": [
     "Shopify",

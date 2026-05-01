@@ -222,6 +222,7 @@ class Matcher:
         packs_root: Optional[Path] = None,
         apply_blocklist: bool = True,
         blocklist_path: Optional[Path] = None,
+        remote_providers=None,
     ) -> None:
         root = packs_root if packs_root is not None else _DEFAULT_SIGNALS_ROOT
         self.catalog: dict[str, Technology] = load_all_packs(root)
@@ -236,6 +237,12 @@ class Matcher:
             self.blocklist_config: BlocklistConfig = blocklist_mod.load_blocklist(bl_path)
         else:
             self.blocklist_config = EMPTY_CONFIG
+
+        # Optional remote-API providers (PSI, Mozilla Observatory). When
+        # None (the default) the matcher is byte-identical to its Sprint 1
+        # behavior — no network calls are made. Pass a ``RemoteProviders``
+        # bundle to opt in.
+        self.remote_providers = remote_providers
 
     def match(self, raw_lead: dict) -> list[Detection]:
         """Run every applicable signature against ``raw_lead``.
@@ -408,6 +415,39 @@ class Matcher:
 
         # Final pass: implies/requires/excludes + dedup.
         resolved = resolve(raw_detections, self.catalog)
+        if not self.apply_blocklist:
+            return resolved
+        return blocklist_mod.apply(resolved, self.blocklist_config)
+
+    async def match_async(self, raw_lead: dict) -> list[Detection]:
+        """Run local matching, then fan out remote providers in parallel.
+
+        If ``self.remote_providers`` is None the result is identical to
+        ``match`` (no network). When set and any provider's flag is on,
+        the remote Detections are appended and the resolver/blocklist
+        are re-applied so implied / suppressed behavior is consistent.
+
+        Wrapped in try/except: a remote-provider failure can never break
+        the local-matching result.
+        """
+        local = self.match(raw_lead)
+        providers = self.remote_providers
+        if providers is None or not getattr(providers, "is_enabled", lambda: False)():
+            return local
+
+        try:
+            remote = await providers.collect(raw_lead)
+        except Exception:
+            logger.exception("matcher.match_async: remote_providers.collect raised")
+            return local
+
+        if not remote:
+            return local
+
+        # Re-resolve so implied/required/excluded behavior is consistent
+        # across local + remote detections, then re-apply the blocklist.
+        merged = list(local) + list(remote)
+        resolved = resolve(merged, self.catalog)
         if not self.apply_blocklist:
             return resolved
         return blocklist_mod.apply(resolved, self.blocklist_config)

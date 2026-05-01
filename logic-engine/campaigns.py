@@ -32,6 +32,17 @@ class RuntimeConfig:
     # runs. Default False so production behavior is unchanged until we opt in.
     # Set ``TRACEFAB_SIGNALS_V2=1`` to enable.
     signals_v2_enabled: bool = False
+    # When True (and signals_v2_enabled is also True), run the Sprint 2
+    # weighted scorer over the matcher detections + existing evaluator
+    # signals and surface the result in ``heuristic_flags["score_v2"]`` /
+    # ``heuristic_flags["score_v2_breakdown"]``. This NEVER overwrites
+    # ``score`` / ``is_qualified_lead`` — those still come from the
+    # legacy formula. Set ``TRACEFAB_SCORING_V2=1`` to enable.
+    signals_v2_scoring_enabled: bool = False
+    # Opt-in flags for the two free remote-API providers (Sprint 2).
+    # Disabled by default so no network calls leak out of the matcher.
+    remote_psi_enabled: bool = False
+    remote_observatory_enabled: bool = False
 
 
 def _env_truthy(value: str | None) -> bool:
@@ -51,4 +62,7 @@ def load_runtime_config() -> RuntimeConfig:
         # lead_processor depends on this value, so flipping the env var at
         # runtime won't take effect until the process restarts.
         signals_v2_enabled=_env_truthy(os.getenv("TRACEFAB_SIGNALS_V2")),
+        signals_v2_scoring_enabled=_env_truthy(os.getenv("TRACEFAB_SCORING_V2")),
+        remote_psi_enabled=_env_truthy(os.getenv("TRACEFAB_REMOTE_PSI")),
+        remote_observatory_enabled=_env_truthy(os.getenv("TRACEFAB_REMOTE_OBSERVATORY")),
     )
