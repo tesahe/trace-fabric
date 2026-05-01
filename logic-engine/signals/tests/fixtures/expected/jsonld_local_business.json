@@ -1,0 +1,14 @@
+{
+  "fixture": "jsonld_local_business.html",
+  "url": "https://acmeplumbing.example/",
+  "synthetic_headers": [],
+  "must_detect": [
+    {"name": "Schema.org: Plumber", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_telephone", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_address", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_aggregateRating", "pack": "structured_data", "min_confidence": 80},
+    {"name": "Schema.org: has_openingHours", "pack": "structured_data", "min_confidence": 80}
+  ],
+  "must_not_detect": ["WordPress", "Shopify", "Wix"],
+  "notes": "Pure JSON-LD LocalBusiness fixture. Verifies structured_data parser surfaces the business type + sub-properties as Detections."
+}

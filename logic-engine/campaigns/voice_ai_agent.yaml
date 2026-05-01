@@ -1,0 +1,78 @@
+version: 1
+campaign: voice_ai_agent
+description: |
+  Weight config for the "voice AI agent" offer (24/7 phone-answering /
+  intake AI). Highest signal: real local business with real phone-driven
+  intake but no booking widget and clear after-hours gap. Negative weight
+  on businesses that already run a booking SaaS or whose category is
+  fundamentally not phone-driven.
+
+weights_universal:
+  detections:
+    "Calendly:wappalyzer": -10
+    "Acuity Scheduling:local_biz": -15
+    "Square Appointments:local_biz": -10
+    "Setmore:local_biz": -8
+    "Schedulicity:local_biz": -8
+  signals_from_existing_evaluator:
+    no_phone_signal: 30
+    no_booking: 20
+    no_hours: 15
+    has_phone_signal: 8
+    has_contact_page: 5
+  signals_from_remote_apis:
+    psi_mobile_score_below_50: 10
+    observatory_grade_F: 5
+
+weights_by_industry:
+  plumbing:
+    detections:
+      "ServiceTitan:local_biz": -25
+      "Housecall Pro:local_biz": -15
+      "Jobber:local_biz": -10
+      "FieldEdge:local_biz": -25
+      "Workiz:local_biz": -15
+  hvac:
+    detections:
+      "ServiceTitan:local_biz": -25
+      "FieldEdge:local_biz": -25
+      "Housecall Pro:local_biz": -15
+  painting:
+    detections:
+      "Jobber:local_biz": -10
+      "Housecall Pro:local_biz": -10
+  dental:
+    detections:
+      "Mindbody:local_biz": -10
+  salon:
+    detections:
+      "Boulevard:local_biz": -25
+      "Mindbody:local_biz": -20
+      "Vagaro:local_biz": -15
+      "Phorest:local_biz": -15
+      "Booksy:local_biz": -15
+      "Mangomint:local_biz": -15
+  restaurant:
+    detections:
+      "OpenTable:local_biz": -15
+      "Resy:local_biz": -15
+      "Toast Online Ordering:local_biz": -10
+
+weights_by_region:
+  high_cost_metros:
+    matches: ["san francisco", "new york", "seattle", "boston", "los angeles"]
+    multiplier: 1.15
+
+reject_if_universal:
+  signal_true:
+    - is_parked_domain
+    - is_no_website_opportunity
+
+reject_if_industry:
+  salon:
+    detection_present:
+      - "Boulevard:local_biz"
+
+score_baseline: 0.30
+score_max: 1.0
+qualification_threshold: 0.55

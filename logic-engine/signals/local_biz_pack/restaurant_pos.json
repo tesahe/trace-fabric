@@ -1,0 +1,115 @@
+{
+  "Toast Online Ordering": {
+    "cats": [6],
+    "description": "Toast Online Ordering is the consumer-facing ordering widget for restaurants on the Toast POS platform.",
+    "website": "https://pos.toasttab.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "Toast.svg",
+    "scriptSrc": [
+      "(?:cdn|static)\\.toasttab\\.com/.+\\.js",
+      "online-ordering\\.toasttab\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?toasttab\\.com",
+      "<a[^>]+href=\"https?://(?:order|www)\\.toasttab\\.com/[^\"]*\""
+    ],
+    "url": "(?:order|www|online-ordering)\\.toasttab\\.com/",
+    "notes": "Toast Online Ordering hosted at order.toasttab.com/<slug>; widget assets on cdn.toasttab.com / online-ordering.toasttab.com (vendor embed snippet)."
+  },
+  "ChowNow": {
+    "cats": [6],
+    "description": "ChowNow is a commission-free online ordering platform for independent restaurants.",
+    "website": "https://www.chownow.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "ChowNow.svg",
+    "scriptSrc": [
+      "cdn\\.chownow\\.com/.+\\.js",
+      "(?:www|order|directweb)\\.chownow\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?chownow\\.com",
+      "<div[^>]+class=\"chownow[^\"]*\"",
+      "<a[^>]+href=\"https?://direct\\.chownow\\.com/order/[^\"]*\""
+    ],
+    "url": "direct\\.chownow\\.com/order/",
+    "notes": "ChowNow direct-ordering URLs at direct.chownow.com/order/<slug>; embed widget lives under cdn.chownow.com (vendor embed code)."
+  },
+  "Square for Restaurants": {
+    "cats": [6],
+    "description": "Square for Restaurants offers online ordering and reservations for hospitality businesses on Square.",
+    "website": "https://squareup.com/us/en/point-of-sale/restaurants",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "Square for Restaurants.svg",
+    "scriptSrc": [
+      "squareup\\.com/online-ordering/(?:js|widget)"
+    ],
+    "html": [
+      "<a[^>]+href=\"https?://order\\.online\\.square/[^\"]*\"",
+      "<iframe[^>]+order\\.online\\.square"
+    ],
+    "url": "order\\.online\\.square/",
+    "notes": "Square's hosted online-ordering domain is order.online.square (rolled out 2023). Scoped to that subdomain to avoid confusion with generic Square sites."
+  },
+  "Resy": {
+    "cats": [6],
+    "description": "Resy is a reservation and waitlist platform owned by American Express, used widely in fine-dining.",
+    "website": "https://resy.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "Resy.svg",
+    "scriptSrc": [
+      "widgets\\.resy\\.com/.+\\.js",
+      "(?:cdn|static)\\.resy\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:widgets|resy)\\.resy\\.com",
+      "<div[^>]+id=\"resy_button_widget[^\"]*\"",
+      "<a[^>]+href=\"https?://resy\\.com/cities/[^\"]+/[^\"]+/?\""
+    ],
+    "url": "resy\\.com/cities/[a-z0-9-]+/",
+    "notes": "Resy embed: widgets.resy.com/.../button.js plus div#resy_button_widget (per resy.com/integrations docs). Reservation pages live at resy.com/cities/<city>/<restaurant>."
+  },
+  "OpenTable": {
+    "cats": [6],
+    "description": "OpenTable is a reservation network for restaurants; ubiquitous embed widget for table booking.",
+    "website": "https://www.opentable.com",
+    "saas": true,
+    "pricing": ["mid", "recurring"],
+    "icon": "OpenTable.svg",
+    "scriptSrc": [
+      "(?:www\\.)?opentable\\.com/widget/reservation/loader",
+      "secure\\.opentable\\.com/.+\\.js"
+    ],
+    "html": [
+      "<iframe[^>]+(?:[a-z0-9-]+\\.)?opentable\\.com",
+      "<div[^>]+id=\"ot-reservation-widget[^\"]*\"",
+      "<a[^>]+href=\"https?://(?:www|secure)\\.opentable\\.com/(?:r/|restref/)[^\"]*\""
+    ],
+    "url": "(?:www|secure)\\.opentable\\.com/(?:r|restref)/",
+    "notes": "OpenTable widget loader at opentable.com/widget/reservation/loader (vendor docs). Restaurant pages live under /r/<slug> or /restref/."
+  },
+  "BentoBox": {
+    "cats": [6],
+    "description": "BentoBox is a website + online-ordering platform built specifically for restaurants.",
+    "website": "https://www.getbento.com",
+    "saas": true,
+    "pricing": ["mid", "high", "recurring"],
+    "icon": "BentoBox.svg",
+    "scriptSrc": [
+      "(?:[a-z0-9-]+\\.)?getbento\\.com/.+\\.js",
+      "cdn\\.getbento\\.com"
+    ],
+    "html": [
+      "<link[^>]+href=\"https?://[^\"]*getbento\\.com[^\"]*\"",
+      "<meta[^>]+content=\"BentoBox[^\"]*\""
+    ],
+    "meta": {
+      "generator": "BentoBox"
+    },
+    "url": "(?:[a-z0-9-]+\\.)?getbento\\.com/",
+    "notes": "BentoBox sites are commonly hosted on getbento.com subdomains; the platform also stamps a generator meta tag (verified in field samples)."
+  }
+}

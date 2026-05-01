@@ -37,6 +37,10 @@ class MatchSource(str, Enum):
     # Synthetic sources produced by the resolver, not by raw pattern matches.
     IMPLIED = "implied"
     REQUIRED = "required"
+    # Sprint 2: structured-data + remote-API enrichment sources.
+    STRUCTURED_DATA = "structured_data"
+    REMOTE_PSI = "remote_psi"
+    REMOTE_OBSERVATORY = "remote_observatory"
 
 
 @dataclass(frozen=True)

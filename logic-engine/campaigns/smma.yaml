@@ -1,0 +1,69 @@
+version: 1
+campaign: smma
+description: |
+  Weight config for the "social-media management" agency offer. Looks for
+  brands with a public storefront / brand identity but visibly thin social
+  presence and no review/reputation widget. De-prioritizes leads that
+  already run an aggressive marketing stack (HubSpot, Klaviyo, BirdEye)
+  because the SMMA pitch is harder to land there.
+
+weights_universal:
+  detections:
+    "BirdEye:local_biz": -20
+    "Podium:local_biz": -15
+    "NiceJob:local_biz": -10
+    "Trustpilot:local_biz": -10
+    "HubSpot:wappalyzer": -15
+    "Klaviyo:wappalyzer": -15
+    "Mailchimp:wappalyzer": -10
+    "Shopify:wappalyzer": 5
+    "Squarespace:wappalyzer": 5
+    "Wix:wappalyzer": 5
+    "WordPress:wappalyzer": 8
+  signals_from_existing_evaluator:
+    no_social_presence: 25
+    no_reviews: 20
+    no_cta: 15
+    has_contact_page: 5
+  signals_from_remote_apis:
+    psi_mobile_score_below_50: 10
+    observatory_grade_F: 5
+
+weights_by_industry:
+  plumbing:
+    detections:
+      "ServiceTitan:local_biz": -10
+  hvac:
+    detections:
+      "ServiceTitan:local_biz": -10
+  painting:
+    detections:
+      "Jobber:local_biz": -5
+  dental: {}
+  salon:
+    detections:
+      "Boulevard:local_biz": -10
+      "Mindbody:local_biz": -8
+      "Booksy:local_biz": -5
+  restaurant:
+    detections:
+      "Toast Online Ordering:local_biz": -10
+      "OpenTable:local_biz": -5
+      "Resy:local_biz": -5
+      "BentoBox:local_biz": -5
+
+weights_by_region:
+  high_cost_metros:
+    matches: ["san francisco", "new york", "seattle", "boston", "los angeles"]
+    multiplier: 1.1
+
+reject_if_universal:
+  signal_true:
+    - is_parked_domain
+    - is_no_website_opportunity
+
+reject_if_industry: {}
+
+score_baseline: 0.30
+score_max: 1.0
+qualification_threshold: 0.55

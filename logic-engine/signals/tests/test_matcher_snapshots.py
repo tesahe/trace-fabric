@@ -29,6 +29,7 @@ FIXTURE_NAMES = [
     "kitchen_sink.html",
     "parked_domain.html",
     "static_brochure.html",
+    "jsonld_local_business.html",
 ]
 
 

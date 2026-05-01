@@ -16,3 +16,5 @@ instructor
 aiolimiter
 jsonref
 pytest
+pyyaml  # campaign weight configs (Sprint 2)
+httpx  # remote-API providers: PSI + Mozilla Observatory (Sprint 2, opt-in)
