@@ -1,0 +1,100 @@
+version: 1
+campaign: website_modernization
+description: |
+  Weight config for the "website rebuild / modernization" offer. Big positive
+  weight on legacy CMS + missing modern features; big negative weight on
+  visibly-already-modern stacks (Squarespace, Wix, Shopify) where there is
+  little to rebuild. Per-industry overrides downgrade leads already running
+  vertical SaaS that obviates a generic web rebuild.
+
+# Tier 1: universal weights (apply to all leads under this campaign)
+weights_universal:
+  detections:
+    "WordPress:wappalyzer": 15
+    "Joomla:wappalyzer": 20
+    "Drupal:wappalyzer": 12
+    "Wix:wappalyzer": -20
+    "Squarespace:wappalyzer": -25
+    "Shopify:wappalyzer": -25
+    "Webflow:wappalyzer": -15
+    "Duda:wappalyzer": -10
+    "GoDaddy Website Builder:wappalyzer": 10
+    "Weebly:wappalyzer": -5
+    "Contact Form 7:wappalyzer": 5
+    "WPForms:wappalyzer": 5
+    "Calendly:wappalyzer": -5
+    "HubSpot:wappalyzer": -10
+  signals_from_existing_evaluator:
+    no_viewport: 25
+    no_form: 20
+    no_cta: 15
+    no_privacy: 10
+    stale_copyright_3y: 15
+    no_page_title: 8
+  signals_from_remote_apis:
+    psi_mobile_score_below_50: 25
+    observatory_grade_F: 20
+
+# Tier 2: per-industry overrides (additive on top of universal)
+weights_by_industry:
+  plumbing:
+    detections:
+      "ServiceTitan:local_biz": -30
+      "Housecall Pro:local_biz": -10
+      "Jobber:local_biz": -5
+      "FieldEdge:local_biz": -25
+      "Workiz:local_biz": -10
+  hvac:
+    detections:
+      "ServiceTitan:local_biz": -30
+      "FieldEdge:local_biz": -25
+      "Housecall Pro:local_biz": -10
+  painting:
+    detections:
+      "Jobber:local_biz": -5
+      "Housecall Pro:local_biz": -5
+  dental: {}
+  salon:
+    detections:
+      "Boulevard:local_biz": -25
+      "Mindbody:local_biz": -20
+      "Vagaro:local_biz": -10
+      "Phorest:local_biz": -15
+      "Booksy:local_biz": -10
+      "Mangomint:local_biz": -10
+  restaurant:
+    detections:
+      "Toast Online Ordering:local_biz": -25
+      "ChowNow:local_biz": -15
+      "OpenTable:local_biz": -10
+      "Resy:local_biz": -10
+      "Square for Restaurants:local_biz": -10
+      "BentoBox:local_biz": -20
+
+# Tier 3: per-region modifiers
+weights_by_region:
+  high_cost_metros:
+    matches: ["san francisco", "new york", "seattle", "boston", "los angeles"]
+    multiplier: 1.2
+
+# Reject conditions
+reject_if_universal:
+  detection_present:
+    - "Squarespace:wappalyzer"
+    - "Wix:wappalyzer"
+  signal_true:
+    - is_parked_domain
+    - is_no_website_opportunity
+
+reject_if_industry:
+  plumbing:
+    detection_present:
+      - "ServiceTitan:local_biz"
+  hvac:
+    detection_present:
+      - "ServiceTitan:local_biz"
+
+# Score normalization
+score_baseline: 0.30
+score_max: 1.0
+qualification_threshold: 0.55
