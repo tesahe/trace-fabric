@@ -20,18 +20,18 @@
 
 ## About
 
-An async lead-ingestion and evaluation engine built for operators who need an ethical, cost-disciplined way to find and qualify local business leads by analyzing real websites for customer compatibility.
+TraceFabric is an asynchronous lead-ingestion and tiered evaluation engine.
 
-TraceFabric is an asynchronous, two-service pipeline that identifies localized digital service gaps and evaluates their economic viability. It bridges deterministic evaluation and staged LLM orchestration by being cost-aware: cheap, evidence-backed deterministic checks run first, and LLM stages only run on candidates that earn the spend.
+AI-powered lead-qualification tools typically run an LLM call on every candidate before any filtering. That's expensive at volume, and the qualification decision is untraceable as there's no record of why a lead was kept or dropped beyond the model's output.
 
-Every decision — qualified, rejected, or excluded — is persisted as a structured, teacher-labeled record. That data foundation is the basis for future student-model training, so the pipeline gets cheaper and more self-sufficient over time.
+The design is a cost-gated cascade: cheap, evidence-backed, repeatable deterministic checks run first, and LLM stages only run on candidates that earn the spend.
 
 ## Key Features
 
-* **Mass Ingestion Engine (Rust):** Memory-safe, high-concurrency crawling and DOM parsing built on `tokio`, `sqlx`, and `reqwest`.
-* **ZeroMQ IPC Bridge:** Sub-millisecond inter-process communication using strict Protobuf serialization, bypassing HTTP/REST overhead between services.
-* **Cost-Gated LLM Cascade:** A local XGBoost gatekeeper plus deterministic evidence extraction filter leads for economic viability before any frontier LLM tokens are spent. Tier 1 constrained validation and Tier 2 structured extraction (via Instructor) run only on candidates that earn the cost.
-* **"No-Drop" Data Strategy:** All leads — qualified, rejected, or excluded — flow into a central PostgreSQL warehouse to build a teacher-student self-reinforcing cycle for future local model training.
+* **Crawler (Rust):** Async ingestion built on `tokio` and `reqwest`, with rate-limiting via `governor` and HTML parsing via the `scraper` crate. Serializes results into Protobuf and pushes over ZeroMQ for downstream Python evaluation.
+* **Schema-Enforced IPC:** Unidirectional layer between Rust and Python, built on Protobuf and ZeroMQ. Per-message decode time at 0.0082 ms per message on localhost (1000-message benchmark, [spike](https://github.com/tesahe/trace-fabric/issues/1#issuecomment-4206098314)).
+* **Cost-Gated LLM Cascade:** A deterministic stage filters leads before any LLM call. Two LLM stages: one validates the deterministic signals, the other extracts structured fields via Instructor.
+* **"No-Drop" Mandate:** Every lead is persisted to Postgres regardless of outcome - qualified or rejected (including compliance exclusions). The persisted record is intended to support training a learned gatekeeper.
 
 ## Architecture
 
@@ -41,7 +41,7 @@ flowchart LR
     U(["Operator"]) --> Q["Niche+Location or URL"]
 
     subgraph P1[Phase 1 - Rust Ingestion]
-        R["scraper-engine<br/>(tokio · sqlx · governor)"]
+        R["scraper-engine<br/>(tokio · governor · scraper)"]
     end
 
     subgraph P2[Phase 2 - Python Evaluation]
@@ -50,7 +50,7 @@ flowchart LR
 
     Q --> R
     R -->|"  Protobuf over ZeroMQ  "| L
-    L ==>|"  No-Drop persistence  "| DB[("PostgreSQL<br/>lead warehouse")]
+    L ==>|"  No-Drop persistence  "| DB[("PostgreSQL<br/>lead store")]
     L -.->|"  structured LLM calls  "| LLM["LLM Provider"]
     F["Vite + React<br/>operator console"] --> L
 
@@ -77,8 +77,6 @@ flowchart LR
 
 ## Documentation
 
-Read the below links for additional information.
-
 **Architecture**
 
 - [Architecture](docs/ARCHITECTURE.md)
@@ -95,7 +93,7 @@ Read the below links for additional information.
 
 ## Project Status
 
-TraceFabric is an active project demonstrating applied AI engineering across Rust, Python, and a typed IPC boundary. It is **not currently packaged for public redistribution** — there is no hosted demo, no published SDK, and no support model. The repository is open so reviewers can read the code, the architecture decisions, and the evaluation strategy alongside a live development log.
+TraceFabric is an active project; the Rust ingestion layer is functional and current work is on the Python evaluation pipeline. It is not currently packaged for public redistribution. The repository is open so reviewers can read the code, the architecture decisions, and the evaluation strategy.
 
 ## Local Development
 
@@ -106,8 +104,8 @@ This section is for reviewers, contributors, and future-me. The [Documentation](
 Versions reflect what's pinned in this repo today.
 
 * Docker & Docker Compose
-* Rust 1.85+ with Cargo (project uses edition 2024, `tokio` 1.51, `sqlx` 0.8)
-* Python 3.11+ (logic-engine pins `protobuf` 6.33, `pyzmq` 27.1, `xgboost` 3.2)
+* Rust 1.85+ with Cargo (project uses edition 2024, `tokio` 1.51)
+* Python 3.11+ (logic-engine pins `protobuf` 6.33, `pyzmq` 27.1)
 * Node 20+ (frontend uses Vite 5, React 18, TypeScript 5)
 * PostgreSQL 15 (provisioned via `infra/docker-compose.yml`)
 * `protoc` (Protocol Buffer compiler) — required to build the Rust side
@@ -130,9 +128,9 @@ Versions reflect what's pinned in this repo today.
 
    ```bash
    cd scraper-engine
-   cargo run --release
+   cargo run --release -- discover --industry "plumbers" --location "seattle" --limit 10 --run-id "local-test-1"
    ```
-4. (Optional) Start the operator console:
+4. Start the operator console to view live evaluations:
 
    ```bash
    cd frontend
@@ -140,25 +138,20 @@ Versions reflect what's pinned in this repo today.
    npm run dev
    ```
 
+
 ## Roadmap
 
-* **Phase 1:** `tokio` crawler + ZeroMQ/Protobuf IPC bridge benchmarked.
-* **Phase 2:** Tier 0 Deterministic evidence extraction + FastAPI integration live.
-* **Phase 3:** Deterministic structured-output generation via Instructor across Tier 1 and Tier 2.
-* **Phase 4:** Gatekeeper-Eval CI/CD gate, OpenTelemetry tracing, teacher-label dataset export.
-* **Phase 5:** XGBoost integration into Tier 0 with saturated dataset export.
-
-See [ROADMAP.md](docs/ROADMAP.md) for detailed exit criteria and out-of-scope items.
+See [ROADMAP.md](docs/ROADMAP.md) for a phase-by-phase plan with exit criteria.
 
 ## Ethics
 
-TraceFabric is designed to be a responsible web citizen with the following guardrails hardcoded into the architecture.
+TraceFabric implements the following guardrails:
 
 1. **User-Agent Transparency:** Every request identifies as `TraceFabric/1.0 (+https://github.com/tesahe/trace-fabric)`.
 2. **Robots.txt Compliance:** The Rust ingestion layer parses `robots.txt` and respects crawl exclusions. Disallowed sites are recorded as excluded leads and are never fetched.
-3. **Rate-Limiting:** Implements a Token Bucket algorithm via the `governor` crate to prevent server strain.
-4. **Data Minimization:** Only structural DOM markers required for economic viability analysis are retained; raw PII is not stored.
-5. **Auditable Decisions:** Every qualification or rejection is backed by deterministic evidence and persisted alongside model outputs, so any decision can be inspected after the fact.
+3. **Rate-Limiting:** Rate-limiting via the `governor` crate to prevent server strain.
+4. **Data Minimization:** The persisted record stores extracted signals and decisions, not raw page content.
+5. **Auditable Decisions:** Every qualification or rejection is backed by deterministic evidence and persisted alongside model outputs.
 
 ## License
 
