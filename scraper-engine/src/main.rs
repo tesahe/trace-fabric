@@ -10,7 +10,6 @@ use dotenvy::dotenv;
 use governor::{Quota, RateLimiter};
 use reqwest::Client;
 use scraper::Html;
-use sqlx::postgres::PgPoolOptions;
 use std::collections::HashSet;
 use std::env;
 use std::num::NonZeroU32;
@@ -324,15 +323,8 @@ async fn main() -> AppResult<()> {
     info!("TraceFabric Ingestion Engine booting...");
 
     // 3. Establish Database Pool
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    info!("Establishing Master Warehouse Connection Pool...");
+    // (Deprecated: Python backend now handles all persistence)
 
-    let _database_pool = PgPoolOptions::new()
-        .max_connections(5)
-        .connect(&database_url)
-        .await
-        .expect("Failed to connect to database");
-    info!("Connection pool established.");
 
     // 4. Build HTTP Client
     // 4. Build HTTP Client

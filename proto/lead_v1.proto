@@ -67,15 +67,17 @@ message RawLead {
 }
 
 
+// HTTP header key-value pair
 message Header {
   string key = 1;
   string value = 2;
 }
 
+// Same-domain , reused for anchors/scripts/stylesheets
 message UrlArtifact {
-  string url = 1;
-  bool is_internal = 2;
-  string label = 3;
+  string url = 1; // always unique url
+  bool is_internal = 2; // same domain as base URL? - internal web page
+  string label = 3; // visible link text not the path
 }
 
 message RootFile {

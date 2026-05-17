@@ -28,6 +28,8 @@ env/
 # Protobuf generated files
 *_pb2.py
 *_pb2_grpc.py
+logic-engine/lead_v1_pb2.py
+logic-engine/lead_v1_pb2_grpc.py
 
 # --- Rust Build & Cargo ---
 **/target/

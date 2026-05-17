@@ -28,10 +28,13 @@ The design is a cost-gated cascade: cheap, evidence-backed, repeatable determini
 
 ## Key Features
 
-* **Crawler (Rust):** Async ingestion built on `tokio` and `reqwest`, with rate-limiting via `governor` and HTML parsing via the `scraper` crate. Serializes results into Protobuf and pushes over ZeroMQ for downstream Python evaluation.
-* **Schema-Enforced IPC:** Unidirectional layer between Rust and Python, built on Protobuf and ZeroMQ. Per-message decode time at 0.0082 ms per message on localhost (1000-message benchmark, [spike](https://github.com/tesahe/trace-fabric/issues/1#issuecomment-4206098314)).
-* **Cost-Gated LLM Cascade:** A deterministic stage filters leads before any LLM call. Two LLM stages: one validates the deterministic signals, the other extracts structured fields via Instructor.
-* **"No-Drop" Mandate:** Every lead is persisted to Postgres regardless of outcome - qualified or rejected (including compliance exclusions). The persisted record is intended to support training a learned gatekeeper.
+**Crawler (Rust):** Async ingestion built on `tokio` and `reqwest`, with rate-limiting via `governor` and HTML parsing via the `scraper` crate. Serializes results into Protobuf and pushes over ZeroMQ for downstream Python evaluation.
+
+**Schema-Enforced IPC:** Unidirectional layer between Rust and Python, built on Protobuf and ZeroMQ. Per-message decode time at 0.0082 ms per message on localhost (1000-message benchmark, [spike](https://github.com/tesahe/trace-fabric/issues/1#issuecomment-4206098314)).
+
+**Cost-Gated LLM Cascade:** A deterministic stage filters leads before any LLM call. Two LLM stages: one validates the deterministic signals, the other extracts structured fields via Instructor.
+
+**"No-Drop" Mandate:** Every lead is persisted to Postgres regardless of outcome - qualified or rejected (including compliance exclusions). The persisted record is intended to support training a learned gatekeeper.
 
 ## Architecture
 
@@ -121,8 +124,9 @@ Versions reflect what's pinned in this repo today.
 
    ```bash
    cd logic-engine
+   source .venv/bin/activate
    pip install -r requirements.txt
-   uvicorn app.main:app --reload
+   uvicorn main:app --reload
    ```
 3. In a new terminal, start the Rust scraper-engine (ingestion + IPC):
 
@@ -137,7 +141,6 @@ Versions reflect what's pinned in this repo today.
    npm install
    npm run dev
    ```
-
 
 ## Roadmap
 
