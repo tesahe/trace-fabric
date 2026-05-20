@@ -277,3 +277,276 @@ pub async fn fetch_root_file(
         body,
     })
 }
+
+/*
+Testing suite - Goal:
+    - Security checks
+    - IP blocking functions
+    - Robots txt testing
+    - Redirect testing
+    - Content-type testing
+    - Fetching 
+
+*/
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::net::{Ipv4Addr, Ipv6Addr};
+
+    // ── robots_txt_disallows_homepage ──────────────────────────────────────
+
+    #[test]
+    fn robots_wildcard_disallow_root_blocked() {
+        let body = "User-agent: *\nDisallow: /";
+        assert!(robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_tracefabric_agent_disallow_root_blocked() {
+        let body = "User-agent: tracefabric\nDisallow: /";
+        assert!(robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_disallow_specific_path_not_blocked() {
+        // Only Disallow: / blocks the homepage — specific paths don't
+        let body = "User-agent: *\nDisallow: /admin";
+        assert!(!robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_other_agent_disallow_does_not_apply() {
+        let body = "User-agent: Googlebot\nDisallow: /\nUser-agent: *\nAllow: /";
+        assert!(!robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_empty_body_allows_crawl() {
+        assert!(!robots_txt_disallows_homepage(""));
+    }
+
+    #[test]
+    fn robots_comments_stripped_correctly() {
+        let body = "User-agent: * # this is a comment\nDisallow: / # block all";
+        assert!(robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_case_insensitive_directives() {
+        let body = "USER-AGENT: *\nDISALLOW: /";
+        assert!(robots_txt_disallows_homepage(body));
+    }
+
+    #[test]
+    fn robots_allow_all_not_blocked() {
+        let body = "User-agent: *\nDisallow:";
+        assert!(!robots_txt_disallows_homepage(body));
+    }
+
+    // ── evaluate_crawl_eligibility ─────────────────────────────────────────
+
+    #[test]
+    fn eligibility_none_robots_allows_crawl() {
+        let (allowed, reason) = evaluate_crawl_eligibility(None);
+        assert!(allowed);
+        assert!(reason.is_empty());
+    }
+
+    #[test]
+    fn eligibility_robots_not_found_allows_crawl() {
+        let file = schema::RootFile {
+            path: "/robots.txt".to_string(),
+            http_status: 404,
+            exists: false,
+            content_type: String::new(),
+            body: String::new(),
+        };
+        let (allowed, reason) = evaluate_crawl_eligibility(Some(&file));
+        assert!(allowed);
+        assert!(reason.is_empty());
+    }
+
+    #[test]
+    fn eligibility_disallow_all_blocks_crawl() {
+        let file = schema::RootFile {
+            path: "/robots.txt".to_string(),
+            http_status: 200,
+            exists: true,
+            content_type: "text/plain".to_string(),
+            body: "User-agent: *\nDisallow: /".to_string(),
+        };
+        let (allowed, reason) = evaluate_crawl_eligibility(Some(&file));
+        assert!(!allowed);
+        assert_eq!(reason, "robots_txt_disallow_all");
+    }
+
+    #[test]
+    fn eligibility_partial_disallow_allows_crawl() {
+        let file = schema::RootFile {
+            path: "/robots.txt".to_string(),
+            http_status: 200,
+            exists: true,
+            content_type: "text/plain".to_string(),
+            body: "User-agent: *\nDisallow: /admin".to_string(),
+        };
+        let (allowed, reason) = evaluate_crawl_eligibility(Some(&file));
+        assert!(allowed);
+        assert!(reason.is_empty());
+    }
+
+    // ── is_disallowed_ipv4 ─────────────────────────────────────────────────
+
+    #[test]
+    fn ipv4_private_rfc1918_10_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(10, 0, 0, 1)));
+    }
+
+    #[test]
+    fn ipv4_private_rfc1918_172_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(172, 16, 0, 1)));
+    }
+
+    #[test]
+    fn ipv4_private_rfc1918_192_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(192, 168, 1, 1)));
+    }
+
+    #[test]
+    fn ipv4_loopback_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(127, 0, 0, 1)));
+    }
+
+    #[test]
+    fn ipv4_link_local_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(169, 254, 1, 1)));
+    }
+
+    #[test]
+    fn ipv4_shared_address_space_blocked() {
+        // RFC 6598 — 100.64.0.0/10
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(100, 64, 0, 1)));
+    }
+
+    #[test]
+    fn ipv4_reserved_blocked() {
+        assert!(is_disallowed_ipv4(Ipv4Addr::new(240, 0, 0, 1)));
+    }
+
+    #[test]
+    fn ipv4_public_allowed() {
+        assert!(!is_disallowed_ipv4(Ipv4Addr::new(8, 8, 8, 8)));
+    }
+
+    #[test]
+    fn ipv4_another_public_allowed() {
+        assert!(!is_disallowed_ipv4(Ipv4Addr::new(93, 184, 216, 34)));
+    }
+
+    // ── is_disallowed_ipv6 ─────────────────────────────────────────────────
+
+    #[test]
+    fn ipv6_loopback_blocked() {
+        assert!(is_disallowed_ipv6("::1".parse::<Ipv6Addr>().unwrap()));
+    }
+
+    #[test]
+    fn ipv6_unspecified_blocked() {
+        assert!(is_disallowed_ipv6("::".parse::<Ipv6Addr>().unwrap()));
+    }
+
+    #[test]
+    fn ipv6_link_local_blocked() {
+        assert!(is_disallowed_ipv6("fe80::1".parse::<Ipv6Addr>().unwrap()));
+    }
+
+    #[test]
+    fn ipv6_unique_local_blocked() {
+        assert!(is_disallowed_ipv6("fc00::1".parse::<Ipv6Addr>().unwrap()));
+    }
+
+    #[test]
+    fn ipv6_documentation_blocked() {
+        // 2001:db8::/32 — reserved for documentation
+        assert!(is_disallowed_ipv6(
+            "2001:db8::1".parse::<Ipv6Addr>().unwrap()
+        ));
+    }
+
+    #[test]
+    fn ipv6_public_allowed() {
+        // Cloudflare public DNS
+        assert!(!is_disallowed_ipv6(
+            "2606:4700:4700::1111".parse::<Ipv6Addr>().unwrap()
+        ));
+    }
+
+    // ── is_disallowed_hostname ─────────────────────────────────────────────
+
+    #[test]
+    fn hostname_localhost_blocked() {
+        assert!(is_disallowed_hostname("localhost"));
+    }
+
+    #[test]
+    fn hostname_subdomain_localhost_blocked() {
+        assert!(is_disallowed_hostname("foo.localhost"));
+    }
+
+    #[test]
+    fn hostname_dot_local_blocked() {
+        assert!(is_disallowed_hostname("mydevbox.local"));
+    }
+
+    #[test]
+    fn hostname_metadata_endpoint_blocked() {
+        assert!(is_disallowed_hostname("metadata.google.internal"));
+    }
+
+    #[test]
+    fn hostname_public_domain_allowed() {
+        assert!(!is_disallowed_hostname("example.com"));
+    }
+
+    #[test]
+    fn hostname_check_is_case_insensitive() {
+        assert!(is_disallowed_hostname("LOCALHOST"));
+    }
+
+    // ── is_supported_primary_content_type ─────────────────────────────────
+
+    #[test]
+    fn content_type_html_accepted() {
+        assert!(is_supported_primary_content_type("text/html"));
+    }
+
+    #[test]
+    fn content_type_html_with_charset_accepted() {
+        assert!(is_supported_primary_content_type("text/html; charset=utf-8"));
+    }
+
+    #[test]
+    fn content_type_xhtml_accepted() {
+        assert!(is_supported_primary_content_type("application/xhtml+xml"));
+    }
+
+    #[test]
+    fn content_type_json_rejected() {
+        assert!(!is_supported_primary_content_type("application/json"));
+    }
+
+    #[test]
+    fn content_type_pdf_rejected() {
+        assert!(!is_supported_primary_content_type("application/pdf"));
+    }
+
+    #[test]
+    fn content_type_image_rejected() {
+        assert!(!is_supported_primary_content_type("image/jpeg"));
+    }
+
+    #[test]
+    fn content_type_empty_rejected() {
+        assert!(!is_supported_primary_content_type(""));
+    }
+}
