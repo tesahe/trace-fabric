@@ -246,15 +246,41 @@ pub fn extract_page_title(document: &Html) -> String {
 }
 
 pub fn extract_text_content(document: &Html) -> String {
+    let exclude_selector = parse_selector("script, style, noscript");
+    let excluded_ids: HashSet<_> = document
+        .select(&exclude_selector)
+        .map(|el| el.id())
+        .collect();
+
     document
-        .root_element()
-        .text()
-        .collect::<Vec<_>>()
-        .join(" ")
+        .select(&parse_selector("body"))
+        .next()
+        .map(|body| {
+            body.descendants()
+                .filter_map(|node| {
+                    let text = node.value().as_text()?;
+                    if node
+                        .ancestors()
+                        .any(|ancestor| excluded_ids.contains(&ancestor.id()))
+                    {
+                        return None;
+                    }
+                    let trimmed = text.trim();
+                    if trimmed.is_empty() {
+                        None
+                    } else {
+                        Some(trimmed.to_string())
+                    }
+                })
+                .collect::<Vec<_>>()
+                .join(" ")
+        })
+        .unwrap_or_default()
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
 }
+
 
 pub fn extract_phone_number(document: &Html, text_content: &str) -> String {
     let anchor_selector = parse_selector("a[href]");
@@ -422,13 +448,18 @@ pub fn clean_phone_candidate(raw_value: &str) -> String {
 pub fn looks_like_generic_title(value: &str) -> bool {
     let lower = value.to_ascii_lowercase();
     [
-        "hvac company",
-        "heating and cooling",
-        "air conditioning",
-        "portland hvac",
         "home",
-        "welcome", // temp for initial test
+        "welcome",
+        "index",
+        "untitled",
+        "untitled document",
+        "new page",
+        "page not found",
+        "404",
+        "403",
+        "error",
     ]
+
     .iter()
     .any(|token| lower == *token || lower.starts_with(&format!("{token} |")))
 }
@@ -461,7 +492,8 @@ pub fn looks_like_postal_address(value: &str) -> bool {
     .iter()
     .any(|token| lower.contains(token));
 
-    (has_street_number && has_street_type) || has_city_state_zip && !contains_bad_tokens
+
+    ((has_street_number && has_street_type) || has_city_state_zip) && !contains_bad_tokens
 }
 
 pub fn extract_address(document: &Html) -> String {

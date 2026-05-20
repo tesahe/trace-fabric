@@ -4,80 +4,102 @@ package tracefabric;
 
 message RawLead {
 
-  string run_id = 37;
-
   // Identity
   string id = 1;
   string timestamp = 2;
+  string run_id = 3;
 
-  // Canonical lead identity / routing
-  string source_url = 3;   // canonical website URL used for crawl routing
-  string initial_url = 4;  // first requested URL
-  string final_url = 5;    // final URL after redirects
+  // URL routing
+  string source_url = 4;
+  string initial_url = 5;
+  string final_url = 6;
 
   // Discovery / provenance / compliance
-  string discovery_source = 6;          // brave, foursquare, manual, etc.
-  string target_industry = 7;
-  string target_location = 8;
-  bool crawl_allowed = 9;
-  string crawl_disallowed_reason = 10;
-  bool is_no_website_opportunity = 11;
+  string discovery_source = 7;
+  string target_industry = 8;
+  string target_location = 9;
+  bool crawl_allowed = 10;
+  string crawl_disallowed_reason = 11;
+  bool is_no_website_opportunity = 12;
+  string provider_fsq_id = 13;
 
-  //double check this 
-  string provider_fsq_id = 12;          // only retained provider ID currently allowed by policy
+  // Website-derived business fields
+  string company_name = 14;
+  string category = 15;
+  string phone_number = 16;
+  string address = 17;
 
-  // Website-derived business fields only , nullable / set to empty string if not found
-  string company_name = 13;
-  string category = 14;
-  string phone_number = 15;
-  string address = 16;
-
-  // Optional provenance/confidence metadata
-  string provider_provenance_json = 17;
-  string website_provenance_json = 18;
-  float location_confidence = 19;
-  float category_confidence = 20;
+  // Provenance / confidence metadata
+  string provider_provenance_json = 18;
+  string website_provenance_json = 19;
+  float location_confidence = 20;
+  float category_confidence = 21;
 
   // Fetch metadata
-  int32 http_status = 21;
-  bool is_https = 22;
-  int32 redirect_count = 23;
-  int32 fetch_duration_ms = 24;
-  int32 response_size_bytes = 25;
-  string content_type = 26;
+  int32 http_status = 22;
+  bool is_https = 23;
+  int32 redirect_count = 24;
+  int32 fetch_duration_ms = 25;
+  int32 response_size_bytes = 26;
+  string content_type = 27;
+  repeated Header response_headers = 28;
 
-  repeated Header response_headers = 27;
+  // Homepage content
+  string raw_html = 29;
+  string text_content = 30;
+  string page_title = 31;
 
-  // Homepage content artifacts
-  string raw_html = 28;
-  string text_content = 29;
-  string page_title = 30;
+  // URL/resource inventories
+  repeated UrlArtifact anchor_hrefs = 32;
+  repeated UrlArtifact script_srcs = 33;
+  repeated UrlArtifact stylesheet_hrefs = 34;
 
-  // URL/resource inventories from homepage
-  repeated UrlArtifact anchor_hrefs = 31;
-  repeated UrlArtifact script_srcs = 32;
-  repeated UrlArtifact stylesheet_hrefs = 33;
+  // Root-level file checks
+  RootFile robots_txt = 35;
+  RootFile sitemap_xml = 36;
+  string manifest_url = 37;
 
-  // Root-level technical file checks
-  RootFile robots_txt = 34;
-  RootFile sitemap_xml = 35;
+  // Extracted signals (Rust-side, replaces Python HTML re-parsing)
+  int32 word_count = 38;
+  bool has_viewport = 39;
+  bool has_form = 40;
+  bool has_tel_link = 41;
+  bool has_mailto_link = 42;
+  bool is_parked_domain = 43;
+  int32 outbound_domain_count = 44;
+  string schema_org_business_type = 45;   // e.g. "Plumber", "HVACContractor", "Dentist"
 
-  // Optional homepage manifest
-  string manifest_url = 36;
+  // Outreach
+  string email_address = 46;              // first mailto: found, or regex fallback
+
+  // LLM context
+  string meta_description = 47;           // <meta name="description"> content
+
+  // Social presence
+  string social_linkedin = 48;
+  string social_facebook = 49;
+  string social_instagram = 50;
+
+  // Staleness signal
+  int32 copyright_year = 51;              // most recent copyright year found, 0 if absent
+
+  // Campaign-fit signals (moving from Python)
+  bool has_booking_signal = 52;
+  bool has_cta_signal = 53;
+  bool has_hours_signal = 54;
+  bool has_reviews_signal = 55;
+  bool has_contact_page = 56;
 }
 
-
-// HTTP header key-value pair
 message Header {
   string key = 1;
   string value = 2;
 }
 
-// Same-domain , reused for anchors/scripts/stylesheets
 message UrlArtifact {
-  string url = 1; // always unique url
-  bool is_internal = 2; // same domain as base URL? - internal web page
-  string label = 3; // visible link text not the path
+  string url = 1;
+  bool is_internal = 2;
+  string label = 3;
 }
 
 message RootFile {
@@ -86,10 +108,7 @@ message RootFile {
   bool exists = 3;
   string content_type = 4;
   string body = 5;
-
 }
-
-
 
 message LeadBatch {
   repeated RawLead leads = 1;

@@ -58,3 +58,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 [build-dependencies]
 # compiles .proto into Rust types at build time.
 prost-build = "0.14.3"
+
+[dev-dependencies]
+# for running tests
+insta = "1"
