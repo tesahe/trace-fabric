@@ -823,3 +823,402 @@ pub fn select_priority_internal_links(
         .map(|(_, url)| url)
         .collect()
 }
+
+/*
+Testing Suite
+All functions pure sync - takes a value and returns.
+
+    - Happy path - correct HTML, expected output
+    - Missing/empty path - missign tag - returns empty string/false
+    - Noise / edge case - 
+
+*/
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use scraper::Html;
+
+    fn parse(html: &str) -> Html {
+        Html::parse_document(html)
+    }
+
+    // ── clean_phone_candidate ──────────────────────────────────────────────
+
+    #[test]
+    fn clean_phone_us_10_digit() {
+        assert_eq!(clean_phone_candidate("tel:5031234567"), "5031234567");
+    }
+
+    #[test]
+    fn clean_phone_strips_country_code() {
+        assert_eq!(clean_phone_candidate("tel:15031234567"), "5031234567");
+    }
+
+    #[test]
+    fn clean_phone_strips_plus_prefix() {
+        assert_eq!(clean_phone_candidate("tel:+15031234567"), "5031234567");
+    }
+
+    #[test]
+    fn clean_phone_strips_query_string() {
+        assert_eq!(clean_phone_candidate("tel:5031234567?ref=header"), "5031234567");
+    }
+
+    #[test]
+    fn clean_phone_strips_semicolon_params() {
+        assert_eq!(clean_phone_candidate("tel:5031234567;phone-context=+1"), "5031234567");
+    }
+
+    #[test]
+    fn clean_phone_returns_empty_for_short() {
+        assert_eq!(clean_phone_candidate("tel:12345"), "");
+    }
+
+    #[test]
+    fn clean_phone_returns_empty_for_empty() {
+        assert_eq!(clean_phone_candidate(""), "");
+    }
+
+    // ── looks_like_postal_address ──────────────────────────────────────────
+
+    #[test]
+    fn postal_accepts_street_number_and_type() {
+        assert!(looks_like_postal_address("123 Main St"));
+    }
+
+    #[test]
+    fn postal_accepts_city_state_zip() {
+        assert!(looks_like_postal_address("Portland, OR 97201"));
+    }
+
+    #[test]
+    fn postal_accepts_full_address() {
+        assert!(looks_like_postal_address("123 Oak Avenue, Portland, OR 97201"));
+    }
+
+    #[test]
+    fn postal_rejects_copyright_with_street_number() {
+        // Verifies the operator precedence fix — bad tokens must block both branches
+        assert!(!looks_like_postal_address(
+            "Copyright 2020 All Rights Reserved 123 Main St"
+        ));
+    }
+
+    #[test]
+    fn postal_rejects_copyright_with_city_state_zip() {
+        assert!(!looks_like_postal_address(
+            "© 2021 Company. All Rights Reserved. Portland, OR 97201"
+        ));
+    }
+
+    #[test]
+    fn postal_rejects_license_text() {
+        assert!(!looks_like_postal_address(
+            "License #CCB 123456 Oak Ave Suite 100"
+        ));
+    }
+
+    #[test]
+    fn postal_rejects_empty() {
+        assert!(!looks_like_postal_address(""));
+    }
+
+    #[test]
+    fn postal_rejects_plain_sentence() {
+        assert!(!looks_like_postal_address("Call us today for a free estimate"));
+    }
+
+    // ── looks_like_company_name_candidate ──────────────────────────────────
+
+    #[test]
+    fn company_name_accepts_valid() {
+        assert!(looks_like_company_name_candidate("Portland Plumbing Co"));
+    }
+
+    #[test]
+    fn company_name_rejects_too_short() {
+        assert!(!looks_like_company_name_candidate("AB"));
+    }
+
+    #[test]
+    fn company_name_rejects_too_long() {
+        let long = "A".repeat(81);
+        assert!(!looks_like_company_name_candidate(&long));
+    }
+
+    #[test]
+    fn company_name_rejects_too_many_words() {
+        assert!(!looks_like_company_name_candidate(
+            "one two three four five six seven eight nine ten"
+        ));
+    }
+
+    #[test]
+    fn company_name_rejects_mostly_digits() {
+        assert!(!looks_like_company_name_candidate("1234 5678 abcd"));
+    }
+
+    #[test]
+    fn company_name_rejects_cta_phrases() {
+        assert!(!looks_like_company_name_candidate("Call Us"));
+        assert!(!looks_like_company_name_candidate("Contact Us"));
+        assert!(!looks_like_company_name_candidate("Book Now"));
+    }
+
+    // ── extract_page_title ─────────────────────────────────────────────────
+
+    #[test]
+    fn page_title_extracted() {
+        let doc = parse("<html><head><title>Portland Plumbing Co</title></head></html>");
+        assert_eq!(extract_page_title(&doc), "Portland Plumbing Co");
+    }
+
+    #[test]
+    fn page_title_empty_when_absent() {
+        let doc = parse("<html><head></head></html>");
+        assert_eq!(extract_page_title(&doc), "");
+    }
+
+    #[test]
+    fn page_title_trimmed() {
+        let doc = parse("<html><head><title>  Acme Corp  </title></head></html>");
+        assert_eq!(extract_page_title(&doc), "Acme Corp");
+    }
+
+    // ── extract_text_content ───────────────────────────────────────────────
+
+    #[test]
+    fn text_content_excludes_script() {
+        let doc = parse(
+            r#"<html><body><p>Hello world</p><script>var x = "injected";</script></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        assert!(text.contains("Hello world"));
+        assert!(!text.contains("injected"));
+    }
+
+    #[test]
+    fn text_content_excludes_style() {
+        let doc = parse(
+            r#"<html><body><p>Real content</p><style>.foo { color: red; }</style></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        assert!(text.contains("Real content"));
+        assert!(!text.contains("color"));
+    }
+
+    #[test]
+    fn text_content_normalizes_whitespace() {
+        let doc = parse("<html><body><p>Hello   World</p></body></html>");
+        assert_eq!(extract_text_content(&doc), "Hello World");
+    }
+
+    #[test]
+    fn text_content_empty_body() {
+        let doc = parse("<html><body></body></html>");
+        assert_eq!(extract_text_content(&doc), "");
+    }
+
+    // ── extract_phone_number ───────────────────────────────────────────────
+
+    #[test]
+    fn phone_from_tel_link() {
+        let doc = parse(
+            r#"<html><body><a href="tel:+15031234567">Call Us</a></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        assert_eq!(extract_phone_number(&doc, &text), "5031234567");
+    }
+
+    #[test]
+    fn phone_from_text_regex_fallback() {
+        let doc = parse("<html><body><p>Call us at 503-123-4567 today.</p></body></html>");
+        let text = extract_text_content(&doc);
+        assert_eq!(extract_phone_number(&doc, &text), "5031234567");
+    }
+
+    #[test]
+    fn phone_tel_link_takes_priority_over_text() {
+        let doc = parse(
+            r#"<html><body><a href="tel:5031234567">Call</a><p>Also call 4041111111</p></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        assert_eq!(extract_phone_number(&doc, &text), "5031234567");
+    }
+
+    #[test]
+    fn phone_empty_when_absent() {
+        let doc = parse("<html><body><p>No contact info here.</p></body></html>");
+        let text = extract_text_content(&doc);
+        assert_eq!(extract_phone_number(&doc, &text), "");
+    }
+
+    // ── infer_category_from_text ───────────────────────────────────────────
+
+    #[test]
+    fn category_hvac() {
+        assert_eq!(
+            infer_category_from_text("We specialize in hvac installation and repair"),
+            "hvac"
+        );
+    }
+
+    #[test]
+    fn category_plumbing() {
+        assert_eq!(
+            infer_category_from_text("Expert plumbing services for your home"),
+            "plumbing"
+        );
+    }
+
+    #[test]
+    fn category_empty_for_unrecognized() {
+        assert_eq!(infer_category_from_text("We sell artisanal cheese"), "");
+    }
+
+    #[test]
+    fn category_case_insensitive() {
+        assert_eq!(infer_category_from_text("HVAC Services in Portland"), "hvac");
+    }
+
+    // ── extract_page_signals ───────────────────────────────────────────────
+
+    #[test]
+    fn signals_has_viewport() {
+        let doc = parse(
+            r#"<html><head><meta name="viewport" content="width=device-width"></head><body></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert!(extract_page_signals(&doc, &text, &hrefs).has_viewport);
+    }
+
+    #[test]
+    fn signals_no_viewport() {
+        let doc = parse("<html><head></head><body></body></html>");
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert!(!extract_page_signals(&doc, &text, &hrefs).has_viewport);
+    }
+
+    #[test]
+    fn signals_email_from_mailto() {
+        let doc = parse(
+            r#"<html><body><a href="mailto:info@example.com">Email us</a></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        let signals = extract_page_signals(&doc, &text, &hrefs);
+        assert_eq!(signals.email_address, "info@example.com");
+        assert!(signals.has_mailto_link);
+    }
+
+    #[test]
+    fn signals_parked_domain_detected() {
+        let doc = parse(
+            "<html><body><p>This domain is for sale. Buy this domain today.</p></body></html>",
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert!(extract_page_signals(&doc, &text, &hrefs).is_parked_domain);
+    }
+
+    #[test]
+    fn signals_schema_org_type_extracted() {
+        let doc = parse(
+            r#"<html><head>
+                <script type="application/ld+json">
+                {"@type": "Plumber", "name": "Portland Plumbing Co"}
+                </script>
+            </head><body></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert_eq!(
+            extract_page_signals(&doc, &text, &hrefs).schema_org_business_type,
+            "Plumber"
+        );
+    }
+
+    #[test]
+    fn signals_social_links_extracted() {
+        let doc = parse(
+            r#"<html><body>
+                <a href="https://facebook.com/mypage">Facebook</a>
+                <a href="https://instagram.com/myprofile">Instagram</a>
+            </body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        let signals = extract_page_signals(&doc, &text, &hrefs);
+        assert_eq!(signals.social_facebook, "https://facebook.com/mypage");
+        assert_eq!(signals.social_instagram, "https://instagram.com/myprofile");
+        assert_eq!(signals.social_linkedin, "");
+    }
+
+    #[test]
+    fn signals_copyright_year() {
+        let doc = parse("<html><body><p>© 2019 Portland Plumbing Co.</p></body></html>");
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert_eq!(
+            extract_page_signals(&doc, &text, &hrefs).copyright_year,
+            2019
+        );
+    }
+
+    #[test]
+    fn signals_word_count() {
+        let doc = parse("<html><body><p>one two three four five</p></body></html>");
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert_eq!(extract_page_signals(&doc, &text, &hrefs).word_count, 5);
+    }
+
+    #[test]
+    fn signals_contact_page_from_anchor() {
+        let doc = parse(
+            r#"<html><body><a href="/contact-us">Contact Us</a></body></html>"#,
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert!(extract_page_signals(&doc, &text, &hrefs).has_contact_page);
+    }
+
+    #[test]
+    fn signals_booking_detected() {
+        let doc = parse(
+            "<html><body><p>Book now online or schedule an appointment today.</p></body></html>",
+        );
+        let text = extract_text_content(&doc);
+        let hrefs = extract_anchor_hrefs(&doc, "https://example.com");
+        assert!(extract_page_signals(&doc, &text, &hrefs).has_booking_signal);
+    }
+
+    // ── is_internal_url ────────────────────────────────────────────────────
+
+    #[test]
+    fn internal_url_same_domain() {
+        assert!(is_internal_url(
+            "https://example.com",
+            "https://example.com/about"
+        ));
+    }
+
+    #[test]
+    fn internal_url_different_domain() {
+        assert!(!is_internal_url(
+            "https://example.com",
+            "https://other.com/page"
+        ));
+    }
+
+    #[test]
+    fn internal_url_subdomain_is_external() {
+        assert!(!is_internal_url(
+            "https://example.com",
+            "https://sub.example.com/page"
+        ));
+    }
+}

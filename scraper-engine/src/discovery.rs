@@ -382,3 +382,250 @@ pub async fn queue_direct_url_candidate(
         .await
         .map_err(|e| format!("Failed to queue direct URL candidate: {}", e).into())
 }
+
+
+/*
+Testing suite
+Every function is either URL manipulation or JSOn parsing.
+
+
+*/ 
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // ── canonical_domain_key ───────────────────────────────────────────────
+
+    #[test]
+    fn domain_key_strips_www() {
+        assert_eq!(
+            canonical_domain_key("https://www.example.com/page"),
+            Some("example.com".to_string())
+        );
+    }
+
+    #[test]
+    fn domain_key_plain_domain() {
+        assert_eq!(
+            canonical_domain_key("https://example.com"),
+            Some("example.com".to_string())
+        );
+    }
+
+    #[test]
+    fn domain_key_lowercased() {
+        assert_eq!(
+            canonical_domain_key("https://EXAMPLE.COM/page"),
+            Some("example.com".to_string())
+        );
+    }
+
+    #[test]
+    fn domain_key_returns_none_for_invalid_url() {
+        assert_eq!(canonical_domain_key("not a url"), None);
+    }
+
+    // ── normalize_canonical_website_url ────────────────────────────────────
+
+    #[test]
+    fn normalize_strips_fragment() {
+        assert_eq!(
+            normalize_canonical_website_url("https://example.com/page#section"),
+            Some("https://example.com/page".to_string())
+        );
+    }
+
+    #[test]
+    fn normalize_strips_query() {
+        assert_eq!(
+            normalize_canonical_website_url("https://example.com/page?utm_source=google"),
+            Some("https://example.com/page".to_string())
+        );
+    }
+
+    #[test]
+    fn normalize_strips_trailing_slash() {
+        assert_eq!(
+            normalize_canonical_website_url("https://example.com/"),
+            Some("https://example.com".to_string())
+        );
+    }
+
+    #[test]
+    fn normalize_rejects_non_http_scheme() {
+        assert_eq!(normalize_canonical_website_url("ftp://example.com"), None);
+    }
+
+    #[test]
+    fn normalize_rejects_invalid_url() {
+        assert_eq!(normalize_canonical_website_url("not a url"), None);
+    }
+
+    #[test]
+    fn normalize_rejects_disallowed_host() {
+        assert_eq!(normalize_canonical_website_url("https://yelp.com/biz/plumber"), None);
+    }
+
+    #[test]
+    fn normalize_rejects_disallowed_path() {
+        assert_eq!(
+            normalize_canonical_website_url("https://example.com/directory/plumbers"),
+            None
+        );
+    }
+
+    #[test]
+    fn normalize_accepts_valid_business_url() {
+        assert_eq!(
+            normalize_canonical_website_url("https://portlandplumbing.com"),
+            Some("https://portlandplumbing.com".to_string())
+        );
+    }
+
+    // ── is_disallowed_discovery_host ───────────────────────────────────────
+
+    #[test]
+    fn host_denylist_exact_match() {
+        assert!(is_disallowed_discovery_host("yelp.com"));
+    }
+
+    #[test]
+    fn host_denylist_www_prefix_blocked() {
+        assert!(is_disallowed_discovery_host("www.yelp.com"));
+    }
+
+    #[test]
+    fn host_denylist_subdomain_blocked() {
+        assert!(is_disallowed_discovery_host("en.yelp.com"));
+    }
+
+    #[test]
+    fn host_denylist_does_not_block_similar_name() {
+        // "notyelp.com" should not be blocked just because it contains "yelp"
+        assert!(!is_disallowed_discovery_host("notyelp.com"));
+    }
+
+    #[test]
+    fn host_denylist_allows_legitimate_domain() {
+        assert!(!is_disallowed_discovery_host("portlandplumbing.com"));
+    }
+
+    // ── is_disallowed_discovery_path ───────────────────────────────────────
+
+    #[test]
+    fn path_denylist_exact_match() {
+        assert!(is_disallowed_discovery_path("/search"));
+    }
+
+    #[test]
+    fn path_denylist_prefix_with_slash() {
+        assert!(is_disallowed_discovery_path("/directory/plumbers"));
+    }
+
+    #[test]
+    fn path_denylist_allows_root() {
+        assert!(!is_disallowed_discovery_path("/"));
+    }
+
+    #[test]
+    fn path_denylist_allows_empty() {
+        assert!(!is_disallowed_discovery_path(""));
+    }
+
+    #[test]
+    fn path_denylist_allows_normal_page() {
+        assert!(!is_disallowed_discovery_path("/about-us"));
+    }
+
+    #[test]
+    fn path_denylist_does_not_block_partial_word() {
+        // "/searching" starts with "/search" — verify it IS blocked (prefix rule)
+        assert!(is_disallowed_discovery_path("/search/results"));
+        // But "/about-search" is not a prefix match
+        assert!(!is_disallowed_discovery_path("/about-search"));
+    }
+
+    // ── extract_brave_web_candidates ──────────────────────────────────────
+
+    #[test]
+    fn brave_candidates_parsed_correctly() {
+        let body = r#"{
+            "web": {
+                "results": [
+                    {"url": "https://example.com", "title": "Example", "description": "A site"},
+                    {"url": "https://other.com", "title": "Other", "description": "Another"}
+                ]
+            }
+        }"#;
+        let results = extract_brave_web_candidates(body);
+        assert_eq!(results.len(), 2);
+        assert_eq!(results[0].0, "https://example.com");
+        assert_eq!(results[0].1, "Example");
+        assert_eq!(results[0].2, "A site");
+    }
+
+    #[test]
+    fn brave_candidates_skips_empty_url() {
+        let body = r#"{
+            "web": {
+                "results": [
+                    {"url": "", "title": "Empty URL", "description": ""},
+                    {"url": "https://example.com", "title": "Valid", "description": ""}
+                ]
+            }
+        }"#;
+        let results = extract_brave_web_candidates(body);
+        assert_eq!(results.len(), 1);
+        assert_eq!(results[0].0, "https://example.com");
+    }
+
+    #[test]
+    fn brave_candidates_returns_empty_for_missing_web_key() {
+        let body = r#"{"query": {"more_results_available": false}}"#;
+        assert_eq!(extract_brave_web_candidates(body), vec![]);
+    }
+
+    #[test]
+    fn brave_candidates_returns_empty_for_invalid_json() {
+        assert_eq!(extract_brave_web_candidates("not json"), vec![]);
+    }
+
+    #[test]
+    fn brave_candidates_handles_missing_title_and_description() {
+        let body = r#"{
+            "web": {
+                "results": [{"url": "https://example.com"}]
+            }
+        }"#;
+        let results = extract_brave_web_candidates(body);
+        assert_eq!(results.len(), 1);
+        assert_eq!(results[0].1, "");
+        assert_eq!(results[0].2, "");
+    }
+
+    // ── brave_more_results_available ──────────────────────────────────────
+
+    #[test]
+    fn more_results_true() {
+        let body = r#"{"query": {"more_results_available": true}}"#;
+        assert!(brave_more_results_available(body));
+    }
+
+    #[test]
+    fn more_results_false() {
+        let body = r#"{"query": {"more_results_available": false}}"#;
+        assert!(!brave_more_results_available(body));
+    }
+
+    #[test]
+    fn more_results_missing_field_returns_false() {
+        let body = r#"{"query": {}}"#;
+        assert!(!brave_more_results_available(body));
+    }
+
+    #[test]
+    fn more_results_invalid_json_returns_false() {
+        assert!(!brave_more_results_available("not json"));
+    }
+}
