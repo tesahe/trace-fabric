@@ -12,7 +12,6 @@ pub fn run_zmq_sender(
         
     let context = Context::new();
 
-
     // creates socket object in memory, has no destiniation
     // context.socket returns Result<Socket, Error> - socket created if Ok
     let socket = match context.socket(zmq::PUSH) {

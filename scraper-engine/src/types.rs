@@ -12,3 +12,12 @@ pub struct DiscoveredCandidate {
     pub provider_fsq_id: String,
     pub is_no_website_opportunity: bool, // if business has a website
 }
+
+
+pub type AppRateLimiter = governor::RateLimiter<
+    governor::state::NotKeyed,
+    governor::state::InMemoryState,
+    governor::clock::DefaultClock,
+>;
+
+pub type AppResult<T> = Result<T, Box<dyn std::error::Error + Send + Sync>>;

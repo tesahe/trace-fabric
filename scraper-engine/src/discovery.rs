@@ -1,4 +1,13 @@
+use std::collections::HashSet;
+use tokio::sync::mpsc;
+use tracing::{debug, info};
 use url::Url;
+use crate::cli::{DiscoverArgs, UrlArgs};
+use crate::types::{AppResult, DiscoveredCandidate};
+
+// This file STRICTLY uses Brave API to find URLs and queue them.
+// No scraping is done in discovery.rs
+
 
 const DISCOVERY_HOST_DENYLIST: &[&str] = &[
     "angi.com",
@@ -146,4 +155,230 @@ fn is_disallowed_discovery_path(path: &str) -> bool {
     DISCOVERY_PATH_DENYLIST
         .iter()
         .any(|blocked| path == *blocked || path.starts_with(&format!("{blocked}/")))
+}
+
+
+
+// Calls Brave Search API, paginates, filters, and queues URLs
+pub async fn queue_discovery_candidates(
+    args: DiscoverArgs,
+    discovery_tx: mpsc::Sender<DiscoveredCandidate>,
+    brave_api_key: String,
+    http_client: reqwest::Client,
+) -> AppResult<()> {
+    info!("Stage 1 (Brave discovery) background task started");
+
+    let discovery_query = format!("{} in {}", args.industry, args.location);
+    let discovery_limit = args.limit;
+    let discovery_max_pages = args.max_pages.clamp(1, 10);
+    let discovery_fetch_target = discovery_limit
+        .saturating_mul(discovery_max_pages)
+        .clamp(20, discovery_max_pages.saturating_mul(20));
+
+    info!(
+        query = %discovery_query,
+        limit = discovery_limit,
+        max_pages = discovery_max_pages,
+        fetch_target = discovery_fetch_target,
+        run_id = %args.run_id,
+        "Querying Brave web search for candidate websites"
+    );
+
+    let mut seen_domains: HashSet<String> = HashSet::new();
+    let mut queued_count = 0usize;
+    let mut skipped_non_canonical = 0usize;
+    let mut skipped_duplicate = 0usize;
+    let mut raw_results = 0usize;
+    let mut page_index = 0usize;
+    let mut remaining_target = discovery_fetch_target;
+    let mut pages_fetched = 0usize;
+
+    while queued_count < discovery_limit
+        && remaining_target > 0
+        && page_index < discovery_max_pages
+        && page_index <= 9
+    {
+        let page_count = remaining_target.min(20);
+        let discovery_count = page_count.to_string();
+        let offset = page_index.to_string();
+
+        let response = http_client
+            .get("https://api.search.brave.com/res/v1/web/search")
+            .header("Accept", "application/json")
+            .header("X-Subscription-Token", &brave_api_key)
+            .query(&[
+                ("q", discovery_query.as_str()),
+                ("count", discovery_count.as_str()),
+                ("offset", offset.as_str()),
+                ("country", "us"),
+                ("search_lang", "en"),
+            ])
+            .send()
+            .await;
+
+        let (results, more_results_available) = match response {
+            Ok(resp) => {
+                let status = resp.status();
+                let body = resp.text().await.unwrap_or_default();
+
+                if !status.is_success() {
+                    return Err(format!(
+                        "Brave Search API returned non-success status: {} body={}",
+                        status, body
+                    )
+                    .into());
+                }
+
+                let results = extract_brave_web_candidates(&body);
+                let more_results_available = brave_more_results_available(&body);
+
+                if results.is_empty() {
+                    info!(page = page_index, "Brave response contained no web results");
+                    break;
+                }
+
+                info!(
+                    page = page_index,
+                    page_results = results.len(),
+                    page_count = page_count,
+                    more_results_available = more_results_available,
+                    "Brave API returned paginated web results"
+                );
+
+                (results, more_results_available)
+            }
+            Err(e) => {
+                return Err(format!("Failed to connect to Brave Search API: {}", e).into());
+            }
+        };
+
+        pages_fetched += 1;
+        raw_results += results.len();
+
+        for (result_url, result_title, result_description) in results {
+            if queued_count >= discovery_limit {
+                info!(
+                    queued = queued_count,
+                    limit = discovery_limit,
+                    "Discovery limit reached"
+                );
+                break;
+            }
+
+            let Some(normalized_website) = normalize_canonical_website_url(&result_url) else {
+                skipped_non_canonical += 1;
+                debug!(url = %result_url, "Skipping non-canonical or invalid website URL");
+                continue;
+            };
+
+            let Some(domain_key) = canonical_domain_key(&normalized_website) else {
+                skipped_non_canonical += 1;
+                debug!(url = %normalized_website, "Skipping candidate without canonical domain key");
+                continue;
+            };
+
+            if seen_domains.contains(&domain_key) {
+                skipped_duplicate += 1;
+                debug!(url = %normalized_website, domain = %domain_key, "Skipping duplicate discovered website domain");
+                continue;
+            }
+
+            seen_domains.insert(domain_key.clone());
+
+            let candidate = DiscoveredCandidate {
+                run_id: args.run_id.clone(),
+                website_url: normalized_website.clone(),
+                discovery_source: "brave".to_string(),
+                target_industry: args.industry.clone(),
+                target_location: args.location.clone(),
+                provider_provenance_json: serde_json::json!({
+                    "provider": "brave",
+                    "query": discovery_query,
+                    "transient_only": true,
+                    "provider_payload_stored": false,
+                    "page": page_index,
+                    "domain_key": domain_key
+                })
+                .to_string(),
+                provider_fsq_id: String::new(),
+                is_no_website_opportunity: false,
+            };
+
+            debug!(
+                title = %result_title,
+                url = %candidate.website_url,
+                description = %result_description,
+                run_id = %candidate.run_id,
+                "Brave discovered candidate website"
+            );
+
+            if let Err(e) = discovery_tx.send(candidate).await {
+                return Err(
+                    format!("Failed to send discovered candidate to pipeline: {}", e).into(),
+                );
+            }
+
+            queued_count += 1;
+        }
+
+        remaining_target = remaining_target.saturating_sub(page_count);
+        if !more_results_available {
+            break;
+        }
+
+        page_index += 1;
+    }
+
+    info!(
+        queued = queued_count,
+        raw_results = raw_results,
+        skipped_non_canonical = skipped_non_canonical,
+        skipped_duplicate = skipped_duplicate,
+        limit = discovery_limit,
+        max_pages = discovery_max_pages,
+        fetch_target = discovery_fetch_target,
+        pages_fetched = pages_fetched,
+        run_id = %args.run_id,
+        "Discovery filtering summary"
+    );
+
+    info!("Discovery task finished queuing URLs.");
+    Ok(())
+}
+
+// Strictly for queueing a set URL inputted.
+pub async fn queue_direct_url_candidate(
+    args: UrlArgs,
+    tx: mpsc::Sender<DiscoveredCandidate>,
+) -> AppResult<()> {
+    let normalized_website = normalize_canonical_website_url(&args.website)
+        .ok_or_else(|| format!("Invalid or non-canonical website URL: {}", args.website))?;
+
+    let candidate = DiscoveredCandidate {
+        run_id: args.run_id.clone(),
+        website_url: normalized_website.clone(),
+        discovery_source: "direct_url".to_string(),
+        target_industry: args.industry.clone(),
+        target_location: args.location.clone(),
+        provider_provenance_json: serde_json::json!({
+            "provider": "direct_url",
+            "input_website": args.website,
+            "normalized_website": normalized_website,
+            "transient_only": true,
+            "provider_payload_stored": false,
+        })
+        .to_string(),
+        provider_fsq_id: String::new(),
+        is_no_website_opportunity: false,
+    };
+
+    info!(
+        url = %candidate.website_url,
+        run_id = %candidate.run_id,
+        "Queued direct URL candidate"
+    );
+
+    tx.send(candidate)
+        .await
+        .map_err(|e| format!("Failed to queue direct URL candidate: {}", e).into())
 }

@@ -1,6 +1,7 @@
 use regex::Regex;
 use scraper::{Html, Selector};
 use url::Url;
+use serde_json;
 
 use crate::schema;
 
@@ -9,6 +10,224 @@ use std::collections::HashSet;
 pub fn parse_selector(selector: &str) -> Selector {
     Selector::parse(selector).expect("valid CSS selector")
 }
+
+
+// Relevant page signals for:
+    // 1. business compatibility signals
+    // 2. real website signals
+pub struct PageSignals {
+    pub word_count: i32,
+    pub has_viewport: bool,
+    pub has_form: bool,
+    pub has_tel_link: bool,
+    pub has_mailto_link: bool,
+    pub is_parked_domain: bool,
+    pub outbound_domain_count: i32,
+    pub schema_org_business_type: String,
+    pub email_address: String,
+    pub meta_description: String,
+    pub social_linkedin: String,
+    pub social_facebook: String,
+    pub social_instagram: String,
+    pub copyright_year: i32,
+    pub has_booking_signal: bool,
+    pub has_cta_signal: bool,
+    pub has_hours_signal: bool,
+    pub has_reviews_signal: bool,
+    pub has_contact_page: bool,
+}
+
+// extract page signals from scraped url
+pub fn extract_page_signals(
+    document: &Html,
+    text_content: &str,
+    anchor_hrefs: &[schema::UrlArtifact], 
+) -> PageSignals {
+
+    
+    let lower = text_content.to_ascii_lowercase();
+
+    let mut has_tel_link = false;
+    let mut has_mailto_link = false;
+    let mut email_address = String::new();
+
+    // boolean - .next() through iterator, bool viewport and form
+    let has_viewport = document
+        .select(&parse_selector(r#"meta[name="viewport"]"#))
+        .next()
+        .is_some();
+
+    let has_form = document
+        .select(&parse_selector("form"))
+        .next()
+        .is_some();
+
+    
+    for el in document.select(&parse_selector("a[href]")) {
+        let Some(href) = el.value().attr("href") else {
+            continue;
+        };
+        let lower_href = href.to_ascii_lowercase();
+
+        if lower_href.starts_with("tel:") { // check - is it always tel consistently 
+            has_tel_link = true;
+        }
+
+        if lower_href.starts_with("mailto:") {
+            has_mailto_link = true;
+            if email_address.is_empty() {
+                let extracted = href["mailto:".len()..]
+                    .split('?')
+                    .next()
+                    .unwrap_or("")
+                    .to_string();
+                if extracted.contains("@") {
+                    email_address = extracted;
+                }
+            }
+        }
+
+    }
+    if email_address.is_empty() {
+        if let Ok(re) = Regex::new(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}") {
+            if let Some(m) = re.find(text_content) {
+                email_address = m.as_str().to_string();
+            }
+        }
+    }
+
+    // rudimentary parked domain check 
+    let is_parked_domain = [
+        "this domain is for sale",
+        "buy this domain",
+        "parked free",
+        "under construction",
+        "coming soon",
+    ]
+    .iter()
+    .any( |phrase| lower.contains(phrase));
+
+    // hashSet only stores unique values
+    let outbound_domains: HashSet<String> = anchor_hrefs
+        .iter()
+        .filter( |a| !a.is_internal)
+        .filter_map(|a| {
+            Url::parse(&a.url)
+                .ok()?
+                .host_str()
+                .map( |h| h.to_ascii_lowercase())
+        })
+        .collect();
+    let outbound_domain_count = outbound_domains.len().min(i32::MAX as usize) as i32;
+
+    let schema_org_business_type = extract_schema_org_business_type(document);
+
+    let meta_description = document
+        .select(&parse_selector(r#"meta[name="description"]"#))
+        .next()
+        .and_then( |el| el.value().attr("content"))
+        .map(normalize_whitespace)
+        .unwrap_or_default();
+    
+    let social_linkedin = extract_social_link(anchor_hrefs, "linkedin.com");
+    let social_facebook = extract_social_link(anchor_hrefs, "facebook.com");
+    let social_instagram = extract_social_link(anchor_hrefs, "instagram.com");
+
+    let copyright_year = Regex::new(r"(?i)(?:copyright|©)\s*(20\d{2})")
+        .ok()
+        .and_then( |re| re.captures(text_content))
+        .and_then( |caps| caps.get(1))
+        .and_then( |m| m.as_str().parse::<i32>().ok())
+        .unwrap_or(0);
+
+
+    // VERY basic lists to be expanded
+    // ADD MORE KEYWORDS AND PHRASES BASED ON DATA
+
+
+    let has_booking_signal = ["book now", "schedule", "reserve", "appointment", "calendly"]
+        .iter()
+        .any( |t| lower.contains(t));
+
+
+    let has_cta_signal = ["free estimate", "request quote", "contact us", "call now"]
+        .iter()
+        .any(|t| lower.contains(t));
+
+    let has_hours_signal = lower.contains("hours") || lower.contains("open today");
+
+    let has_reviews_signal = ["testimonial", "testimonials", "review", "reviews"]
+        .iter()
+        .any(|t| lower.contains(t));
+
+    let has_contact_page = anchor_hrefs.iter().any(|a| {
+        let combined = format!(
+            "{} {}",
+            a.url.to_ascii_lowercase(),
+            a.label.to_ascii_lowercase()
+        );
+        combined.contains("contact")
+    });
+
+    let word_count = text_content
+        .split_whitespace()
+        .count()
+        .min(i32::MAX as usize) as i32;
+
+
+
+    PageSignals {
+        word_count,
+        has_viewport,
+        has_form,
+        has_tel_link,
+        has_mailto_link,
+        is_parked_domain,
+        outbound_domain_count,
+        schema_org_business_type,
+        email_address,
+        meta_description,
+        social_linkedin,
+        social_facebook,
+        social_instagram,
+        copyright_year,
+        has_booking_signal,
+        has_cta_signal,
+        has_hours_signal,
+        has_reviews_signal,
+        has_contact_page,
+    }
+}
+
+fn extract_schema_org_business_type(document: &Html) -> String {
+    let selector = parse_selector(r#"script[type="application/ld+json"]"#);
+    for el in document.select(&selector) {
+        let text = el.text().collect::<String>();
+        let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+            continue;
+        };
+        let items: Vec<&serde_json::Value> = match value.as_array() {
+            Some(arr) => arr.iter().collect(),
+            None => vec![&value],
+        };
+        for item in items {
+            if let Some(t) = item.get("@type").and_then(|v| v.as_str()) {
+                return t.to_string();
+            }
+        }
+    }
+    String::new()
+
+}
+
+fn extract_social_link(anchor_hrefs: &[schema::UrlArtifact], domain: &str) -> String {
+    anchor_hrefs
+        .iter()
+        .find(|a| a.url.contains(domain))
+        .map(|a| a.url.clone())
+        .unwrap_or_default()
+}
+
 
 pub fn extract_page_title(document: &Html) -> String {
     let selector = parse_selector("title");
