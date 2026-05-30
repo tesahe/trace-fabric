@@ -1,8 +1,7 @@
 import re
 import logging
 from typing import Dict, Any, Tuple, List, Callable
-from bs4 import BeautifulSoup
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 logger = logging.getLogger(__name__)
@@ -17,37 +16,26 @@ class RuleSet:
     """ Defines the signifiers for a specific product/service campaign."""
     campaign_name: str
     rejection_signatures: List[re.Pattern]
-    # Functions that take (soup, text_content) and return dict of flags
-    custom_evaluators: List[Callable[[BeautifulSoup, str], Dict[str, Any]]]
+    custom_evaluators: List[Callable[[Any], Dict[str, Any]]] = field(default_factory=list)
 
-def evaluate_website_modernization(soup: BeautifulSoup, text_content: str) -> Dict[str, Any]:
-    """
-    Signifiers for identifying sites that need complete overhauls.
-    TEMP function to work AS IS but be updated later oncee:
-        DEEP RESEARCH completed on real correlations with:
-            non responsive sites
-            sites that need improvement
-            service gaps
 
-    
-    
-    """
-    flags = {}
-    
-    # 1. Lack of viewport meta tag strongly correlates with archaic, non-mobile responsive sites!
-    viewport = soup.find("meta", attrs={"name": "viewport"})
-    flags["missing_mobile_viewport"] = viewport is None
-    
-    # 2. Check if it's Wordpress (if it is, and missing viewport, it's a prime target)
-    flags["is_wordpress"] = bool(re.search(r'wp-content|wp-includes', str(soup)))
-    
-    return flags
+def _url_list(lead) -> List[str]:
+    return [s.url for s in lead.script_srcs] + [s.url for s in lead.stylesheet_hrefs]
 
+
+def evaluate_website_modernization(lead) -> Dict[str, Any]:
+    urls = _url_list(lead)
+    return {
+        "missing_mobile_viewport": not lead.has_viewport,
+        "is_wordpress": any(
+            "wp-content" in u or "wp-includes" in u for u in urls
+        ),
+    }
 
 WEBSITE_MODERNIZATION_CAMPAIGN = RuleSet(
     campaign_name="website_modernization",
     rejection_signatures=[
-        re.compile(r"Static\.SQUARESPACE", re.IGNORECASE),
+        re.compile(r"squarespace\.com", re.IGNORECASE),
         re.compile(r"cdn\.shopify\.com", re.IGNORECASE),
         re.compile(r"wix\.com", re.IGNORECASE),
         re.compile(r"weebly\.com", re.IGNORECASE),
@@ -90,81 +78,38 @@ def get_ruleset_for_campaign(campaign_type: str) -> RuleSet:
 # ==========================================
     
 
-class HeuristicScanner: 
-    """ 
-    First Tier Gatekeeper: Deterministic lexical and DOM scanning.
-    Executes fast checks before any LLM interference, 100% adaptable to new campaigns.
+class HeuristicScanner:
+    """
+    Tier 0 gatekeeper. Fast deterministic rejection using proto-extracted signals.
+    Reads word_count and is_parked_domain directly from the proto lead object.
+    Rejection signatures are matched against extracted script/stylesheet URLs.
     """
 
-
-    # start w/ 150 words as threshhold
     MIN_WORD_COUNT = 150
 
-
-    def __init__(self, raw_html: str, active_ruleset: RuleSet = WEBSITE_MODERNIZATION_CAMPAIGN):
-        """
-        Parses raw HTML using lxml.  Falling back to html.parser if no lxml
-        """
+    def __init__(self, lead, active_ruleset: RuleSet = WEBSITE_MODERNIZATION_CAMPAIGN):
+        self.lead = lead
         self.ruleset = active_ruleset
-        
-        try: 
-            self.soup = BeautifulSoup(raw_html, 'lxml')
-        except getattr(BeautifulSoup, "FeatureNotFound", Exception):
-            logger.warning("lxml not found, falling back to html.parser")
-            self.soup = BeautifulSoup(raw_html, 'html.parser')
-
-        # strip tags and extract human readable text
-        self.text_content = self.soup.get_text(separator=" ", strip=True)
-        
-        self.raw_string = str(self.soup)
-
 
     def run_all_checks(self) -> Tuple[bool, Dict[str, Any], str]:
-        """
-        Executes all heuristics
-        Returns: (passed: bool, flags: dict, rejection_reason: str)
-        """
+        flags: Dict[str, Any] = {"campaign": self.ruleset.campaign_name}
 
-        flags = {"campaign": self.ruleset.campaign_name}
-
-        
-
-        # 1) Universal Checks (Applies to ALL campaigns)
-        word_count = len(self.text_content.split())
+        word_count = self.lead.word_count
         flags["word_count"] = word_count
-
         if word_count < self.MIN_WORD_COUNT:
-            return False, flags, f"rejected_heuristic_low_word_count"
+            return False, flags, "rejected_heuristic_low_word_count"
 
-        if self._is_parked_domain():
-            flags["parked_domain"]= True
+        if self.lead.is_parked_domain:
+            flags["parked_domain"] = True
             return False, flags, "rejected_heuristic_parked_domain"
 
-        # 2) Campaign Specific Rejections 
-        # for example, squarespace for website modification
+        urls = _url_list(self.lead)
+        for pattern in self.ruleset.rejection_signatures:
+            if any(pattern.search(u) for u in urls):
+                flags["rejection_signature"] = pattern.pattern
+                return False, flags, "rejected_heuristic_campaign_mismatch"
 
-        for rejection_pattern in self.ruleset.rejection_signatures:
-            if rejection_pattern.search(self.raw_string):
-                flags["rejection_signature"] = rejection_pattern.pattern
-                return False, flags, f"rejected_heuristic_campaign_mismatch"
-
-        # 3) Campaign Specific Value Extraction
         for evaluator in self.ruleset.custom_evaluators:
-            eval_flags = evaluator(self.soup, self.text_content)
-            flags.update(eval_flags)
-
+            flags.update(evaluator(self.lead))
 
         return True, flags, "pending_tier_1"
-
-
-
-    def _is_parked_domain(self) -> bool:
-        """ Check for parked domain signatures """
-
-        parked_phrases = ["this domain is for sale", "buy this domain", "parked free", "under construction"]
-        lower_text = self.text_content.lower()
-        return any(phrase in lower_text for phrase in parked_phrases)
-        
-        
-
-        

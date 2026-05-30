@@ -13,6 +13,26 @@ def make_base_lead(
     crawl_disallowed_reason: str = "",
     is_no_website_opportunity: bool = False,
     discovery_source: str = "brave",
+    # Proto signal fields - must be set explicitly to match the embedded HTML
+    has_viewport: bool = False,
+    has_form: bool = False,
+    has_tel_link: bool = False,
+    has_mailto_link: bool = False,
+    has_contact_page: bool = False,
+    has_booking_signal: bool = False,
+    has_cta_signal: bool = False,
+    has_hours_signal: bool = False,
+    has_reviews_signal: bool = False,
+    is_parked_domain: bool = False,
+    word_count: int = 0,
+    outbound_domain_count: int = 0,
+    copyright_year: int = 0,
+    schema_org_business_type: str = "",
+    email_address: str = "",
+    meta_description: str = "",
+    social_linkedin: str = "",
+    social_facebook: str = "",
+    social_instagram: str = "",
 ) -> dict:
     return {
         "raw_html": raw_html,
@@ -40,6 +60,25 @@ def make_base_lead(
         "crawl_disallowed_reason": crawl_disallowed_reason,
         "is_no_website_opportunity": is_no_website_opportunity,
         "discovery_source": discovery_source,
+        "has_viewport": has_viewport,
+        "has_form": has_form,
+        "has_tel_link": has_tel_link,
+        "has_mailto_link": has_mailto_link,
+        "has_contact_page": has_contact_page,
+        "has_booking_signal": has_booking_signal,
+        "has_cta_signal": has_cta_signal,
+        "has_hours_signal": has_hours_signal,
+        "has_reviews_signal": has_reviews_signal,
+        "is_parked_domain": is_parked_domain,
+        "word_count": word_count,
+        "outbound_domain_count": outbound_domain_count,
+        "copyright_year": copyright_year,
+        "schema_org_business_type": schema_org_business_type,
+        "email_address": email_address,
+        "meta_description": meta_description,
+        "social_linkedin": social_linkedin,
+        "social_facebook": social_facebook,
+        "social_instagram": social_instagram,
     }
 
 
@@ -68,6 +107,9 @@ def weak_website_hvac_lead() -> dict:
         raw_html=raw_html,
         text_content=text_content,
         source_url="https://aaaheatingandcoolinginc.com/",
+        has_form=True,
+        has_contact_page=True,
+        # no viewport, no cta, no privacy → will generate gaps for website_modernization
     )
 
 
@@ -95,6 +137,9 @@ def voice_ai_candidate_lead() -> dict:
         text_content=text_content,
         source_url="https://fastresponseplumbing.com/",
         phone_number="503-555-9999",
+        has_viewport=True,
+        has_tel_link=True,
+        # no booking signal, no hours signal → voice_ai campaign sees gaps
     )
 
 
@@ -124,6 +169,9 @@ def smma_candidate_without_socials() -> dict:
         anchor_hrefs=[
             {"url": "https://rosecityautodetail.com/contact", "is_internal": True, "label": "Contact"},
         ],
+        has_viewport=True,
+        has_contact_page=True,
+        # no social links in anchor_hrefs, no reviews, no cta → smma sees gaps
     )
 
 
@@ -179,6 +227,10 @@ def modern_business_lead() -> dict:
             {"url": "https://northwestcomfortsolutions.com/contact", "is_internal": True, "label": "Contact"},
             {"url": "https://northwestcomfortsolutions.com/privacy-policy", "is_internal": True, "label": "Privacy Policy"},
         ],
+        has_viewport=True,
+        has_form=True,
+        has_cta_signal=True,
+        has_contact_page=True,
     )
 
 
@@ -226,6 +278,10 @@ def smma_candidate_with_socials() -> dict:
             {"url": "https://instagram.com/rosecitydetail", "is_internal": False, "label": "Instagram"},
             {"url": "https://facebook.com/rosecitydetail", "is_internal": False, "label": "Facebook"},
         ],
+        has_viewport=True,
+        has_contact_page=True,
+        social_instagram="https://instagram.com/rosecitydetail",
+        social_facebook="https://facebook.com/rosecitydetail",
     )
 
 
@@ -257,6 +313,12 @@ def cross_campaign_lead() -> dict:
         anchor_hrefs=[
             {"url": "https://rapidresponsehvac.com/contact", "is_internal": True, "label": "Contact"},
         ],
+        has_viewport=True,
+        has_tel_link=True,
+        has_contact_page=True,
+        # no form, no cta → website_modernization sees gaps
+        # no booking, no hours → voice_ai sees gaps
+        # guarantees the two campaigns produce different missing_critical_features lists
     )
 
 

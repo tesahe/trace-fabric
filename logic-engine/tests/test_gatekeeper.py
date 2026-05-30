@@ -1,13 +1,32 @@
+from types import SimpleNamespace
+
 from gatekeeper import HeuristicScanner, get_ruleset_for_campaign
 
 
-def test_gatekeeper_rejects_low_word_count():
-    html = "<html><body><p>Hello world.</p></body></html>"
+def make_gatekeeper_lead(
+    *,
+    word_count: int = 200,
+    is_parked_domain: bool = False,
+    has_viewport: bool = True,
+    script_srcs: list | None = None,
+    stylesheet_hrefs: list | None = None,
+):
+    def make_url(url: str):
+        return SimpleNamespace(url=url, is_internal=False, label="")
 
-    scanner = HeuristicScanner(
-        html,
-        get_ruleset_for_campaign("website_modernization"),
+    return SimpleNamespace(
+        word_count=word_count,
+        is_parked_domain=is_parked_domain,
+        has_viewport=has_viewport,
+        script_srcs=[make_url(u) for u in (script_srcs or [])],
+        stylesheet_hrefs=[make_url(u) for u in (stylesheet_hrefs or [])],
     )
+
+
+def test_gatekeeper_rejects_low_word_count():
+    lead = make_gatekeeper_lead(word_count=3)
+
+    scanner = HeuristicScanner(lead, get_ruleset_for_campaign("website_modernization"))
     passed, flags, status = scanner.run_all_checks()
 
     assert passed is False
@@ -16,12 +35,9 @@ def test_gatekeeper_rejects_low_word_count():
 
 
 def test_gatekeeper_rejects_parked_domain():
-    html = "<html><body>" + ("this domain is for sale " * 30) + "</body></html>"
+    lead = make_gatekeeper_lead(is_parked_domain=True)
 
-    scanner = HeuristicScanner(
-        html,
-        get_ruleset_for_campaign("website_modernization"),
-    )
+    scanner = HeuristicScanner(lead, get_ruleset_for_campaign("website_modernization"))
     passed, flags, status = scanner.run_all_checks()
 
     assert passed is False
@@ -30,17 +46,11 @@ def test_gatekeeper_rejects_parked_domain():
 
 
 def test_gatekeeper_rejects_campaign_mismatch_for_shopify():
-    html = (
-        "<html><body>"
-        + ("word " * 200)
-        + '<script src="https://cdn.shopify.com/s/files/1/theme.js"></script>'
-        + "</body></html>"
+    lead = make_gatekeeper_lead(
+        script_srcs=["https://cdn.shopify.com/s/files/1/theme.js"],
     )
 
-    scanner = HeuristicScanner(
-        html,
-        get_ruleset_for_campaign("website_modernization"),
-    )
+    scanner = HeuristicScanner(lead, get_ruleset_for_campaign("website_modernization"))
     passed, flags, status = scanner.run_all_checks()
 
     assert passed is False
@@ -49,17 +59,13 @@ def test_gatekeeper_rejects_campaign_mismatch_for_shopify():
 
 
 def test_gatekeeper_passes_valid_business_html():
-    html = (
-        "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'></head>"
-        "<body>"
-        + ("We are a local HVAC company serving Portland with installation, repair, maintenance, and emergency service. " * 20)
-        + "</body></html>"
+    lead = make_gatekeeper_lead(
+        word_count=200,
+        is_parked_domain=False,
+        has_viewport=True,
     )
 
-    scanner = HeuristicScanner(
-        html,
-        get_ruleset_for_campaign("website_modernization"),
-    )
+    scanner = HeuristicScanner(lead, get_ruleset_for_campaign("website_modernization"))
     passed, flags, status = scanner.run_all_checks()
 
     assert passed is True

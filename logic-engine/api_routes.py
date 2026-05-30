@@ -64,6 +64,8 @@ def register_routes(app: FastAPI) -> None:
                         "is_qualified_lead": lead.is_qualified_lead,
                         "rejection_reason": lead.rejection_reason,
                         "overall_digital_health": lead.overall_digital_health,
+                        "tier1_result": lead.tier1_result,
+                        "tier2_result": lead.tier2_result,
                         "identified_service_gaps": lead.identified_service_gaps,
                         "missing_critical_features": lead.missing_critical_features,
                     }
@@ -102,6 +104,10 @@ def register_routes(app: FastAPI) -> None:
                 "overall_digital_health": lead.overall_digital_health,
                 "heuristic_flags": lead.heuristic_flags,
                 "deterministic_evidence": lead.deterministic_evidence,
+                "tier1_result": lead.tier1_result,
+                "tier2_result": lead.tier2_result,
+                "llm_output": lead.llm_output,
+                "full_llm_payload": lead.full_llm_payload,
                 "identified_service_gaps": lead.identified_service_gaps,
                 "missing_critical_features": lead.missing_critical_features,
                 "crawl_allowed": lead.crawl_allowed,
@@ -212,6 +218,8 @@ def register_routes(app: FastAPI) -> None:
                         "is_qualified_lead": lead.is_qualified_lead,
                         "rejection_reason": lead.rejection_reason,
                         "overall_digital_health": lead.overall_digital_health,
+                        "tier1_result": lead.tier1_result,
+                        "tier2_result": lead.tier2_result,
                         "identified_service_gaps": lead.identified_service_gaps,
                         "missing_critical_features": lead.missing_critical_features,
                     }
@@ -293,4 +301,3 @@ def register_routes(app: FastAPI) -> None:
 
         asyncio.create_task(track_run_process(run_id, process))
         return {"run_id": run_id, "status": "running"}
-

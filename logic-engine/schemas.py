@@ -1,46 +1,64 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
+from __future__ import annotations
 
+from typing import Any
+
+from pydantic import BaseModel, Field
 
 
 class ServiceGaps(BaseModel):
     has_online_booking: bool = Field(
-        description="True if the business allows customers to book or purchase directly on the website, waitlist, or forms."
+        default=False,
+        description="True if the business allows customers to book or purchase directly on the website, waitlist, or forms.",
     )
     is_mobile_optimized: bool = Field(
-        description="True if the website is clearly structured with mobile responsiveness in mind."
+        default=False,
+        description="True if the website is clearly structured with mobile responsiveness in mind.",
     )
     has_clear_contact_info: bool = Field(
-        description="True if phone numbers, emails, or physical addresses are easily accessible."
+        default=False,
+        description="True if phone numbers, emails, or physical addresses are easily accessible.",
     )
-    outdated_indicators: List[str] = Field(
+    outdated_indicators: list[str] = Field(
         default_factory=list,
-        description="Specific reasons the site appears outdated (e.g., 'Copyright 2014', 'Flash elements', 'Broken images'). Return an empty list if modern."
+        description="Specific reasons the site appears outdated.",
     )
-    missing_critical_features: List[str] = Field(
+    missing_critical_features: list[str] = Field(
         default_factory=list,
-        description="Features standard to this industry that are noticeably absent (e.g., 'No menu PDF', 'No pricing table')."
+        description="Features standard to this industry that are noticeably absent.",
     )
 
-class LeadExtraction(BaseModel):
-    business_name: Optional[str] = Field(
-        default=None, 
-        description="The formal name of the business as extracted from the page."
-    )
-    confidence_score: float = Field(
-        ge=0.0, le=1.0, 
-        description="Your confidence from 0.0 to 1.0 that this page represents a legitimate, operational business."
-    )
-    service_gaps: ServiceGaps = Field(
-        description="Detailed breakdown of digital presence deficiencies."
-    )
-    overall_digital_health: str = Field(
-        description="A one-sentence summary of the business's digital footprint. E.g., 'Strong local presence but critically missing e-commerce capabilities.'"
-    )
-    is_qualified_lead: bool = Field(
-        description="Set to True ONLY IF significant service gaps exist where we can definitively provide technical value."
-    )
-    rejection_reason: Optional[str] = Field(
+
+class BusinessProfile(BaseModel):
+    business_name: str | None = Field(
         default=None,
-        description="If is_qualified_lead is False, provide the exact reason why (e.g., 'Site is highly optimized', 'Business appears closed')."
+        description="The formal name of the business as extracted from the page.",
     )
+    category: str | None = Field(default=None)
+    phone_number: str | None = Field(default=None)
+    address: str | None = Field(default=None)
+    website_url: str | None = Field(default=None)
+
+
+class Tier2EnrichmentOutput(BaseModel):
+    business_profile: BusinessProfile
+    service_gaps: ServiceGaps
+    niche_attributes: dict[str, Any] = Field(default_factory=dict)
+    operator_summary: str = Field(
+        description="A concise UI-safe summary of the business and the extracted opportunities."
+    )
+    confidence: float = Field(
+        ge=0.0,
+        le=1.0,
+        description="Confidence score from 0.0 to 1.0.",
+    )
+
+
+class LeadExtraction(BaseModel):
+    """Legacy alias retained for compatibility with older imports/tests."""
+
+    business_name: str | None = Field(default=None)
+    confidence_score: float = Field(ge=0.0, le=1.0)
+    service_gaps: ServiceGaps
+    overall_digital_health: str
+    is_qualified_lead: bool
+    rejection_reason: str | None = Field(default=None)

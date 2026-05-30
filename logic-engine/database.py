@@ -118,6 +118,27 @@ class ScoredLeadModel(Base):
     stylesheet_hrefs: Mapped[list] = mapped_column(JSON, default=list)
     robots_txt: Mapped[dict] = mapped_column(JSON, default=dict)
     sitemap_xml: Mapped[dict] = mapped_column(JSON, default=dict)
+        # --- Rust-extracted signals (proto fields 38-56) ---
+    word_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    has_viewport: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_form: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_tel_link: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_mailto_link: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    is_parked_domain: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    outbound_domain_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    schema_org_business_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    email_address: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    meta_description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    social_linkedin: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    social_facebook: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    social_instagram: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    copyright_year: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    has_booking_signal: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_cta_signal: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_hours_signal: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_reviews_signal: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+    has_contact_page: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
+
 
     # --- deterministic / workflow state ---
     pipeline_status: Mapped[str] = mapped_column(String, default="discovered")
@@ -136,6 +157,8 @@ class ScoredLeadModel(Base):
     missing_critical_features: Mapped[list] = mapped_column(JSON, default=list)
 
     # --- optional later-stage ML / LLM state ---
+    tier1_result: Mapped[dict] = mapped_column(JSON, default=dict)
+    tier2_result: Mapped[dict] = mapped_column(JSON, default=dict)
     llm_output: Mapped[dict] = mapped_column(JSON, default=dict)
     full_llm_payload: Mapped[dict] = mapped_column(JSON, default=dict)
     llm_processing_cost: Mapped[float] = mapped_column(Float, default=0.0)
@@ -149,4 +172,3 @@ class ScoredLeadModel(Base):
         server_default=func.now(),
         onupdate=func.now(),
     )
-

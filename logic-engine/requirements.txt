@@ -16,3 +16,4 @@ instructor
 aiolimiter
 jsonref
 pytest
+PyYAML

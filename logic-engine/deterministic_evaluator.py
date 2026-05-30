@@ -1,17 +1,11 @@
-import re
 from datetime import datetime
 from urllib.parse import urlparse
-
-from bs4 import BeautifulSoup
 
 
 CURRENT_YEAR = datetime.now().year
 
 
-
 def evaluate_lead(*, lead_data: dict, campaign_type: str, target_industry: str, heuristic_flags: dict) -> dict:
-    raw_html = lead_data.get("raw_html", "") or ""
-    text_content = lead_data.get("text_content", "") or ""
     page_title = lead_data.get("page_title", "") or ""
     anchor_hrefs = lead_data.get("anchor_hrefs", []) or []
     robots_txt = lead_data.get("robots_txt") or {}
@@ -23,29 +17,28 @@ def evaluate_lead(*, lead_data: dict, campaign_type: str, target_industry: str, 
     is_no_website_opportunity = bool(lead_data.get("is_no_website_opportunity", False))
     discovery_source = lead_data.get("discovery_source", "") or ""
 
-    soup = BeautifulSoup(raw_html, "lxml")
-    lower_text = text_content.lower()
-    source_host = urlparse(source_url).netloc.lower()
+    # Read Rust-extracted signals directly — no HTML re-parsing
+    has_viewport = bool(lead_data.get("has_viewport", False))
+    has_form = bool(lead_data.get("has_form", False))
+    has_tel = bool(lead_data.get("has_tel_link", False))
+    has_mailto = bool(lead_data.get("has_mailto_link", False))
+    has_contact_page = bool(lead_data.get("has_contact_page", False))
+    has_booking = bool(lead_data.get("has_booking_signal", False))
+    has_cta = bool(lead_data.get("has_cta_signal", False))
+    has_hours = bool(lead_data.get("has_hours_signal", False))
+    has_reviews = bool(lead_data.get("has_reviews_signal", False))
+    is_parked = bool(lead_data.get("is_parked_domain", False))
+    copyright_year = int(lead_data.get("copyright_year", 0) or 0)
 
-    has_viewport = bool(soup.find("meta", attrs={"name": "viewport"}))
-    has_form = bool(soup.find("form"))
-    has_tel = bool(soup.find("a", href=re.compile(r"^tel:", re.I)))
-    has_mailto = bool(soup.find("a", href=re.compile(r"^mailto:", re.I)))
-    has_contact_page = any(
-        "contact" in f"{x.get('label', '')} {x.get('url', '')}".lower()
-        for x in anchor_hrefs
-    )
+    # Privacy still requires anchor scan — no dedicated proto signal
     has_privacy = any(
         "privacy" in f"{x.get('label', '')} {x.get('url', '')}".lower()
         for x in anchor_hrefs
     )
-    has_booking = any(token in lower_text for token in ["book now", "schedule", "appointment", "calendly"])
-    has_cta = any(token in lower_text for token in ["free estimate", "request quote", "contact us", "call now"])
-    has_hours = "hours" in lower_text or "open today" in lower_text
-    has_reviews = any(token in lower_text for token in ["testimonial", "testimonials", "review", "reviews"])
 
     has_phone_signal = bool((lead_data.get("phone_number") or "").strip()) or has_tel
     has_address_signal = bool((lead_data.get("address") or "").strip())
+    source_host = urlparse(source_url).netloc.lower()
     directory_like = any(token in source_host for token in ["yelp.", "facebook.", "instagram.", "tripadvisor."])
 
     if is_no_website_opportunity:
@@ -102,15 +95,39 @@ def evaluate_lead(*, lead_data: dict, campaign_type: str, target_industry: str, 
             },
         }
 
+    if is_parked:
+        return {
+            "pipeline_status": "rejected_parked_domain",
+            "score": 0.0,
+            "is_qualified_lead": False,
+            "has_booking_widget": False,
+            "is_mobile_optimized": False,
+            "has_clear_contact_info": False,
+            "overall_digital_health": "Domain appears to be parked or for sale.",
+            "rejection_reason": "parked_domain",
+            "identified_service_gaps": [],
+            "missing_critical_features": [],
+            "heuristic_flags": {
+                **heuristic_flags,
+                "campaign_type": campaign_type,
+                "target_industry": target_industry,
+                "is_real_business_deterministic": False,
+            },
+            "deterministic_evidence": {
+                "source_host": source_host,
+                "discovery_source": discovery_source,
+                "crawl_allowed": crawl_allowed,
+                "is_parked_domain": True,
+            },
+        }
+
     outdated = []
     if not has_viewport:
         outdated.append("missing_mobile_viewport")
     if not page_title.strip():
         outdated.append("missing_page_title")
-
-    m = re.search(r"(?:copyright|\xa9)\s*(20\d{2})", text_content, re.I)
-    if m and int(m.group(1)) <= CURRENT_YEAR - 3:
-        outdated.append(f"stale_copyright_{m.group(1)}")
+    if copyright_year > 0 and copyright_year <= CURRENT_YEAR - 3:
+        outdated.append(f"stale_copyright_{copyright_year}")
 
     missing = []
     if campaign_type == "website_modernization":
