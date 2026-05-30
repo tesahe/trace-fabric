@@ -15,6 +15,8 @@ pub fn parse_selector(selector: &str) -> Selector {
 // Relevant page signals for:
     // 1. business compatibility signals
     // 2. real website signals
+
+#[derive(Debug)]
 pub struct PageSignals {
     pub word_count: i32,
     pub has_viewport: bool,
@@ -150,7 +152,7 @@ pub fn extract_page_signals(
         .any( |t| lower.contains(t));
 
 
-    let has_cta_signal = ["free estimate", "request quote", "contact us", "call now"]
+    let has_cta_signal = ["free estimate", "request quote", "contact us", "get a quote", "call now"]
         .iter()
         .any(|t| lower.contains(t));
 

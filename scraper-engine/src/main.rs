@@ -1,11 +1,5 @@
-mod compliance;
-mod discovery;
-mod extract;
 mod transport;
-mod types;
-mod cli;
 mod pipeline;
-mod schema;
 
 
 use clap::Parser;
@@ -20,15 +14,13 @@ use tokio::sync::mpsc;
 use tracing::{error, info};
 use tracing_subscriber::EnvFilter;
 
-use discovery::{
-    queue_discovery_candidates,
-    queue_direct_url_candidate,
-};
-use types::{DiscoveredCandidate, AppResult};
-
+use scraper_engine::discovery::{queue_discovery_candidates, queue_direct_url_candidate};
+use scraper_engine::types::{DiscoveredCandidate, AppResult};
+use scraper_engine::schema;
+use scraper_engine::cli::{Cli, Command};
 use transport::run_zmq_sender;
 use pipeline::process_candidate;
-use cli::{Cli, Command};
+
 
 #[tokio::main]
 async fn main() -> AppResult<()> {

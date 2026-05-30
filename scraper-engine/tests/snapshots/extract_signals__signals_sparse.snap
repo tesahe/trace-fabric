@@ -1,0 +1,25 @@
+---
+source: tests/extract_signals.rs
+expression: signals
+---
+PageSignals {
+    word_count: 0,
+    has_viewport: false,
+    has_form: false,
+    has_tel_link: false,
+    has_mailto_link: false,
+    is_parked_domain: false,
+    outbound_domain_count: 0,
+    schema_org_business_type: "",
+    email_address: "",
+    meta_description: "",
+    social_linkedin: "",
+    social_facebook: "",
+    social_instagram: "",
+    copyright_year: 0,
+    has_booking_signal: false,
+    has_cta_signal: false,
+    has_hours_signal: false,
+    has_reviews_signal: false,
+    has_contact_page: false,
+}

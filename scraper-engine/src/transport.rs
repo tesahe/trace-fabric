@@ -3,7 +3,7 @@ use std::sync::mpsc::Receiver;
 use zmq::Context;
 use tracing::{error, info};
 
-use crate::schema;
+use scraper_engine::schema;
 
 
 pub fn run_zmq_sender(

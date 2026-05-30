@@ -5,21 +5,21 @@ use std::time::Instant;
 use scraper::Html;
 use tracing::{debug, error, info};
 
-use crate::compliance::{evaluate_crawl_eligibility, fetch_page_with_limits, fetch_root_file};
-use crate::extract::{
+use scraper_engine::compliance::{evaluate_crawl_eligibility, fetch_page_with_limits, fetch_root_file};
+use scraper_engine::extract::{
     build_website_provenance_json, extract_address, extract_anchor_hrefs, extract_company_name,
     extract_manifest_url, extract_page_title, extract_phone_number, extract_script_srcs,
     extract_stylesheet_hrefs, extract_text_content, infer_category_from_text,
     select_priority_internal_links, extract_page_signals,
 };
-use crate::schema;
-use crate::types::{AppRateLimiter, DiscoveredCandidate};
+use scraper_engine::schema;
+use scraper_engine::types::{AppRateLimiter, DiscoveredCandidate};
 
 pub async fn process_candidate(
     candidate: DiscoveredCandidate,
     http_client: reqwest::Client,
     rate_limiter:Arc<AppRateLimiter>,
-    zmq_tx: Sender<crate::schema::RawLead>,
+    zmq_tx: Sender<schema::RawLead>,
 ) {
     let initial_url = candidate.website_url.clone();
     let fetch_started = Instant::now();

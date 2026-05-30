@@ -40,6 +40,9 @@ Cargo.lock.bk
 # Contains mutation testing data
 **/mutants.out*/
 
+# Tests
+*.snap.new
+
 
 .dev-logs/
 .dev-pids/

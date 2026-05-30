@@ -1,0 +1,25 @@
+---
+source: tests/extract_signals.rs
+expression: signals
+---
+PageSignals {
+    word_count: 73,
+    has_viewport: true,
+    has_form: true,
+    has_tel_link: true,
+    has_mailto_link: true,
+    is_parked_domain: false,
+    outbound_domain_count: 3,
+    schema_org_business_type: "Plumber",
+    email_address: "info@cityplumbing.com",
+    meta_description: "Licensed plumber in Portland. Same-day service, free estimates.",
+    social_linkedin: "https://linkedin.com/company/cityplumbing",
+    social_facebook: "https://facebook.com/cityplumbing",
+    social_instagram: "https://instagram.com/cityplumbing",
+    copyright_year: 2024,
+    has_booking_signal: true,
+    has_cta_signal: false,
+    has_hours_signal: true,
+    has_reviews_signal: true,
+    has_contact_page: true,
+}
