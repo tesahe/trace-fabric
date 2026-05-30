@@ -81,10 +81,16 @@ export function LeadExplorer() {
               onChange={(e) => setStatus(e.target.value)}
             >
               <option value="any">any</option>
-              <option value="qualified_deterministic">persisted</option>
-              <option value="rejected_deterministic">rejected</option>
-              <option value="excluded_crawl_disallowed">excluded (crawl)</option>
+              <option value="qualified_deterministic">qualified (deterministic)</option>
+              <option value="rejected_deterministic">rejected (deterministic)</option>
+              <option value="excluded_crawl_disallowed">excluded (crawl blocked)</option>
               <option value="excluded_no_website_opportunity">excluded (no site)</option>
+              <option value="rejected_parked_domain">rejected (parked domain)</option>
+              <option value="rejected_compliance">rejected (compliance)</option>
+              <option value="tier1_rejected">tier 1 rejected</option>
+              <option value="tier1_passed">tier 1 passed</option>
+              <option value="tier2_queued">tier 2 queued</option>
+              <option value="tier2_complete">tier 2 complete</option>
               <option value="failed">failed</option>
             </select>
           </div>

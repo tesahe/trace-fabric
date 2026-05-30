@@ -6,6 +6,12 @@ export type PipelineStatus =
   | "rejected_deterministic"
   | "excluded_no_website_opportunity"
   | "excluded_crawl_disallowed"
+  | "rejected_parked_domain"
+  | "rejected_compliance"
+  | "tier1_rejected"
+  | "tier1_passed"
+  | "tier2_queued"
+  | "tier2_complete"
   | "running"   // UI-only: lead is live in-progress
   | "failed";   // UI-only: fetch or process error
 
@@ -110,6 +116,21 @@ export interface Lead {
   heuristicFlags: HeuristicFlags;                 // heuristic_flags
   identifiedServiceGaps: string[];               // identified_service_gaps
   missingCriticalFeatures: string[];             // missing_critical_features
+
+  // Rust-extracted signal columns (top-level DB fields, not inside deterministic_evidence)
+  wordCount?: number;
+  hasViewport?: boolean;
+  hasTelLink?: boolean;
+  hasMailtoLink?: boolean;
+  isParkedDomain?: boolean;
+  outboundDomainCount?: number;
+  schemaOrgBusinessType?: string;
+  emailAddress?: string;
+  metaDescription?: string;
+  socialLinkedin?: string;
+  socialFacebook?: string;
+  socialInstagram?: string;
+  copyrightYear?: number;
 
   // UI-only derived fields
   pipeline: PipelineStage[];

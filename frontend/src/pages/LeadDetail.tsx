@@ -98,6 +98,33 @@ export function LeadDetail() {
               </section>
 
               <section className="detail-section">
+                <h3 className="detail-section__title">Web signals</h3>
+                <KeyValueGrid
+                  rows={[
+                    { k: "word count",       v: lead.word_count != null ? String(lead.word_count) : "—" },
+                    { k: "mobile viewport",  v: lead.has_viewport != null ? (lead.has_viewport ? "yes" : "no") : "—" },
+                    { k: "has form",         v: lead.has_form != null ? (lead.has_form ? "yes" : "no") : "—" },
+                    { k: "tel link",         v: lead.has_tel_link != null ? (lead.has_tel_link ? "yes" : "no") : "—" },
+                    { k: "mailto link",      v: lead.has_mailto_link != null ? (lead.has_mailto_link ? "yes" : "no") : "—" },
+                    { k: "parked domain",    v: lead.is_parked_domain != null ? (lead.is_parked_domain ? "yes" : "no") : "—" },
+                    { k: "outbound domains", v: lead.outbound_domain_count != null ? String(lead.outbound_domain_count) : "—" },
+                    { k: "copyright year",   v: lead.copyright_year != null ? String(lead.copyright_year) : "—" },
+                    { k: "schema.org type",  v: lead.schema_org_business_type || "—" },
+                    { k: "email",            v: lead.email_address || "—" },
+                    { k: "meta description", v: lead.meta_description || "—" },
+                    { k: "linkedin",         v: lead.social_linkedin || "—" },
+                    { k: "facebook",         v: lead.social_facebook || "—" },
+                    { k: "instagram",        v: lead.social_instagram || "—" },
+                    { k: "booking signal",   v: lead.has_booking_signal != null ? (lead.has_booking_signal ? "yes" : "no") : "—" },
+                    { k: "cta signal",       v: lead.has_cta_signal != null ? (lead.has_cta_signal ? "yes" : "no") : "—" },
+                    { k: "hours signal",     v: lead.has_hours_signal != null ? (lead.has_hours_signal ? "yes" : "no") : "—" },
+                    { k: "reviews signal",   v: lead.has_reviews_signal != null ? (lead.has_reviews_signal ? "yes" : "no") : "—" },
+                    { k: "contact page",     v: lead.has_contact_page != null ? (lead.has_contact_page ? "yes" : "no") : "—" },
+                  ]}
+                />
+              </section>
+
+              <section className="detail-section">
                 <h3 className="detail-section__title">Pipeline result</h3>
                 <KeyValueGrid
                   rows={[

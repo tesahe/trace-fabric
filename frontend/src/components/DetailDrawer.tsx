@@ -153,6 +153,27 @@ export function DetailDrawer({ lead, onClose }: { lead: Lead; onClose: () => voi
             />
           </Section>
 
+          {/* Raw Rust-extracted signals */}
+          <Section title="Web signals" defaultOpen={false}>
+            <KeyValueGrid
+              rows={[
+                { k: "word count",      v: lead.wordCount != null ? String(lead.wordCount) : "—" },
+                { k: "mobile viewport", v: lead.hasViewport != null ? (lead.hasViewport ? "yes" : "no") : "—" },
+                { k: "tel link",        v: lead.hasTelLink != null ? (lead.hasTelLink ? "yes" : "no") : "—" },
+                { k: "mailto link",     v: lead.hasMailtoLink != null ? (lead.hasMailtoLink ? "yes" : "no") : "—" },
+                { k: "parked domain",   v: lead.isParkedDomain != null ? (lead.isParkedDomain ? "yes" : "no") : "—" },
+                { k: "outbound domains",v: lead.outboundDomainCount != null ? String(lead.outboundDomainCount) : "—" },
+                { k: "copyright year",  v: lead.copyrightYear != null ? String(lead.copyrightYear) : "—" },
+                { k: "schema.org type", v: lead.schemaOrgBusinessType || "—" },
+                { k: "email",           v: lead.emailAddress || "—" },
+                { k: "meta description",v: lead.metaDescription || "—" },
+                { k: "linkedin",        v: lead.socialLinkedin || "—" },
+                { k: "facebook",        v: lead.socialFacebook || "—" },
+                { k: "instagram",       v: lead.socialInstagram || "—" },
+              ]}
+            />
+          </Section>
+
           <TierBlock tier={lead.tier1} label="Tier 1 validation" />
           <TierBlock tier={lead.tier2} label="Tier 2 structured extraction" />
 

@@ -305,11 +305,19 @@ code,
   border-radius: 50%;
   display: inline-block;
 }
-.status--running .status__dot { background: var(--info); animation: pulse 1.4s ease-in-out infinite; }
-.status--persisted .status__dot { background: var(--success); }
-.status--rejected .status__dot { background: var(--danger); }
-.status--skipped .status__dot { background: var(--neutral); }
-.status--failed .status__dot { background: var(--danger); }
+.status--running .status__dot                        { background: var(--info); animation: pulse 1.4s ease-in-out infinite; }
+.status--failed .status__dot                         { background: var(--danger); }
+/* pipeline_status values */
+.status--qualified_deterministic .status__dot        { background: var(--success); }
+.status--rejected_deterministic .status__dot         { background: var(--danger); }
+.status--excluded_crawl_disallowed .status__dot      { background: var(--neutral); }
+.status--excluded_no_website_opportunity .status__dot{ background: var(--neutral); }
+.status--rejected_parked_domain .status__dot         { background: var(--neutral); }
+.status--rejected_compliance .status__dot            { background: var(--danger); }
+.status--tier1_rejected .status__dot                 { background: var(--danger); }
+.status--tier1_passed .status__dot                   { background: var(--info); }
+.status--tier2_queued .status__dot                   { background: var(--info); animation: pulse 1.4s ease-in-out infinite; }
+.status--tier2_complete .status__dot                 { background: var(--success); }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }

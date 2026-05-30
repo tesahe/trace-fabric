@@ -34,6 +34,7 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 
 export interface ApiLead {
   id: string;
+  run_id?: string;
   created_at: string;
   timestamp?: string;
   source_url: string;
@@ -64,8 +65,32 @@ export interface ApiLead {
   page_title?: string;
   provider_provenance?: unknown;
   website_provenance?: unknown;
-  robots_txt?: string;
-  sitemap_xml?: string;
+  robots_txt?: unknown;
+  sitemap_xml?: unknown;
+  tier1_result?: unknown;
+  tier2_result?: unknown;
+  llm_output?: unknown;
+  full_llm_payload?: unknown;
+  // Rust-extracted signal columns
+  word_count?: number;
+  has_viewport?: boolean;
+  has_form?: boolean;
+  has_tel_link?: boolean;
+  has_mailto_link?: boolean;
+  is_parked_domain?: boolean;
+  outbound_domain_count?: number;
+  schema_org_business_type?: string;
+  email_address?: string;
+  meta_description?: string;
+  social_linkedin?: string;
+  social_facebook?: string;
+  social_instagram?: string;
+  copyright_year?: number;
+  has_booking_signal?: boolean;
+  has_cta_signal?: boolean;
+  has_hours_signal?: boolean;
+  has_reviews_signal?: boolean;
+  has_contact_page?: boolean;
 }
 
 export interface ApiLeadList {
